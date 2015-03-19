@@ -9,13 +9,13 @@ public class MenuLightsHandler : MonoBehaviour {
 
 	void Start()
 	{
-		maxBrightness = light.intensity;
+		maxBrightness = GetComponent<Light>().intensity;
 	}
 
 	void Update () {
 
 		float time = Mathf.PingPong(Time.time,1);
 
-		light.intensity = Mathf.Lerp (0, maxBrightness, time);
+		GetComponent<Light>().intensity = Mathf.Lerp (0, maxBrightness, time);
 	}
 }

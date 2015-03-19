@@ -48,10 +48,10 @@ public class GUI_Handler : MonoBehaviour {
 	int menuDirection = 0;
 
 	void Start(){
-		guiTexture.color = Color.black;
+		GetComponent<GUITexture>().color = Color.black;
 	}
 	void OnGUI () {
-		guiTexture.pixelInset = new Rect(0f, 0f, Screen.width, Screen.height);
+		GetComponent<GUITexture>().pixelInset = new Rect(0f, 0f, Screen.width, Screen.height);
 		
 		if(menuNum == 0)
 		{
@@ -311,7 +311,7 @@ public class GUI_Handler : MonoBehaviour {
 			
 		}
 		
-		if(guiTexture.color.a >= 0.95f && isFading)
+		if(GetComponent<GUITexture>().color.a >= 0.95f && isFading)
 		{
 			isFading = false;
 			menuNum+= menuDirection;
@@ -336,13 +336,13 @@ public class GUI_Handler : MonoBehaviour {
 	
 	public void FadeToBlack()
 	{
-		guiTexture.color = Color.Lerp(guiTexture.color, Color.black, fadeSpeed * Time.deltaTime);
+		GetComponent<GUITexture>().color = Color.Lerp(GetComponent<GUITexture>().color, Color.black, fadeSpeed * Time.deltaTime);
 		guiColor = Color.Lerp(guiColor, Color.clear, fadeSpeed * Time.deltaTime);
 	}
 	
 	public void FadeToClear()
 	{
-		guiTexture.color = Color.Lerp(guiTexture.color, Color.clear, fadeSpeed * Time.deltaTime);
+		GetComponent<GUITexture>().color = Color.Lerp(GetComponent<GUITexture>().color, Color.clear, fadeSpeed * Time.deltaTime);
 		guiColor = Color.Lerp(guiColor, Color.white, fadeSpeed * Time.deltaTime);
 	}
 }

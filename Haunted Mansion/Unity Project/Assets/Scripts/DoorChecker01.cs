@@ -11,6 +11,6 @@ public class DoorChecker01 : MonoBehaviour {
 						gameObject.SetActive(false);
 				}
 
-		collider.enabled = true;
+		GetComponent<Collider>().enabled = true;
 	}
 }

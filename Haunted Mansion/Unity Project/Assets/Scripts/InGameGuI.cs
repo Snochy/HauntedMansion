@@ -27,11 +27,11 @@ public class InGameGuI : MonoBehaviour {
 
 
 	void Start() {
-		guiTexture.color = Color.black;
+		GetComponent<GUITexture>().color = Color.black;
 	}
 	void OnGUI () {
 
-		guiTexture.pixelInset = new Rect(0f, 0f, Screen.width, Screen.height);
+		GetComponent<GUITexture>().pixelInset = new Rect(0f, 0f, Screen.width, Screen.height);
 		GUI.color = guiColor;
 		if(controls)
 		{
@@ -58,7 +58,7 @@ public class InGameGuI : MonoBehaviour {
 
 				if(GUI.Button(new Rect(Screen.width * .90f,Screen.height * .05f, 50,50), cogIcon))
 				{
-					guiTexture.color = new Color(0,0,0,0.75f);
+					GetComponent<GUITexture>().color = new Color(0,0,0,0.75f);
 					menuOpen = true;
 				}
 			}
@@ -79,7 +79,7 @@ public class InGameGuI : MonoBehaviour {
 				if(GUI.Button(new Rect(Screen.width * .45f,Screen.height * .5f, 100,25),"Apply"))
 				{
 					menuOpen = false;
-					guiTexture.color = new Color(0,0,0,0f);
+					GetComponent<GUITexture>().color = new Color(0,0,0,0f);
 				}
 			}
 
@@ -115,16 +115,16 @@ public class InGameGuI : MonoBehaviour {
 	{
 		if(!menuOpen && !isFading)
 		{
-			guiTexture.color = Color.Lerp(guiTexture.color, Color.clear, fadeSpeed * Time.deltaTime);
+			GetComponent<GUITexture>().color = Color.Lerp(GetComponent<GUITexture>().color, Color.clear, fadeSpeed * Time.deltaTime);
 			guiColor = Color.Lerp(guiColor, Color.white, fadeSpeed * Time.deltaTime);
 		}
 		if(isFading)
 		{
-			guiTexture.color = Color.Lerp(guiTexture.color, Color.black, Time.deltaTime);
+			GetComponent<GUITexture>().color = Color.Lerp(GetComponent<GUITexture>().color, Color.black, Time.deltaTime);
 			guiColor = Color.Lerp(guiColor, Color.clear, Time.deltaTime);
 		}
 
-		if(guiTexture.color.a >= 0.95f && isFading)
+		if(GetComponent<GUITexture>().color.a >= 0.95f && isFading)
 		{
 			isFading = false;
 			Application.LoadLevel(0);

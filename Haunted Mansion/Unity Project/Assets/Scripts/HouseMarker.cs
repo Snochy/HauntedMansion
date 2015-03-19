@@ -79,7 +79,7 @@ public class HouseMarker : MonoBehaviour {
 						{
 							if(door.tag == "Door" && foundConnection)
 							{
-								door.gameObject.AddComponent("BoxCollider");
+								door.gameObject.AddComponent<BoxCollider>();
 								door.GetComponent<BoxCollider>().size = new Vector3(60,300,300);
 							}
 						}
@@ -114,7 +114,7 @@ public class HouseMarker : MonoBehaviour {
 						{
 							if(door.tag == "Door" && foundConnection)
 							{
-								door.gameObject.AddComponent("BoxCollider");
+								door.gameObject.AddComponent<BoxCollider>();
 								door.GetComponent<BoxCollider>().size = new Vector3(60,300,300);
 							}
 						}

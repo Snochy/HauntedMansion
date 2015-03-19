@@ -8,8 +8,8 @@ public class DoorCollider : MonoBehaviour {
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in players)
 		{
-			if(transform.collider != null)
-				Physics.IgnoreCollision(transform.collider, player.transform.collider);
+			if(transform.GetComponent<Collider>() != null)
+				Physics.IgnoreCollision(transform.GetComponent<Collider>(), player.transform.GetComponent<Collider>());
 		}
 	}
 }
