@@ -24,11 +24,14 @@ public class Character_Movement : MonoBehaviour {
 		{	
 			float forward;
 
-			if (Input.GetMouseButton(0) && Input.GetMouseButton(1))
-				forward = 1;
-			else forward = Input.GetAxis("Vertical");
+            if (Input.GetMouseButton(0) && Input.GetMouseButton(1))
+            {
+                transform.rotation = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0);
+                forward = 1;
+            }
+            else forward = Input.GetAxis("Vertical");
 
-            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, forward);			
+            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, forward);
             moveDirection = transform.TransformDirection(moveDirection);
             moveDirection *= speed;
 			

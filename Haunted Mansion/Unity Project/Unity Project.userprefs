@@ -1,8 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="C:\Projects\Haunted Mansion\Unity Project\Assets\Scripts\HouseMarker.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Character_Movement.cs">
     <Files>
-      <File FileName="C:\Projects\Haunted Mansion\Unity Project\Assets\Scripts\HouseMarker.cs" Line="94" Column="30" />
+      <File FileName="Assets\Scripts\Character_Movement.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

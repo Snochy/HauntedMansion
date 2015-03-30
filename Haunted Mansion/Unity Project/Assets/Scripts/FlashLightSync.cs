@@ -4,6 +4,8 @@ using System.Collections;
 public class FlashLightSync : MonoBehaviour {
 
 	public Transform flashlight;
+    public Transform cameraFacingSync;
+    public Vector3 point;
 
 	public LayerMask layerMask;
 
@@ -13,6 +15,8 @@ public class FlashLightSync : MonoBehaviour {
 			if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity,layerMask))
 			{
 				flashlight.LookAt(hit.point);
+                //point = hit.point;
 			}
+
 	}
 }

@@ -52,6 +52,14 @@
      <Compile Include="Assets\Scripts\FlashLightSync.cs" />
      <Compile Include="Assets\Scripts\GUI_Handler.cs" />
      <Compile Include="Assets\Scripts\HouseMarker.cs" />
+     <Compile Include="Assets\Scripts\HouseScripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\HouseScripts\IntVector2.cs" />
+     <Compile Include="Assets\Scripts\HouseScripts\Maze.cs" />
+     <Compile Include="Assets\Scripts\HouseScripts\MazeCell.cs" />
+     <Compile Include="Assets\Scripts\HouseScripts\MazeCellEdge.cs" />
+     <Compile Include="Assets\Scripts\HouseScripts\MazeDirection.cs" />
+     <Compile Include="Assets\Scripts\HouseScripts\MazePassage.cs" />
+     <Compile Include="Assets\Scripts\HouseScripts\MazeWall.cs" />
      <Compile Include="Assets\Scripts\InGameGuI.cs" />
      <Compile Include="Assets\Scripts\MenuLightsHandler.cs" />
      <Compile Include="Assets\Scripts\SoundPlayer.cs" />
