@@ -9,6 +9,7 @@ public class Maze : MonoBehaviour {
     public MazeCell cellPrefab;
     public MazePassage passagePrefab;
     public MazeWall wallPrefab;
+    public GameObject mainHall;
 
     private MazeCell[,] cells;
 
@@ -34,6 +35,7 @@ public class Maze : MonoBehaviour {
 
     private void DoFirstGenerationStep(List<MazeCell> activeCells)
     {
+		AddEntranceHall(activeCells);
         activeCells.Add(CreateCell(RandomCoordinates));
     }
 
@@ -75,7 +77,7 @@ public class Maze : MonoBehaviour {
 		newCell.name = "Room Cell " + coordinates.x + ", " + coordinates.z;
 		newCell.transform.parent = transform;
 		newCell.transform.localPosition =
-                new Vector3((coordinates.x - size.x * 0.5f + 0.5f) * 600, 0f, (coordinates.z - size.z * 0.5f + 0.5f) * 600);
+                new Vector3((coordinates.x - size.x * 0.5f) * 600, 0f, (coordinates.z - size.z * 0.5f) * 600);
 		return newCell;
 	}
 
@@ -109,5 +111,14 @@ public class Maze : MonoBehaviour {
     public bool ContainsCoordinates(IntVector2 coordinate)
     {
         return coordinate.x >= 0 && coordinate.x < size.x && coordinate.z >= 0 && coordinate.z < size.z;
+    }
+    
+	private void AddEntranceHall(List<MazeCell> activeCells)
+    {
+    	int halfX = size.x / 2;
+    	int halfZ = size.z / 2;
+    	for(int x = 2; x >= 0; x--)
+    		for(int z = 2; z >= 0; z--)
+				activeCells.Add(CreateCell(new IntVector2(halfX - x,halfZ - z)));
     }
 }
