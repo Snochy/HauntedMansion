@@ -24,11 +24,11 @@ public static class MazeDirections
     }
 
 	//A list of vector2 that relate to directions
-    private static IntVector2[] vectors = {
-		new IntVector2(0, 1),
-		new IntVector2(1, 0),
-		new IntVector2(0, -1),
-		new IntVector2(-1, 0)
+    private static IntVector3[] vectors = {
+		new IntVector3(0, 0, 1),
+		new IntVector3(1, 0, 0),
+		new IntVector3(0, 0 ,-1),
+		new IntVector3(-1,0 , 0)
 	};
 
 	//A list of the opposites of the current directions
@@ -46,7 +46,7 @@ public static class MazeDirections
     }
 
 	//Turns direction into a Vector 2 int
-    public static IntVector2 ToIntVector2(this MazeDirection direction)
+    public static IntVector3 ToIntVector2(this MazeDirection direction)
     {
         return vectors[(int)direction];
     }

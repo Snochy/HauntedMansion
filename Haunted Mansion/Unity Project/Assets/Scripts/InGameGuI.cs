@@ -22,6 +22,8 @@ public class InGameGuI : MonoBehaviour {
 
 	public Color guiColor = Color.clear;
 
+    public GameObject gameHandler;
+
 	GUIContent button01Content = new GUIContent();
 	GUIContent button02Content = new GUIContent();
 
@@ -43,6 +45,8 @@ public class InGameGuI : MonoBehaviour {
 
 			if(GUI.Button(new Rect(Screen.width * .3f,Screen.height * .65f, 100,50),"Close"))
 			{
+                gameHandler.GetComponent<GameManager>().mainCharacter.SetActive(true);
+                gameHandler.GetComponent<GameManager>().LoadAssets();
 				controls = false;
 			}
 		}

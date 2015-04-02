@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 
     public Maze mazePrefab;
     private Maze mazeInstance;
+    public GameObject mainCharacter;
 
 	//Begins with starting the game
     void Start()
@@ -20,6 +21,19 @@ public class GameManager : MonoBehaviour
         {
             RestartGame();
         }
+
+    }
+
+    public void LoadAssets()
+    {
+
+        transform.GetComponent<InputRooms>().ReplaceRooms();
+        transform.GetComponent<InputRooms>().ReplaceRoomsUpper();
+    }
+
+    public Maze GetMaze()
+    {
+        return mazeInstance;
     }
 
 	//Makes instance of Maze and generates maze within Maze
