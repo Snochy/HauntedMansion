@@ -7,6 +7,7 @@ public class SoundPlayer : MonoBehaviour {
 	public AudioSource music;
 
 	public AudioSource click;
+    public AudioSource book;
 	
 	public void PlayAudio(string a)
 	{
@@ -16,5 +17,7 @@ public class SoundPlayer : MonoBehaviour {
 			step.Stop();
 		if(a == "click")
 			click.Play ();
+        if (a == "book")
+            book.Play();
 	}
 }

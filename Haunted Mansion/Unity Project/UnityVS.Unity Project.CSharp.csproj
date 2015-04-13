@@ -56,12 +56,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Character_Movement.cs" />
-    <Compile Include="Assets\Scripts\DoorChecker01.cs" />
-    <Compile Include="Assets\Scripts\DoorCollider.cs" />
+    <Compile Include="Assets\Scripts\CharacterScripts\Character_Movement.cs" />
+    <Compile Include="Assets\Scripts\CharacterScripts\InteractingController.cs" />
     <Compile Include="Assets\Scripts\FlashLightSync.cs" />
     <Compile Include="Assets\Scripts\GUI_Handler.cs" />
-    <Compile Include="Assets\Scripts\HouseMarker.cs" />
+    <Compile Include="Assets\Scripts\HauntedTeddy.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\EdgeTypes.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\InputRooms.cs" />
@@ -72,11 +71,19 @@
     <Compile Include="Assets\Scripts\HouseScripts\MazeDirection.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\MazePassage.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\MazeWall.cs" />
+    <Compile Include="Assets\Scripts\HouseScripts\RoomControllor.cs" />
+    <Compile Include="Assets\Scripts\HouseScripts\RoomDataBase.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\RoomType.cs" />
+    <Compile Include="Assets\Scripts\HouseScripts\RandomRoomSound.cs" />
     <Compile Include="Assets\Scripts\InGameGuI.cs" />
+    <Compile Include="Assets\Scripts\ItemScripts\ItemHighLighter.cs" />
     <Compile Include="Assets\Scripts\MenuLightsHandler.cs" />
+    <Compile Include="Assets\Scripts\HouseScripts\PropsSpawner.cs" />
     <Compile Include="Assets\Scripts\SoundPlayer.cs" />
     <Compile Include="Assets\Scripts\cameraDriver.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Props\ItemMaterials\ItemGlow.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2010\UnityVS.CSharp.targets" />
 </Project>

@@ -8,6 +8,12 @@ public class GameManager : MonoBehaviour
     private Maze mazeInstance;
     public GameObject mainCharacter;
 
+    public GameObject teddyHaunt;
+
+    public bool isHouseBuilt;
+    public bool propsSpawned;
+    public bool hauntstart;
+
 	//Begins with starting the game
     void Start()
     {
@@ -22,13 +28,29 @@ public class GameManager : MonoBehaviour
             RestartGame();
         }
 
+        if (isHouseBuilt)
+        {
+            gameObject.GetComponent<InGameGuI>().isHouseReady = true;
+        }
+
+        if (hauntstart)
+        {
+            GameObject haunt = Instantiate(teddyHaunt) as GameObject;
+            haunt.transform.parent = this.transform.parent;
+            hauntstart = false;
+        }
+
+        Physics.gravity = new Vector3(0, -600.0F, 0);
     }
 
     public void LoadAssets()
     {
+            transform.GetComponent<InputRooms>().ReplaceRooms();
+            transform.GetComponent<InputRooms>().ReplaceRoomsUpper();
+            transform.GetComponent<InputRooms>().ReplaceRoomsLower();
+            GetComponent<PropsSpawner>().AddProps();
+            hauntstart = true;
 
-        transform.GetComponent<InputRooms>().ReplaceRooms();
-        transform.GetComponent<InputRooms>().ReplaceRoomsUpper();
     }
 
     public Maze GetMaze()

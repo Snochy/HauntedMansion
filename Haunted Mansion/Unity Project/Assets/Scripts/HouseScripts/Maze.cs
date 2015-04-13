@@ -13,6 +13,7 @@ public class Maze : MonoBehaviour {
 
     private MazeCell[,] groundCells;
     private MazeCell[,] upperCells;
+    private MazeCell[,] basementCells;
 
     public float generationStepDelay;
 
@@ -25,6 +26,11 @@ public class Maze : MonoBehaviour {
     {
         return upperCells;
     }
+
+    public MazeCell[,] GetMazeCellsBasement()
+    {
+        return basementCells;
+    }
 	
 	//Has step delay
 	//Makes cells array equal to the demenions
@@ -36,15 +42,30 @@ public class Maze : MonoBehaviour {
         WaitForSeconds delay = new WaitForSeconds(generationStepDelay);
         groundCells = new MazeCell[size.x, size.z];
         upperCells = new MazeCell[size.x, size.z];
+        basementCells = new MazeCell[size.x, size.z];
+
         List<MazeCell> activeGroundCells = new List<MazeCell>();
         List<MazeCell> activeUpperCells = new List<MazeCell>();
+        List<MazeCell> activeBasementCells = new List<MazeCell>();
+
         DoFirstGenerationStep(activeGroundCells);
         DoFirstGenerationStepUpper(activeUpperCells);
-        while (activeGroundCells.Count > 0)
+        DoFirstGenerationStepBasement(activeUpperCells);
+
+        while (activeGroundCells.Count > 0 || activeUpperCells.Count > 0 || activeBasementCells.Count > 0)
         {
             yield return delay;
-            DoNextGenerationStep(activeUpperCells);
-            DoNextGenerationStep(activeGroundCells);
+            if(activeUpperCells.Count > 0)
+             DoNextGenerationStep(activeUpperCells);
+            if (activeGroundCells.Count > 0)
+             DoNextGenerationStep(activeGroundCells);
+            if (activeBasementCells.Count > 0)
+             DoNextGenerationStep(activeBasementCells);
+        }
+
+        if (activeGroundCells.Count == 0 && activeUpperCells.Count == 0 && activeBasementCells.Count == 0)
+        {
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().isHouseBuilt = true;
         }
     }
 
@@ -60,6 +81,11 @@ public class Maze : MonoBehaviour {
     {
         AddEntranceHallUpper(activeCells);
         activeCells.Add(CreateCell(RandomCoordinatesUpper));
+    }
+
+    private void DoFirstGenerationStepBasement(List<MazeCell> activeCells)
+    {
+        activeCells.Add(CreateCell(RandomCoordinatesBasement));
     }
 
 	//Called after the First step, also take sin list
@@ -94,6 +120,8 @@ public class Maze : MonoBehaviour {
                 neighbor = GetCell(coordinates);
             if (coordinates.y == 1)
                 neighbor = GetCellUpper(coordinates);
+            if (coordinates.y == -1)
+                neighbor = GetCellBasement(coordinates);
 
 			//If no cell is at neigboring location
 			//Create a maze cell at negboring location
@@ -140,6 +168,8 @@ public class Maze : MonoBehaviour {
 		    groundCells[coordinates.x, coordinates.z] = newCell;
         if (coordinates.y == 1)
             upperCells[coordinates.x, coordinates.z] = newCell;
+        if (coordinates.y == -1)
+            basementCells[coordinates.x, coordinates.z] = newCell;
 		newCell.coordinates = coordinates;
 		newCell.name = "Room Cell " + coordinates.x + ", " + coordinates.y + ", " + coordinates.z;
 		newCell.transform.parent = transform;
@@ -155,6 +185,8 @@ public class Maze : MonoBehaviour {
             groundCells[coordinates.x, coordinates.z] = newCell;
         if (coordinates.y == 1)
             upperCells[coordinates.x, coordinates.z] = newCell;
+        if (coordinates.y == -1)
+            basementCells[coordinates.x, coordinates.z] = newCell;
         newCell.coordinates = coordinates;
         newCell.name = "Room Cell " + coordinates.x + ", " + coordinates.y + ", " + coordinates.z;
         newCell.transform.parent = transform;
@@ -174,6 +206,12 @@ public class Maze : MonoBehaviour {
     public MazeCell GetCellUpper(IntVector3 coordinates)
     {
         return upperCells[coordinates.x, coordinates.z];
+    }
+
+    //Told to get the Mazecell at coords
+    public MazeCell GetCellBasement(IntVector3 coordinates)
+    {
+        return basementCells[coordinates.x, coordinates.z];
     }
 
 	//Make a passage between two cells
@@ -221,7 +259,14 @@ public class Maze : MonoBehaviour {
     {
         get
         {
-            return new IntVector3(Random.Range(0, size.x), 0, Random.Range(0, size.z));
+            IntVector3 temp;
+            do
+            {
+                temp = new IntVector3(Random.Range(0, size.x), 0, Random.Range(0, size.z));
+            }
+            while(groundCells[temp.x,temp.z] != null);
+
+            return temp;
         }
     }
 
@@ -230,7 +275,29 @@ public class Maze : MonoBehaviour {
     {
         get
         {
-            return new IntVector3(Random.Range(0, size.x), 1, Random.Range(0, size.z));
+            IntVector3 temp;
+            do
+            {
+                temp = new IntVector3(Random.Range(0, size.x),1, Random.Range(0, size.z));
+            }
+            while(upperCells[temp.x,temp.z] != null);
+
+            return temp;
+        }
+    }
+
+    public IntVector3 RandomCoordinatesBasement
+    {
+        get
+        {
+            IntVector3 temp;
+            do
+            {
+                temp = new IntVector3(Random.Range(0, size.x), -1, Random.Range(0, size.z));
+            }
+            while(basementCells[temp.x,temp.z] != null);
+
+            return temp;
         }
     }
 

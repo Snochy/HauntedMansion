@@ -10,12 +10,16 @@ public class InputRooms : MonoBehaviour
     public GameObject triRoom;
     public GameObject quadRoom;
     public GameObject entranceHall;
+    public RoomDataBase roomDataBase;
+
+    public GameObject soundPrefab;
 
     public void ReplaceRooms()
     {
         MazeCell[,] cells = new MazeCell[transform.GetComponent<GameManager>().GetMaze().size.x, transform.GetComponent<GameManager>().GetMaze().size.z];
         cells = transform.GetComponent<GameManager>().GetMaze().GetMazeCells();
 
+        roomDataBase.SetDemi(transform.GetComponent<GameManager>().GetMaze().size.x, transform.GetComponent<GameManager>().GetMaze().size.z);
         float sizeX = transform.GetComponent<GameManager>().GetMaze().size.x /2f ;
         float sizeZ = transform.GetComponent<GameManager>().GetMaze().size.z /2f ;
 
@@ -43,11 +47,17 @@ public class InputRooms : MonoBehaviour
             if (mazeCell.roomType == RoomType.Single)
             {
                 GameObject newRoom = Instantiate(singleRoom) as GameObject;
-                newRoom.name = "Single Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
+                newRoom.name = "Single Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.x + ", "+ mazeCell.coordinates.z;
                 newRoom.transform.parent = mazeCell.transform.parent;
                 newRoom.transform.localPosition =
                         new Vector3((mazeCell.coordinates.x - transform.GetComponent<GameManager>().GetMaze().size.x * 0.5f) * 600, 0f, (mazeCell.coordinates.z - transform.GetComponent<GameManager>().GetMaze().size.z * 0.5f) * 600);
                 newRoom.transform.localRotation = mazeCell.cellFacing.ToRotation();
+
+                roomDataBase.AddGroundCell(newRoom, mazeCell.coordinates.x, mazeCell.coordinates.z);
+
+                GameObject soundObject = Instantiate(soundPrefab) as GameObject;
+                soundObject.transform.parent = newRoom.transform.Find("RoomCenter");
+                soundObject.transform.localPosition = Vector3.zero;
                 Destroy(mazeCell.gameObject);
             }
 
@@ -55,11 +65,17 @@ public class InputRooms : MonoBehaviour
             if (mazeCell.roomType == RoomType.ThreeWay)
             {
                 GameObject newRoom = Instantiate(triRoom) as GameObject;
-                newRoom.name = "Threeway Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
+                newRoom.name = "Threeway Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.x + ", "+ mazeCell.coordinates.z;
                 newRoom.transform.parent = mazeCell.transform.parent;
                 newRoom.transform.localPosition =
                         new Vector3((mazeCell.coordinates.x - transform.GetComponent<GameManager>().GetMaze().size.x * 0.5f) * 600, 0f, (mazeCell.coordinates.z - transform.GetComponent<GameManager>().GetMaze().size.z * 0.5f) * 600);
                 newRoom.transform.localRotation = mazeCell.cellFacing.ToRotation();
+
+                roomDataBase.AddGroundCell(newRoom, mazeCell.coordinates.x, mazeCell.coordinates.z);
+
+                GameObject soundObject = Instantiate(soundPrefab) as GameObject;
+                soundObject.transform.parent = newRoom.transform.Find("RoomCenter");
+                soundObject.transform.localPosition = Vector3.zero;
                 Destroy(mazeCell.gameObject);
             }
 
@@ -67,11 +83,17 @@ public class InputRooms : MonoBehaviour
             if (mazeCell.roomType == RoomType.FourWay)
             {
                 GameObject newRoom = Instantiate(quadRoom) as GameObject;
-                newRoom.name = "Fourway Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
+                newRoom.name = "Fourway Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
                 newRoom.transform.parent = mazeCell.transform.parent;
                 newRoom.transform.localPosition =
                         new Vector3((mazeCell.coordinates.x - transform.GetComponent<GameManager>().GetMaze().size.x * 0.5f) * 600, 0f, (mazeCell.coordinates.z - transform.GetComponent<GameManager>().GetMaze().size.z * 0.5f) * 600);
                 newRoom.transform.localRotation = mazeCell.cellFacing.ToRotation();
+
+                roomDataBase.AddGroundCell(newRoom, mazeCell.coordinates.x, mazeCell.coordinates.z);
+
+                GameObject soundObject = Instantiate(soundPrefab) as GameObject;
+                soundObject.transform.parent = newRoom.transform.Find("RoomCenter");
+                soundObject.transform.localPosition = Vector3.zero;
                 Destroy(mazeCell.gameObject);
             }
 
@@ -79,11 +101,17 @@ public class InputRooms : MonoBehaviour
             if (mazeCell.roomType == RoomType.Corner)
             {
                 GameObject newRoom = Instantiate(doubleCornerRoom) as GameObject;
-                newRoom.name = "Corner Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
+                newRoom.name = "Corner Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
                 newRoom.transform.parent = mazeCell.transform.parent;
                 newRoom.transform.localPosition =
                         new Vector3((mazeCell.coordinates.x - transform.GetComponent<GameManager>().GetMaze().size.x * 0.5f) * 600, 0f, (mazeCell.coordinates.z - transform.GetComponent<GameManager>().GetMaze().size.z * 0.5f) * 600);
                 newRoom.transform.localRotation = mazeCell.cellFacing.ToRotation();
+
+                roomDataBase.AddGroundCell(newRoom, mazeCell.coordinates.x, mazeCell.coordinates.z);
+
+                GameObject soundObject = Instantiate(soundPrefab) as GameObject;
+                soundObject.transform.parent = newRoom.transform.Find("RoomCenter");
+                soundObject.transform.localPosition = Vector3.zero;
                 Destroy(mazeCell.gameObject);
             }
 
@@ -91,11 +119,17 @@ public class InputRooms : MonoBehaviour
             if (mazeCell.roomType == RoomType.Cross)
             {
                 GameObject newRoom = Instantiate(doubleCrossRoom) as GameObject;
-                newRoom.name = "Cross Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
+                newRoom.name = "Cross Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
                 newRoom.transform.parent = mazeCell.transform.parent;
                 newRoom.transform.localPosition =
                         new Vector3((mazeCell.coordinates.x - transform.GetComponent<GameManager>().GetMaze().size.x * 0.5f) * 600, 0f, (mazeCell.coordinates.z - transform.GetComponent<GameManager>().GetMaze().size.z * 0.5f) * 600);
                 newRoom.transform.localRotation = mazeCell.cellFacing.ToRotation();
+
+                roomDataBase.AddGroundCell(newRoom, mazeCell.coordinates.x, mazeCell.coordinates.z);
+
+                GameObject soundObject = Instantiate(soundPrefab) as GameObject;
+                soundObject.transform.parent = newRoom.transform.Find("RoomCenter");
+                soundObject.transform.localPosition = Vector3.zero;
                 Destroy(mazeCell.gameObject);
             }
     }
@@ -115,11 +149,17 @@ public class InputRooms : MonoBehaviour
             if (mazeCell.roomType == RoomType.Single)
             {
                 GameObject newRoom = Instantiate(singleRoom) as GameObject;
-                newRoom.name = "Single Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
+                newRoom.name = "Single Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
                 newRoom.transform.parent = mazeCell.transform.parent;
                 newRoom.transform.localPosition =
                         new Vector3((mazeCell.coordinates.x - transform.GetComponent<GameManager>().GetMaze().size.x * 0.5f) * 600, 337.4f, (mazeCell.coordinates.z - transform.GetComponent<GameManager>().GetMaze().size.z * 0.5f) * 600);
                 newRoom.transform.localRotation = mazeCell.cellFacing.ToRotation();
+
+                roomDataBase.AddUpperCell(newRoom, mazeCell.coordinates.x, mazeCell.coordinates.z);
+
+                GameObject soundObject = Instantiate(soundPrefab) as GameObject;
+                soundObject.transform.parent = newRoom.transform.Find("RoomCenter");
+                soundObject.transform.localPosition = Vector3.zero;
                 Destroy(mazeCell.gameObject);
             }
 
@@ -127,11 +167,17 @@ public class InputRooms : MonoBehaviour
             if (mazeCell.roomType == RoomType.ThreeWay)
             {
                 GameObject newRoom = Instantiate(triRoom) as GameObject;
-                newRoom.name = "Threeway Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
+                newRoom.name = "Threeway Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
                 newRoom.transform.parent = mazeCell.transform.parent;
                 newRoom.transform.localPosition =
                         new Vector3((mazeCell.coordinates.x - transform.GetComponent<GameManager>().GetMaze().size.x * 0.5f) * 600, 337.4f, (mazeCell.coordinates.z - transform.GetComponent<GameManager>().GetMaze().size.z * 0.5f) * 600);
                 newRoom.transform.localRotation = mazeCell.cellFacing.ToRotation();
+
+                roomDataBase.AddUpperCell(newRoom, mazeCell.coordinates.x, mazeCell.coordinates.z);
+
+                GameObject soundObject = Instantiate(soundPrefab) as GameObject;
+                soundObject.transform.parent = newRoom.transform.Find("RoomCenter");
+                soundObject.transform.localPosition = Vector3.zero;
                 Destroy(mazeCell.gameObject);
             }
 
@@ -139,11 +185,17 @@ public class InputRooms : MonoBehaviour
             if (mazeCell.roomType == RoomType.FourWay)
             {
                 GameObject newRoom = Instantiate(quadRoom) as GameObject;
-                newRoom.name = "Fourway Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
+                newRoom.name = "Fourway Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
                 newRoom.transform.parent = mazeCell.transform.parent;
                 newRoom.transform.localPosition =
                         new Vector3((mazeCell.coordinates.x - transform.GetComponent<GameManager>().GetMaze().size.x * 0.5f) * 600, 337.4f, (mazeCell.coordinates.z - transform.GetComponent<GameManager>().GetMaze().size.z * 0.5f) * 600);
                 newRoom.transform.localRotation = mazeCell.cellFacing.ToRotation();
+
+                roomDataBase.AddUpperCell(newRoom, mazeCell.coordinates.x, mazeCell.coordinates.z);
+
+                GameObject soundObject = Instantiate(soundPrefab) as GameObject;
+                soundObject.transform.parent = newRoom.transform.Find("RoomCenter");
+                soundObject.transform.localPosition = Vector3.zero;
                 Destroy(mazeCell.gameObject);
             }
 
@@ -151,11 +203,17 @@ public class InputRooms : MonoBehaviour
             if (mazeCell.roomType == RoomType.Corner)
             {
                 GameObject newRoom = Instantiate(doubleCornerRoom) as GameObject;
-                newRoom.name = "Corner Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
+                newRoom.name = "Corner Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
                 newRoom.transform.parent = mazeCell.transform.parent;
                 newRoom.transform.localPosition =
                         new Vector3((mazeCell.coordinates.x - transform.GetComponent<GameManager>().GetMaze().size.x * 0.5f) * 600, 337.4f, (mazeCell.coordinates.z - transform.GetComponent<GameManager>().GetMaze().size.z * 0.5f) * 600);
                 newRoom.transform.localRotation = mazeCell.cellFacing.ToRotation();
+
+                roomDataBase.AddUpperCell(newRoom, mazeCell.coordinates.x, mazeCell.coordinates.z);
+
+                GameObject soundObject = Instantiate(soundPrefab) as GameObject;
+                soundObject.transform.parent = newRoom.transform.Find("RoomCenter");
+                soundObject.transform.localPosition = Vector3.zero;
                 Destroy(mazeCell.gameObject);
             }
 
@@ -163,11 +221,113 @@ public class InputRooms : MonoBehaviour
             if (mazeCell.roomType == RoomType.Cross)
             {
                 GameObject newRoom = Instantiate(doubleCrossRoom) as GameObject;
-                newRoom.name = "Cross Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
+                newRoom.name = "Cross Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
                 newRoom.transform.parent = mazeCell.transform.parent;
                 newRoom.transform.localPosition =
                         new Vector3((mazeCell.coordinates.x - transform.GetComponent<GameManager>().GetMaze().size.x * 0.5f) * 600, 337.4f, (mazeCell.coordinates.z - transform.GetComponent<GameManager>().GetMaze().size.z * 0.5f) * 600);
                 newRoom.transform.localRotation = mazeCell.cellFacing.ToRotation();
+
+                roomDataBase.AddUpperCell(newRoom, mazeCell.coordinates.x, mazeCell.coordinates.z);
+
+                GameObject soundObject = Instantiate(soundPrefab) as GameObject;
+                soundObject.transform.parent = newRoom.transform.Find("RoomCenter");
+                soundObject.transform.localPosition = Vector3.zero;
+                Destroy(mazeCell.gameObject);
+            }
+    }
+
+    public void ReplaceRoomsLower()
+    {
+        MazeCell[,] cells = new MazeCell[transform.GetComponent<GameManager>().GetMaze().size.x, transform.GetComponent<GameManager>().GetMaze().size.z];
+        cells = transform.GetComponent<GameManager>().GetMaze().GetMazeCellsBasement();
+
+        foreach (MazeCell mazeCell in cells)
+            if (mazeCell.roomType == RoomType.Single)
+            {
+                GameObject newRoom = Instantiate(singleRoom) as GameObject;
+                newRoom.name = "Single Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
+                newRoom.transform.parent = mazeCell.transform.parent;
+                newRoom.transform.localPosition =
+                        new Vector3((mazeCell.coordinates.x - transform.GetComponent<GameManager>().GetMaze().size.x * 0.5f) * 600, -337.4f, (mazeCell.coordinates.z - transform.GetComponent<GameManager>().GetMaze().size.z * 0.5f) * 600);
+                newRoom.transform.localRotation = mazeCell.cellFacing.ToRotation();
+
+                roomDataBase.AddBasementCell(newRoom, mazeCell.coordinates.x, mazeCell.coordinates.z);
+
+                GameObject soundObject = Instantiate(soundPrefab) as GameObject;
+                soundObject.transform.parent = newRoom.transform.Find("RoomCenter");
+                soundObject.transform.localPosition = Vector3.zero;
+                Destroy(mazeCell.gameObject);
+            }
+
+        foreach (MazeCell mazeCell in cells)
+            if (mazeCell.roomType == RoomType.ThreeWay)
+            {
+                GameObject newRoom = Instantiate(triRoom) as GameObject;
+                newRoom.name = "Threeway Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
+                newRoom.transform.parent = mazeCell.transform.parent;
+                newRoom.transform.localPosition =
+                        new Vector3((mazeCell.coordinates.x - transform.GetComponent<GameManager>().GetMaze().size.x * 0.5f) * 600, -337.4f, (mazeCell.coordinates.z - transform.GetComponent<GameManager>().GetMaze().size.z * 0.5f) * 600);
+                newRoom.transform.localRotation = mazeCell.cellFacing.ToRotation();
+
+                roomDataBase.AddBasementCell(newRoom, mazeCell.coordinates.x, mazeCell.coordinates.z);
+
+                GameObject soundObject = Instantiate(soundPrefab) as GameObject;
+                soundObject.transform.parent = newRoom.transform.Find("RoomCenter");
+                soundObject.transform.localPosition = Vector3.zero;
+                Destroy(mazeCell.gameObject);
+            }
+
+        foreach (MazeCell mazeCell in cells)
+            if (mazeCell.roomType == RoomType.FourWay)
+            {
+                GameObject newRoom = Instantiate(quadRoom) as GameObject;
+                newRoom.name = "Fourway Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
+                newRoom.transform.parent = mazeCell.transform.parent;
+                newRoom.transform.localPosition =
+                        new Vector3((mazeCell.coordinates.x - transform.GetComponent<GameManager>().GetMaze().size.x * 0.5f) * 600, -337.4f, (mazeCell.coordinates.z - transform.GetComponent<GameManager>().GetMaze().size.z * 0.5f) * 600);
+                newRoom.transform.localRotation = mazeCell.cellFacing.ToRotation();
+
+                roomDataBase.AddBasementCell(newRoom, mazeCell.coordinates.x, mazeCell.coordinates.z);
+
+                GameObject soundObject = Instantiate(soundPrefab) as GameObject;
+                soundObject.transform.parent = newRoom.transform.Find("RoomCenter");
+                soundObject.transform.localPosition = Vector3.zero;
+                Destroy(mazeCell.gameObject);
+            }
+
+        foreach (MazeCell mazeCell in cells)
+            if (mazeCell.roomType == RoomType.Corner)
+            {
+                GameObject newRoom = Instantiate(doubleCornerRoom) as GameObject;
+                newRoom.name = "Corner Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
+                newRoom.transform.parent = mazeCell.transform.parent;
+                newRoom.transform.localPosition =
+                        new Vector3((mazeCell.coordinates.x - transform.GetComponent<GameManager>().GetMaze().size.x * 0.5f) * 600, -337.4f, (mazeCell.coordinates.z - transform.GetComponent<GameManager>().GetMaze().size.z * 0.5f) * 600);
+                newRoom.transform.localRotation = mazeCell.cellFacing.ToRotation();
+
+                roomDataBase.AddBasementCell(newRoom, mazeCell.coordinates.x, mazeCell.coordinates.z);
+
+                GameObject soundObject = Instantiate(soundPrefab) as GameObject;
+                soundObject.transform.parent = newRoom.transform.Find("RoomCenter");
+                soundObject.transform.localPosition = Vector3.zero;
+                Destroy(mazeCell.gameObject);
+            }
+
+        foreach (MazeCell mazeCell in cells)
+            if (mazeCell.roomType == RoomType.Cross)
+            {
+                GameObject newRoom = Instantiate(doubleCrossRoom) as GameObject;
+                newRoom.name = "Cross Room " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.x + ", " + mazeCell.coordinates.z;
+                newRoom.transform.parent = mazeCell.transform.parent;
+                newRoom.transform.localPosition =
+                        new Vector3((mazeCell.coordinates.x - transform.GetComponent<GameManager>().GetMaze().size.x * 0.5f) * 600, -337.4f, (mazeCell.coordinates.z - transform.GetComponent<GameManager>().GetMaze().size.z * 0.5f) * 600);
+                newRoom.transform.localRotation = mazeCell.cellFacing.ToRotation();
+
+                roomDataBase.AddBasementCell(newRoom, mazeCell.coordinates.x, mazeCell.coordinates.z);
+
+                GameObject soundObject = Instantiate(soundPrefab) as GameObject;
+                soundObject.transform.parent = newRoom.transform.Find("RoomCenter");
+                soundObject.transform.localPosition = Vector3.zero;
                 Destroy(mazeCell.gameObject);
             }
     }

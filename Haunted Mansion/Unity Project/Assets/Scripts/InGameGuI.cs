@@ -20,6 +20,8 @@ public class InGameGuI : MonoBehaviour {
 
 	private bool isFading = false;
 
+    public bool isHouseReady = false;
+
 	public Color guiColor = Color.clear;
 
     public GameObject gameHandler;
@@ -43,12 +45,13 @@ public class InGameGuI : MonoBehaviour {
 
 			GUI.Label(new Rect(Screen.width * .6f,Screen.height * .3f, 200,200),"Ues W,A,S,D to move your character. \n\nUse Q, E, to strafe. \n\nC to turn on and off your flashlight.\n\nSPACE to jump.\n\nClick and hold LEFT or RIGHT MOUSE buttons to look around.");
 
-			if(GUI.Button(new Rect(Screen.width * .3f,Screen.height * .65f, 100,50),"Close"))
-			{
-                gameHandler.GetComponent<GameManager>().mainCharacter.SetActive(true);
-                gameHandler.GetComponent<GameManager>().LoadAssets();
-				controls = false;
-			}
+            if(isHouseReady)
+			    if(GUI.Button(new Rect(Screen.width * .3f,Screen.height * .65f, 100,50),"Close"))
+			    {
+                    gameHandler.GetComponent<GameManager>().mainCharacter.SetActive(true);
+                    gameHandler.GetComponent<GameManager>().LoadAssets();
+				    controls = false;
+			    }
 		}
 
 		else{
