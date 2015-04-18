@@ -7,16 +7,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{5AAC8DBB-04FC-1399-ECF9-1DE1930E2505}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.0.0f4</UnityVersion>
@@ -57,10 +55,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CharacterScripts\Character_Movement.cs" />
-    <Compile Include="Assets\Scripts\CharacterScripts\InteractingController.cs" />
-    <Compile Include="Assets\Scripts\FlashLightSync.cs" />
-    <Compile Include="Assets\Scripts\GUI_Handler.cs" />
-    <Compile Include="Assets\Scripts\HauntedTeddy.cs" />
+    <Compile Include="Assets\Scripts\CharacterScripts\FlashLightSync.cs" />
+    <Compile Include="Assets\Scripts\CharacterScripts\cameraDriver.cs" />
+    <Compile Include="Assets\Scripts\GUIs\GUI_Handler.cs" />
+    <Compile Include="Assets\Scripts\GUIs\InGameGuI.cs" />
+    <Compile Include="Assets\Scripts\Haunts\HauntedTeddy.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\EdgeTypes.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\InputRooms.cs" />
@@ -71,19 +70,17 @@
     <Compile Include="Assets\Scripts\HouseScripts\MazeDirection.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\MazePassage.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\MazeWall.cs" />
+    <Compile Include="Assets\Scripts\HouseScripts\PropsSpawner.cs" />
+    <Compile Include="Assets\Scripts\HouseScripts\RandomRoomSound.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\RoomControllor.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\RoomDataBase.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\RoomType.cs" />
-    <Compile Include="Assets\Scripts\HouseScripts\RandomRoomSound.cs" />
-    <Compile Include="Assets\Scripts\InGameGuI.cs" />
     <Compile Include="Assets\Scripts\ItemScripts\ItemHighLighter.cs" />
-    <Compile Include="Assets\Scripts\MenuLightsHandler.cs" />
-    <Compile Include="Assets\Scripts\HouseScripts\PropsSpawner.cs" />
-    <Compile Include="Assets\Scripts\SoundPlayer.cs" />
-    <Compile Include="Assets\Scripts\cameraDriver.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\MenuLightsHandler.cs" />
+    <Compile Include="Assets\Scripts\Sounds\SoundPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Props\ItemMaterials\ItemGlow.shader" />
+    <None Include="Assets\FBXModels\Props\PropShaders\ItemGlow.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2010\UnityVS.CSharp.targets" />
 </Project>

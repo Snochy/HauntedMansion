@@ -47,10 +47,11 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\CharacterScripts\Character_Movement.cs" />
-     <Compile Include="Assets\Scripts\CharacterScripts\InteractingController.cs" />
-     <Compile Include="Assets\Scripts\FlashLightSync.cs" />
-     <Compile Include="Assets\Scripts\GUI_Handler.cs" />
-     <Compile Include="Assets\Scripts\HauntedTeddy.cs" />
+     <Compile Include="Assets\Scripts\CharacterScripts\FlashLightSync.cs" />
+     <Compile Include="Assets\Scripts\CharacterScripts\cameraDriver.cs" />
+     <Compile Include="Assets\Scripts\GUIs\GUI_Handler.cs" />
+     <Compile Include="Assets\Scripts\GUIs\InGameGuI.cs" />
+     <Compile Include="Assets\Scripts\Haunts\HauntedTeddy.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\EdgeTypes.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\InputRooms.cs" />
@@ -66,12 +67,10 @@
      <Compile Include="Assets\Scripts\HouseScripts\RoomControllor.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\RoomDataBase.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\RoomType.cs" />
-     <Compile Include="Assets\Scripts\InGameGuI.cs" />
      <Compile Include="Assets\Scripts\ItemScripts\ItemHighLighter.cs" />
-     <Compile Include="Assets\Scripts\MenuLightsHandler.cs" />
-     <Compile Include="Assets\Scripts\SoundPlayer.cs" />
-     <Compile Include="Assets\Scripts\cameraDriver.cs" />
-     <None Include="Assets\Props\ItemMaterials\ItemGlow.shader" />
+     <Compile Include="Assets\Scripts\MainMenu\MenuLightsHandler.cs" />
+     <Compile Include="Assets\Scripts\Sounds\SoundPlayer.cs" />
+     <None Include="Assets\FBXModels\Props\PropShaders\ItemGlow.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
