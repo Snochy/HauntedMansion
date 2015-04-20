@@ -9,4 +9,5 @@ public enum RoomType
     FourWay,
     Single,
     EntranceHall,
+    Stairs,
 }

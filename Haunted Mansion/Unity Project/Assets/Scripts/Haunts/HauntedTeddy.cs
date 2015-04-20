@@ -3,13 +3,14 @@ using System.Collections;
 
 public class HauntedTeddy : MonoBehaviour
 {
-    public GameObject teddyBearGO;
+    private GameObject teddyBearGO;
 
     public GameObject database;
     
     void Start()
     {
         database = GameObject.FindGameObjectWithTag("GameDataBase");
+        teddyBearGO = Resources.Load("props/TeddyBear01") as GameObject;
         SpawnTeddies();
     }
 
@@ -19,7 +20,11 @@ public class HauntedTeddy : MonoBehaviour
         {
             GameObject teddyBear = Instantiate(teddyBearGO) as GameObject;
             teddyBear.name = "TeddyBear Ground " + i;
-            teddyBear.transform.parent = database.GetComponent<RoomDataBase>().groundCells[Random.Range(0, database.GetComponent<RoomDataBase>().demis.x), Random.Range(0, database.GetComponent<RoomDataBase>().demis.z)].transform;
+            IntVector3 temp = new IntVector3(Random.Range(0, database.GetComponent<RoomDataBase>().demis.x), Random.Range(0, database.GetComponent<RoomDataBase>().demis.z), 0);
+            while(database.GetComponent<RoomDataBase>().groundCells[temp.x,temp.y] == null)
+                temp = new IntVector3(Random.Range(0, database.GetComponent<RoomDataBase>().demis.x), Random.Range(0, database.GetComponent<RoomDataBase>().demis.z), 0);
+
+            teddyBear.transform.parent = database.GetComponent<RoomDataBase>().groundCells[temp.x,temp.y].transform;
             teddyBear.transform.rotation = Random.rotation;
             teddyBear.transform.localPosition =
                     new Vector3(Random.Range(-214, 214), Random.Range(17, 270), Random.Range(-214, 214));

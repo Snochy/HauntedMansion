@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
 	//Stops and restarts the generation
     private void RestartGame()
     {
+        isHouseBuilt = false;
         StopAllCoroutines();
         Destroy(mazeInstance.gameObject);
         BeginGame();

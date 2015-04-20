@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Maze : MonoBehaviour {
 
-    public IntVector3 size;
+    public IntVector2 size;
 
     public MazeCell cellPrefab;
     public MazePassage passagePrefab;
@@ -16,6 +16,24 @@ public class Maze : MonoBehaviour {
     private MazeCell[,] basementCells;
 
     public float generationStepDelay;
+
+    public MazeDoor doorPrefab;
+
+    private int roomIndex = 0;
+
+    [Range(0f, 1f)]
+    public float doorProbability;
+
+    public List<MazeRoom> rooms = new List<MazeRoom>();
+
+    private MazeRoom CreateRoom()
+    {
+        MazeRoom newRoom = ScriptableObject.CreateInstance<MazeRoom>();
+        newRoom.roomNumb = roomIndex + 1;
+        roomIndex++;
+        rooms.Add(newRoom);
+        return newRoom;
+    }
 
     public MazeCell[,] GetMazeCells()
     {
@@ -74,18 +92,24 @@ public class Maze : MonoBehaviour {
     private void DoFirstGenerationStep(List<MazeCell> activeCells)
     {
 		AddEntranceHallGround(activeCells);
-        activeCells.Add(CreateCell(RandomCoordinates));
+        MazeCell newCell = CreateCell(RandomCoordinates);
+        newCell.Initialize(CreateRoom());
+        activeCells.Add(newCell);
     }
 
     private void DoFirstGenerationStepUpper(List<MazeCell> activeCells)
     {
         AddEntranceHallUpper(activeCells);
-        activeCells.Add(CreateCell(RandomCoordinatesUpper));
+        MazeCell newCell = CreateCell(RandomCoordinatesUpper);
+        newCell.Initialize(CreateRoom());
+        activeCells.Add(newCell);
     }
 
     private void DoFirstGenerationStepBasement(List<MazeCell> activeCells)
     {
-        activeCells.Add(CreateCell(RandomCoordinatesBasement));
+        MazeCell newCell = CreateCell(RandomCoordinatesBasement);
+        newCell.Initialize(CreateRoom());
+        activeCells.Add(newCell);
     }
 
 	//Called after the First step, also take sin list
@@ -132,6 +156,11 @@ public class Maze : MonoBehaviour {
                 neighbor = CreateCell(coordinates);
                 CreatePassage(currentCell, neighbor, direction);
                 activeCells.Add(neighbor);
+            }
+
+            else if (currentCell.room == neighbor.room)
+            {
+                CreatePassageInSameRoom(currentCell, neighbor, direction);
             }
 			//If cell is currently being used then place a wall
             else
@@ -220,9 +249,19 @@ public class Maze : MonoBehaviour {
 	//Make another passage for neighboring cell, and initialize it
     private void CreatePassage(MazeCell cell, MazeCell otherCell, MazeDirection direction)
     {
-        MazePassage passage = Instantiate(passagePrefab) as MazePassage;
+        MazePassage prefab = Random.value < doorProbability ? doorPrefab : passagePrefab;
+        MazePassage passage = Instantiate(prefab) as MazePassage;
         passage.Initialize(cell, otherCell, direction, EdgeTypes.Passage);
-        passage = Instantiate(passagePrefab) as MazePassage;
+        passage = Instantiate(prefab) as MazePassage;
+        if (passage is MazeDoor)
+        {
+            otherCell.Initialize(CreateRoom());
+        }
+        else
+        {
+            otherCell.Initialize(cell.room);
+        }
+
         passage.Initialize(otherCell, cell, direction.GetOpposite(), EdgeTypes.Passage);
     }
 
@@ -230,6 +269,16 @@ public class Maze : MonoBehaviour {
     private void CreatePassage(MazeCell cell, MazeDirection direction)
     {
         MazePassage passage = Instantiate(passagePrefab) as MazePassage;
+        passage.Initialize(cell, direction, EdgeTypes.Passage);
+    }
+
+    private void CreatePassage(MazeCell cell, MazeDirection direction, bool door)
+    {
+        MazePassage prefab;
+        if (door)
+            prefab = doorPrefab;
+        else prefab = passagePrefab;
+        MazePassage passage = Instantiate(prefab) as MazePassage;
         passage.Initialize(cell, direction, EdgeTypes.Passage);
     }
 
@@ -306,6 +355,14 @@ public class Maze : MonoBehaviour {
     {
         return coordinate.x >= 0 && coordinate.x < size.x && coordinate.z >= 0 && coordinate.z < size.z;
     }
+
+    private void CreatePassageInSameRoom(MazeCell cell, MazeCell otherCell, MazeDirection direction)
+    {
+        MazePassage passage = Instantiate(passagePrefab) as MazePassage;
+        passage.Initialize(cell, otherCell, direction, EdgeTypes.Passage);
+        passage = Instantiate(passagePrefab) as MazePassage;
+        passage.Initialize(otherCell, cell, direction.GetOpposite(), EdgeTypes.Passage);
+    }
     
 	//My sad attempt to add a entrance hall
 	private void AddEntranceHallGround(List<MazeCell> activeCells)
@@ -318,36 +375,42 @@ public class Maze : MonoBehaviour {
                 CreatePassage(activeCells[0], MazeDirection.East);
                 CreatePassage(activeCells[0], MazeDirection.South);
                 CreateWall(activeCells[0], MazeDirection.West);
+                activeCells[0].Initialize(CreateRoom());
 
                 activeCells.Add(CreateCell(new IntVector3(halfX, 0, halfZ), RoomType.EntranceHall));
                 CreateWall(activeCells[1], MazeDirection.North);
                 CreateWall(activeCells[1], MazeDirection.East);
                 CreatePassage(activeCells[1], MazeDirection.South);
                 CreatePassage(activeCells[1], MazeDirection.West);
+                activeCells[1].Initialize(activeCells[1-1].room);
 
                 activeCells.Add(CreateCell(new IntVector3(halfX - 1, 0, halfZ - 1), RoomType.EntranceHall));
                 CreatePassage(activeCells[2], MazeDirection.North);
                 CreatePassage(activeCells[2], MazeDirection.East);
                 CreatePassage(activeCells[2], MazeDirection.South);
-                CreatePassage(activeCells[2], MazeDirection.West);
+                CreatePassage(activeCells[2], MazeDirection.West, true);
+                activeCells[2].Initialize(activeCells[2-1].room);
 
                 activeCells.Add(CreateCell(new IntVector3(halfX, 0, halfZ - 1), RoomType.EntranceHall));
                 CreatePassage(activeCells[3], MazeDirection.North);
-                CreatePassage(activeCells[3], MazeDirection.East);
+                CreatePassage(activeCells[3], MazeDirection.East, true);
                 CreatePassage(activeCells[3], MazeDirection.South);
                 CreatePassage(activeCells[3], MazeDirection.West);
+                activeCells[3].Initialize(activeCells[3-1].room);
 
                 activeCells.Add(CreateCell(new IntVector3(halfX - 1, 0, halfZ - 2), RoomType.EntranceHall));
                 CreatePassage(activeCells[4], MazeDirection.North);
                 CreatePassage(activeCells[4], MazeDirection.East);
                 CreateWall(activeCells[4], MazeDirection.South);
-                CreatePassage(activeCells[4], MazeDirection.West);
+                CreatePassage(activeCells[4], MazeDirection.West, true);
+                activeCells[4].Initialize(activeCells[4-1].room);
 
                 activeCells.Add(CreateCell(new IntVector3(halfX,0 , halfZ - 2), RoomType.EntranceHall));
                 CreatePassage(activeCells[5], MazeDirection.North);
-                CreatePassage(activeCells[5], MazeDirection.East);
+                CreatePassage(activeCells[5], MazeDirection.East, true);
                 CreateWall(activeCells[5], MazeDirection.South);
                 CreatePassage(activeCells[5], MazeDirection.West);
+                activeCells[5].Initialize(activeCells[5 - 1].room);
             }
     }
 
@@ -360,37 +423,57 @@ public class Maze : MonoBehaviour {
             CreateWall(activeCells[0], MazeDirection.North);
             CreatePassage(activeCells[0], MazeDirection.East);
             CreatePassage(activeCells[0], MazeDirection.South);
-            CreatePassage(activeCells[0], MazeDirection.West);
+            CreatePassage(activeCells[0], MazeDirection.West, true);
+            activeCells[0].Initialize(CreateRoom());
 
             activeCells.Add(CreateCell(new IntVector3(halfX, 1, halfZ), RoomType.EntranceHall));
             CreateWall(activeCells[1], MazeDirection.North);
-            CreatePassage(activeCells[1], MazeDirection.East);
+            CreatePassage(activeCells[1], MazeDirection.East, true);
             CreatePassage(activeCells[1], MazeDirection.South);
             CreatePassage(activeCells[1], MazeDirection.West);
+            activeCells[1].Initialize(activeCells[1 - 1].room);
 
             activeCells.Add(CreateCell(new IntVector3(halfX - 1, 1, halfZ - 1), RoomType.EntranceHall));
             CreatePassage(activeCells[2], MazeDirection.North);
             CreatePassage(activeCells[2], MazeDirection.East);
             CreatePassage(activeCells[2], MazeDirection.South);
             CreateWall(activeCells[2], MazeDirection.West);
+            activeCells[2].Initialize(activeCells[2 - 1].room);
 
             activeCells.Add(CreateCell(new IntVector3(halfX, 1, halfZ - 1), RoomType.EntranceHall));
             CreatePassage(activeCells[3], MazeDirection.North);
             CreateWall(activeCells[3], MazeDirection.East);
             CreatePassage(activeCells[3], MazeDirection.South);
             CreatePassage(activeCells[3], MazeDirection.West);
+            activeCells[3].Initialize(activeCells[3 - 1].room);
 
             activeCells.Add(CreateCell(new IntVector3(halfX - 1, 1, halfZ - 2), RoomType.EntranceHall));
             CreatePassage(activeCells[4], MazeDirection.North);
             CreatePassage(activeCells[4], MazeDirection.East);
             CreateWall(activeCells[4], MazeDirection.South);
             CreateWall(activeCells[4], MazeDirection.West);
+            activeCells[4].Initialize(activeCells[4 - 1].room);
 
             activeCells.Add(CreateCell(new IntVector3(halfX, 1, halfZ - 2), RoomType.EntranceHall));
             CreatePassage(activeCells[5], MazeDirection.North);
             CreateWall(activeCells[5], MazeDirection.East);
             CreateWall(activeCells[5], MazeDirection.South);
             CreatePassage(activeCells[5], MazeDirection.West);
+            activeCells[5].Initialize(activeCells[5 - 1].room);
         }
+    }
+
+    private void AddStaircaseDown()
+    {
+        MazeCell newCell;
+        do
+        {
+            newCell = groundCells[Random.Range(0, size.x), Random.Range(0, size.z)];
+        }
+        while (newCell.roomType != RoomType.EntranceHall);
+
+        groundCells[newCell.coordinates.x, newCell.coordinates.z].roomType = RoomType.Stairs;
+        basementCells[newCell.coordinates.x, newCell.coordinates.z].roomType = RoomType.Stairs;
+
     }
 }

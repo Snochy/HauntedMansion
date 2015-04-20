@@ -15,6 +15,16 @@ public class MazeCell : MonoBehaviour {
     public MazeDirection cellFacing;
     public RoomType roomType;
 
+    public MazeRoom room;
+
+    public int roomIndex;
+
+    public void Initialize(MazeRoom room)
+    {
+        room.Add(this);
+        roomIndex = room.roomNumb;
+    }
+
     public MazeCellEdge GetEdge(MazeDirection direction)
     {
         return edges[(int)direction];
