@@ -39,9 +39,9 @@ public class InGameGuI : MonoBehaviour {
 		GUI.color = guiColor;
 		if(controls)
 		{
-			GUI.Box(new Rect(Screen.width * .1f,Screen.height * .15f, Screen.width * .8f,400),"",menuStyle);
+			GUI.Box(new Rect(0,0, Screen.width,Screen.height),"",menuStyle);
 			GUI.Box(new Rect(Screen.width * .3f,Screen.height * .3f, 200,200),keybaordIconA);
-			GUI.Label(new Rect(Screen.width * .11f,Screen.height * .16f, 200,200),"Controls");
+			GUI.Label(new Rect(Screen.width * .11f,Screen.height * .16f, 200,200),"");
 
 			GUI.Label(new Rect(Screen.width * .6f,Screen.height * .3f, 200,200),"Ues W,A,S,D to move your character. \n\nUse Q, E, to strafe. \n\nC to turn on and off your flashlight.\n\nSPACE to jump.\n\nClick and hold LEFT or RIGHT MOUSE buttons to look around.");
 

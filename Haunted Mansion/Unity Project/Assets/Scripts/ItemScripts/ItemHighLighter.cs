@@ -24,7 +24,7 @@ public class ItemHighLighter : MonoBehaviour
     void Update()
     {
         if (Input.GetMouseButton(0) && mouseOver)
-            if (Vector3.Distance(this.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= 80f)
+            if (Vector3.Distance(this.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= 120f)
             {
                 GameObject.Find("SoundHandler").GetComponent<SoundPlayer>().PlayAudio(soundName);
                 Destroy(this.gameObject);

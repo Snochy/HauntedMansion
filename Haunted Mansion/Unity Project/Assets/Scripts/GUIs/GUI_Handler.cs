@@ -20,6 +20,9 @@ public class GUI_Handler : MonoBehaviour {
 	public GUIStyle boxStyle;
 	public GUIStyle textStyle;
 	
+	public GUIStyle inactiveButtonStyle;
+	public GUIStyle inactiveBoxStyle;
+	
 	public Color guiColor = Color.clear;
 	
 	public int menuNum = 0;
@@ -71,6 +74,10 @@ public class GUI_Handler : MonoBehaviour {
 				Application.Quit();
 			}
 		}
+		bool ready;
+		if(indexNumber01 > 0 || indexNumber02 > 0 || indexNumber03 > 0 || indexNumber04 > 0 || indexNumber05 > 0 )
+			ready = true;
+		else ready = false;
 		
 		if(menuNum == 1)
 		{
@@ -94,7 +101,7 @@ public class GUI_Handler : MonoBehaviour {
 			GUI.Label (new Rect(135,435,123,150),"Player 4", textStyle);
 			GUI.Box (new Rect(50,435,75,75),avatarP4);
 
-			GUI.Box (new Rect(25,530,500,100),"",boxStyle);
+			GUI.Box (new Rect(25,530,500,100),"",inactiveBoxStyle);
 			GUI.Label (new Rect(135,545,123,150),"Player 5", textStyle);
 			GUI.Box (new Rect(50,545,75,75),avatarP5);
 
@@ -107,14 +114,18 @@ public class GUI_Handler : MonoBehaviour {
 			}
 
 			//Map Image
-			GUI.Label (new Rect(575,25,250,250),"The Oms-Or Mansion", textStyle);
+			GUI.Label (new Rect(575,25,250,250),"The Ravenhill Mansion", textStyle);
 			GUI.Box (new Rect(575,75,250,250),map);
 			//Play Button
-			if(GUI.Button (new Rect(575,350,200,50),"START",buttonStyle))
+			if(ready)
 			{
-				GameObject.FindGameObjectWithTag("Sound").GetComponent<SoundPlayer>().PlayAudio("click");
-				isFading = true;
+				if(GUI.Button (new Rect(575,350,200,50),"START",buttonStyle))
+				{
+					GameObject.FindGameObjectWithTag("Sound").GetComponent<SoundPlayer>().PlayAudio("click");
+					isFading = true;
+				}
 			}
+			else GUI.Button (new Rect(575,350,200,50),"START", inactiveButtonStyle);
 
 			//Drop down menus
 
