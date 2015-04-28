@@ -4,12 +4,11 @@ using System.Collections;
 public class HauntedTeddy : MonoBehaviour
 {
     private GameObject teddyBearGO;
-
-    public GameObject database;
+    private GameObject maze;
     
     void Start()
     {
-        database = GameObject.FindGameObjectWithTag("GameDataBase");
+        maze = GameObject.Find("Maze(Clone)") as GameObject;
         teddyBearGO = Resources.Load("props/TeddyBear01") as GameObject;
         SpawnTeddies();
     }
@@ -19,12 +18,12 @@ public class HauntedTeddy : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             GameObject teddyBear = Instantiate(teddyBearGO) as GameObject;
-            teddyBear.name = "TeddyBear Ground " + i;
-            IntVector3 temp = new IntVector3(Random.Range(0, database.GetComponent<RoomDataBase>().demis.x), Random.Range(0, database.GetComponent<RoomDataBase>().demis.z), 0);
-            while(database.GetComponent<RoomDataBase>().groundCells[temp.x,temp.y] == null)
-                temp = new IntVector3(Random.Range(0, database.GetComponent<RoomDataBase>().demis.x), Random.Range(0, database.GetComponent<RoomDataBase>().demis.z), 0);
+            teddyBear.name = "TeddyBear Ground " + (i+1);
+            IntVector2 temp = new IntVector2(Random.Range(0, maze.GetComponent<Maze>().size.x), Random.Range(0, maze.GetComponent<Maze>().size.z));
+            while (maze.GetComponent<Maze>().groundCells[temp.x, temp.z] == null)
+                temp = new IntVector2(Random.Range(0, maze.GetComponent<Maze>().size.x), Random.Range(0, maze.GetComponent<Maze>().size.z));
 
-            teddyBear.transform.parent = database.GetComponent<RoomDataBase>().groundCells[temp.x,temp.y].transform;
+            teddyBear.transform.parent = maze.GetComponent<Maze>().groundCells[temp.x, temp.z].transform;
             teddyBear.transform.rotation = Random.rotation;
             teddyBear.transform.localPosition =
                     new Vector3(Random.Range(-214, 214), Random.Range(17, 270), Random.Range(-214, 214));

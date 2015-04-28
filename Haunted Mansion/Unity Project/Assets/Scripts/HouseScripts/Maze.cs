@@ -9,11 +9,12 @@ public class Maze : MonoBehaviour {
     public MazeCell cellPrefab;
     public MazePassage passagePrefab;
     public MazeWall wallPrefab;
+    public MazeCeiling ceilingPrefab;
     public GameObject mainHall;
 
-    private MazeCell[,] groundCells;
-    private MazeCell[,] upperCells;
-    private MazeCell[,] basementCells;
+    public MazeCell[,] groundCells;
+    public MazeCell[,] upperCells;
+    public MazeCell[,] basementCells;
 
     public float generationStepDelay;
 
@@ -26,11 +27,17 @@ public class Maze : MonoBehaviour {
 
     public List<MazeRoom> rooms = new List<MazeRoom>();
 
-    private MazeRoom CreateRoom()
+    public MazeRoomSettings[] roomSettings;
+
+    private MazeRoom CreateRoom(int indexToExclude)
     {
         MazeRoom newRoom = ScriptableObject.CreateInstance<MazeRoom>();
-        newRoom.roomNumb = roomIndex + 1;
-        roomIndex++;
+        newRoom.settingsIndex = Random.Range(0, roomSettings.Length);
+        if (newRoom.settingsIndex == indexToExclude)
+        {
+            newRoom.settingsIndex = (newRoom.settingsIndex + 1) % roomSettings.Length;
+        }
+        newRoom.settings = roomSettings[newRoom.settingsIndex];
         rooms.Add(newRoom);
         return newRoom;
     }
@@ -93,7 +100,7 @@ public class Maze : MonoBehaviour {
     {
 		AddEntranceHallGround(activeCells);
         MazeCell newCell = CreateCell(RandomCoordinates);
-        newCell.Initialize(CreateRoom());
+        newCell.Initialize(CreateRoom(-1));
         activeCells.Add(newCell);
     }
 
@@ -101,14 +108,14 @@ public class Maze : MonoBehaviour {
     {
         AddEntranceHallUpper(activeCells);
         MazeCell newCell = CreateCell(RandomCoordinatesUpper);
-        newCell.Initialize(CreateRoom());
+        newCell.Initialize(CreateRoom(-1));
         activeCells.Add(newCell);
     }
 
     private void DoFirstGenerationStepBasement(List<MazeCell> activeCells)
     {
         MazeCell newCell = CreateCell(RandomCoordinatesBasement);
-        newCell.Initialize(CreateRoom());
+        newCell.Initialize(CreateRoom(-1));
         activeCells.Add(newCell);
     }
 
@@ -125,8 +132,6 @@ public class Maze : MonoBehaviour {
         if (currentCell.IsFullyInitialized)
         {
 			//if cells has all its sides determine, then remove it from list
-            if(currentCell.roomType != RoomType.EntranceHall)
-                currentCell.DecideRoomType();
             activeCells.RemoveAt(currentIndex);
             return;
         }
@@ -171,7 +176,8 @@ public class Maze : MonoBehaviour {
                     {
                         if (neighbor.GetEdge(direction.GetOpposite()).edgeType == EdgeTypes.Wall)
                             CreateWall(currentCell, direction);
-                        else CreatePassage(currentCell, direction);
+                        else if (neighbor.GetEdge(direction.GetOpposite()).edgeType == EdgeTypes.Door)
+                            CreatePassage(currentCell, direction, true);
                     }
                 }
                 else CreateWall(currentCell, neighbor, direction);
@@ -204,7 +210,14 @@ public class Maze : MonoBehaviour {
 		newCell.transform.parent = transform;
 		newCell.transform.localPosition =
                 new Vector3((coordinates.x - size.x * 0.5f) * 600, coordinates.y * 337.4f, (coordinates.z - size.z * 0.5f) * 600);
+
+        MazeCeiling ceiling = Instantiate(ceilingPrefab) as MazeCeiling;
+        ceiling.Initialize(newCell);
+
+
 		return newCell;
+
+
 	}
 
     private MazeCell CreateCell(IntVector3 coordinates, RoomType roomType)
@@ -222,6 +235,10 @@ public class Maze : MonoBehaviour {
         newCell.transform.localPosition =
                 new Vector3((coordinates.x - size.x * 0.5f) * 600, coordinates.y * 337.4f, (coordinates.z - size.z * 0.5f) * 600);
         newCell.roomType = roomType;
+
+
+        MazeCeiling ceiling = Instantiate(ceilingPrefab) as MazeCeiling;
+        ceiling.Initialize(newCell);
         return newCell;
     }
 
@@ -255,7 +272,7 @@ public class Maze : MonoBehaviour {
         passage = Instantiate(prefab) as MazePassage;
         if (passage is MazeDoor)
         {
-            otherCell.Initialize(CreateRoom());
+            otherCell.Initialize(CreateRoom(cell.room.settingsIndex));
         }
         else
         {
@@ -269,17 +286,14 @@ public class Maze : MonoBehaviour {
     private void CreatePassage(MazeCell cell, MazeDirection direction)
     {
         MazePassage passage = Instantiate(passagePrefab) as MazePassage;
-        passage.Initialize(cell, direction, EdgeTypes.Passage);
+        passage.Initialize(cell, direction, EdgeTypes.Door);
     }
 
     private void CreatePassage(MazeCell cell, MazeDirection direction, bool door)
     {
-        MazePassage prefab;
-        if (door)
-            prefab = doorPrefab;
-        else prefab = passagePrefab;
-        MazePassage passage = Instantiate(prefab) as MazePassage;
-        passage.Initialize(cell, direction, EdgeTypes.Passage);
+        MazePassage passage = Instantiate(doorPrefab) as MazePassage;
+        passage.Initialize(cell, direction, EdgeTypes.Door);
+        passage.transform.GetChild(0).GetComponent<Renderer>().material = cell.room.settings.wallMaterial;
     }
 
 	//Make a wall between two cells
@@ -371,46 +385,50 @@ public class Maze : MonoBehaviour {
     	int halfZ = size.z / 2;
             {
                 activeCells.Add(CreateCell(new IntVector3(halfX -1, 0, halfZ), RoomType.EntranceHall));
+                activeCells[0].Initialize(CreateRoom(-1));
                 CreateWall(activeCells[0], MazeDirection.North);
                 CreatePassage(activeCells[0], MazeDirection.East);
                 CreatePassage(activeCells[0], MazeDirection.South);
                 CreateWall(activeCells[0], MazeDirection.West);
-                activeCells[0].Initialize(CreateRoom());
+
 
                 activeCells.Add(CreateCell(new IntVector3(halfX, 0, halfZ), RoomType.EntranceHall));
+                activeCells[1].Initialize(activeCells[0].room);
                 CreateWall(activeCells[1], MazeDirection.North);
                 CreateWall(activeCells[1], MazeDirection.East);
                 CreatePassage(activeCells[1], MazeDirection.South);
                 CreatePassage(activeCells[1], MazeDirection.West);
-                activeCells[1].Initialize(activeCells[1-1].room);
 
                 activeCells.Add(CreateCell(new IntVector3(halfX - 1, 0, halfZ - 1), RoomType.EntranceHall));
+                activeCells[2].Initialize(activeCells[0].room);
                 CreatePassage(activeCells[2], MazeDirection.North);
                 CreatePassage(activeCells[2], MazeDirection.East);
                 CreatePassage(activeCells[2], MazeDirection.South);
                 CreatePassage(activeCells[2], MazeDirection.West, true);
-                activeCells[2].Initialize(activeCells[2-1].room);
+
 
                 activeCells.Add(CreateCell(new IntVector3(halfX, 0, halfZ - 1), RoomType.EntranceHall));
+                activeCells[3].Initialize(activeCells[0].room);
                 CreatePassage(activeCells[3], MazeDirection.North);
                 CreatePassage(activeCells[3], MazeDirection.East, true);
                 CreatePassage(activeCells[3], MazeDirection.South);
                 CreatePassage(activeCells[3], MazeDirection.West);
-                activeCells[3].Initialize(activeCells[3-1].room);
 
                 activeCells.Add(CreateCell(new IntVector3(halfX - 1, 0, halfZ - 2), RoomType.EntranceHall));
+                activeCells[4].Initialize(activeCells[0].room);
                 CreatePassage(activeCells[4], MazeDirection.North);
                 CreatePassage(activeCells[4], MazeDirection.East);
                 CreateWall(activeCells[4], MazeDirection.South);
                 CreatePassage(activeCells[4], MazeDirection.West, true);
-                activeCells[4].Initialize(activeCells[4-1].room);
+
 
                 activeCells.Add(CreateCell(new IntVector3(halfX,0 , halfZ - 2), RoomType.EntranceHall));
+                activeCells[5].Initialize(activeCells[0].room);
                 CreatePassage(activeCells[5], MazeDirection.North);
                 CreatePassage(activeCells[5], MazeDirection.East, true);
                 CreateWall(activeCells[5], MazeDirection.South);
                 CreatePassage(activeCells[5], MazeDirection.West);
-                activeCells[5].Initialize(activeCells[5 - 1].room);
+
             }
     }
 
@@ -420,46 +438,47 @@ public class Maze : MonoBehaviour {
         int halfZ = size.z / 2;
         {
             activeCells.Add(CreateCell(new IntVector3(halfX - 1, 1, halfZ), RoomType.EntranceHall));
+            activeCells[0].Initialize(CreateRoom(-1));
             CreateWall(activeCells[0], MazeDirection.North);
             CreatePassage(activeCells[0], MazeDirection.East);
             CreatePassage(activeCells[0], MazeDirection.South);
             CreatePassage(activeCells[0], MazeDirection.West, true);
-            activeCells[0].Initialize(CreateRoom());
+
 
             activeCells.Add(CreateCell(new IntVector3(halfX, 1, halfZ), RoomType.EntranceHall));
+            activeCells[1].Initialize(activeCells[0].room);
             CreateWall(activeCells[1], MazeDirection.North);
             CreatePassage(activeCells[1], MazeDirection.East, true);
             CreatePassage(activeCells[1], MazeDirection.South);
             CreatePassage(activeCells[1], MazeDirection.West);
-            activeCells[1].Initialize(activeCells[1 - 1].room);
 
             activeCells.Add(CreateCell(new IntVector3(halfX - 1, 1, halfZ - 1), RoomType.EntranceHall));
+            activeCells[2].Initialize(activeCells[0].room);
             CreatePassage(activeCells[2], MazeDirection.North);
             CreatePassage(activeCells[2], MazeDirection.East);
             CreatePassage(activeCells[2], MazeDirection.South);
             CreateWall(activeCells[2], MazeDirection.West);
-            activeCells[2].Initialize(activeCells[2 - 1].room);
 
             activeCells.Add(CreateCell(new IntVector3(halfX, 1, halfZ - 1), RoomType.EntranceHall));
+            activeCells[3].Initialize(activeCells[0].room);
             CreatePassage(activeCells[3], MazeDirection.North);
             CreateWall(activeCells[3], MazeDirection.East);
             CreatePassage(activeCells[3], MazeDirection.South);
             CreatePassage(activeCells[3], MazeDirection.West);
-            activeCells[3].Initialize(activeCells[3 - 1].room);
 
             activeCells.Add(CreateCell(new IntVector3(halfX - 1, 1, halfZ - 2), RoomType.EntranceHall));
+            activeCells[4].Initialize(activeCells[0].room);
             CreatePassage(activeCells[4], MazeDirection.North);
             CreatePassage(activeCells[4], MazeDirection.East);
             CreateWall(activeCells[4], MazeDirection.South);
             CreateWall(activeCells[4], MazeDirection.West);
-            activeCells[4].Initialize(activeCells[4 - 1].room);
 
             activeCells.Add(CreateCell(new IntVector3(halfX, 1, halfZ - 2), RoomType.EntranceHall));
+            activeCells[5].Initialize(activeCells[0].room);
             CreatePassage(activeCells[5], MazeDirection.North);
             CreateWall(activeCells[5], MazeDirection.East);
             CreateWall(activeCells[5], MazeDirection.South);
             CreatePassage(activeCells[5], MazeDirection.West);
-            activeCells[5].Initialize(activeCells[5 - 1].room);
         }
     }
 

@@ -3,11 +3,7 @@
 //A list of room types
 public enum RoomType
 {
-    Corner,
-    Cross,
-    ThreeWay,
-    FourWay,
-    Single,
+    None,
     EntranceHall,
     Stairs,
 }

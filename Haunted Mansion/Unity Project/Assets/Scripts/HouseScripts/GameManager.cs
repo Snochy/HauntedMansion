@@ -46,9 +46,6 @@ public class GameManager : MonoBehaviour
     public void LoadAssets()
     {
             transform.GetComponent<InputRooms>().ReplaceRooms();
-            transform.GetComponent<InputRooms>().ReplaceRoomsUpper();
-            transform.GetComponent<InputRooms>().ReplaceRoomsLower();
-            GetComponent<PropsSpawner>().AddProps();
             hauntstart = true;
 
     }

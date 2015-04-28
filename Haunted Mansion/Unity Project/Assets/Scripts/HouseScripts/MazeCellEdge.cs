@@ -13,7 +13,7 @@ public abstract class MazeCellEdge : MonoBehaviour
     public EdgeTypes edgeType;
 
 	//Initilaize cell edge
-    public void Initialize(MazeCell cell, MazeCell otherCell, MazeDirection direction, EdgeTypes edgeType)
+    public virtual void Initialize(MazeCell cell, MazeCell otherCell, MazeDirection direction, EdgeTypes edgeType)
     {
 		//save variables from intaked into variables for class
         this.cell = cell;
@@ -31,7 +31,7 @@ public abstract class MazeCellEdge : MonoBehaviour
         EdgePlaced = true;
     }
 
-    public void Initialize(MazeCell cell, MazeDirection direction, EdgeTypes edgeType)
+    public virtual void Initialize(MazeCell cell, MazeDirection direction, EdgeTypes edgeType)
     {
         //save variables from intaked into variables for class
         this.cell = cell;

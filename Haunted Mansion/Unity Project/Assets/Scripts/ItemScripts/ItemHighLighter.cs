@@ -9,21 +9,31 @@ public class ItemHighLighter : MonoBehaviour
 
     public string soundName;
 
-    void OnMouseEnter()
+    void Start()
     {
         startcolor = GetComponent<Renderer>().material;
-        GetComponent<Renderer>().material = highLighted;
-        mouseOver = true;
-    }
-    void OnMouseExit()
-    {
-        GetComponent<Renderer>().material = startcolor;
-        mouseOver = false;
     }
 
     void Update()
     {
-        if (Input.GetMouseButton(0) && mouseOver)
+
+        RaycastHit[] allHit = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition));
+        foreach (RaycastHit hit in allHit)
+        {
+            if (hit.collider.gameObject == this.gameObject)
+            {
+                startcolor = GetComponent<Renderer>().material;
+                GetComponent<Renderer>().material = highLighted;
+                mouseOver = true;
+            }
+            else
+            {
+                GetComponent<Renderer>().material = startcolor;
+                mouseOver = false;
+            }
+        }
+
+        if (Input.GetMouseButtonDown(0) && mouseOver)
             if (Vector3.Distance(this.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= 120f)
             {
                 GameObject.Find("SoundHandler").GetComponent<SoundPlayer>().PlayAudio(soundName);

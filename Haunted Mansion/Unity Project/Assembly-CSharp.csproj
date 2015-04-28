@@ -39,43 +39,44 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>D:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>D:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\CharacterScripts\Character_Movement.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\FlashLightSync.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\cameraDriver.cs" />
+     <Compile Include="Assets\Scripts\CharacterScripts\makeTransparent.cs" />
      <Compile Include="Assets\Scripts\GUIs\GUI_Handler.cs" />
      <Compile Include="Assets\Scripts\GUIs\InGameGuI.cs" />
      <Compile Include="Assets\Scripts\Haunts\HauntedTeddy.cs" />
+     <Compile Include="Assets\Scripts\HouseScripts\DoorScript.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\EdgeTypes.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\InputRooms.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\IntVector2.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\IntVector3.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\Maze.cs" />
+     <Compile Include="Assets\Scripts\HouseScripts\MazeCeiling.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\MazeCell.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\MazeCellEdge.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\MazeDirection.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\MazeDoor.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\MazePassage.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\MazeRoom.cs" />
+     <Compile Include="Assets\Scripts\HouseScripts\MazeRoomSettings.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\MazeWall.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\PropsSpawner.cs" />
-     <Compile Include="Assets\Scripts\HouseScripts\RandomRoomSound.cs" />
-     <Compile Include="Assets\Scripts\HouseScripts\RoomControllor.cs" />
-     <Compile Include="Assets\Scripts\HouseScripts\RoomDataBase.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\RoomType.cs" />
      <Compile Include="Assets\Scripts\ItemScripts\ItemHighLighter.cs" />
      <Compile Include="Assets\Scripts\MainMenu\MenuLightsHandler.cs" />
      <Compile Include="Assets\Scripts\Sounds\SoundPlayer.cs" />
      <None Include="Assets\FBXModels\Props\PropShaders\ItemGlow.shader" />
  <Reference Include="UnityEngine.UI">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

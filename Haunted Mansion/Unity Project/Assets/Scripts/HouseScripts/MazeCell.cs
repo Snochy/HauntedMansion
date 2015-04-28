@@ -22,7 +22,7 @@ public class MazeCell : MonoBehaviour {
     public void Initialize(MazeRoom room)
     {
         room.Add(this);
-        roomIndex = room.roomNumb;
+        transform.GetComponent<Renderer>().material = room.settings.floorMaterial;
     }
 
     public MazeCellEdge GetEdge(MazeDirection direction)
@@ -65,105 +65,6 @@ public class MazeCell : MonoBehaviour {
                 }
             }
             throw new System.InvalidOperationException("MazeCell has no uninitialized directions left.");
-        }
-    }
-
-    public void DecideRoomType()
-    {
-        EdgeTypes passage = EdgeTypes.Passage;
-        EdgeTypes north = edges[0].edgeType;
-        EdgeTypes east = edges[1].edgeType;
-        EdgeTypes south = edges[2].edgeType;
-        EdgeTypes west = edges[3].edgeType;
-
-        if (north == passage && east == passage && south == passage && west == passage)
-        {
-            roomType = RoomType.FourWay;
-            cellFacing = MazeDirection.North;
-        }
-
-        if (north == passage && east == passage && south == passage && west != passage)
-        {
-            roomType = RoomType.ThreeWay;
-            cellFacing = MazeDirection.East;
-        }
-
-        if (north == passage && east == passage && south != passage && west == passage)
-        {
-            roomType = RoomType.ThreeWay;
-            cellFacing = MazeDirection.North;
-        }
-
-        if (north == passage && east != passage && south == passage && west == passage)
-        {
-            roomType = RoomType.ThreeWay;
-            cellFacing = MazeDirection.West;
-        }
-
-        if (north != passage && east == passage && south == passage && west == passage)
-        {
-            roomType = RoomType.ThreeWay;
-            cellFacing = MazeDirection.South;
-        }
-
-        if (north != passage && east == passage && south != passage && west == passage)
-        {
-            roomType = RoomType.Cross;
-            cellFacing = MazeDirection.East;
-        }
-
-        if (north == passage && east != passage && south == passage && west != passage)
-        {
-            roomType = RoomType.Cross;
-            cellFacing = MazeDirection.North;
-        }
-
-        if (north == passage && east == passage && south != passage && west != passage)
-        {
-            roomType = RoomType.Corner;
-            cellFacing = MazeDirection.North;
-        }
-
-        if (north != passage && east == passage && south == passage && west != passage)
-        {
-            roomType = RoomType.Corner;
-            cellFacing = MazeDirection.East;
-        }
-
-        if (north != passage && east != passage && south == passage && west == passage)
-        {
-            roomType = RoomType.Corner;
-            cellFacing = MazeDirection.South;
-        }
-
-        if (north == passage && east != passage && south != passage && west == passage)
-        {
-            roomType = RoomType.Corner;
-            cellFacing = MazeDirection.West;
-        }
-
-        if (north == passage && east != passage && south != passage && west != passage)
-        {
-            roomType = RoomType.Single;
-            cellFacing = MazeDirection.North;
-        }
-
-        if (north != passage && east == passage && south != passage && west != passage)
-        {
-            roomType = RoomType.Single;
-            cellFacing = MazeDirection.East;
-        }
-
-        if (north != passage && east != passage && south == passage && west != passage)
-        {
-            roomType = RoomType.Single;
-            cellFacing = MazeDirection.South;
-        }
-
-        if (north != passage && east != passage && south != passage && west == passage)
-        {
-            roomType = RoomType.Single;
-            cellFacing = MazeDirection.West;
         }
     }
 }

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 public class MazeRoom : ScriptableObject
 {
+    public int settingsIndex;
+
+    public MazeRoomSettings settings;
+
     public int roomNumb;
     private List<MazeCell> cells = new List<MazeCell>();
 

@@ -5,4 +5,5 @@ public enum EdgeTypes
 {
     Passage,
     Wall,
+    Door,
 }
