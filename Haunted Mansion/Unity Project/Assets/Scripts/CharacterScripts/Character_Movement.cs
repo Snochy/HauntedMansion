@@ -6,6 +6,8 @@ public class Character_Movement : MonoBehaviour {
     public float jumpSpeed = 140.0F;
 	public float gravity = 140.0F;
 	public float defaultSpeed = 30.0F;
+
+    public Animator anim;
 		
     public float speed = 0.0F;
 
@@ -30,6 +32,8 @@ public class Character_Movement : MonoBehaviour {
                 forward = 1;
             }
             else forward = Input.GetAxis("Vertical");
+
+            anim.SetFloat("Speed", forward);
 
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, forward);
             moveDirection = transform.TransformDirection(moveDirection);

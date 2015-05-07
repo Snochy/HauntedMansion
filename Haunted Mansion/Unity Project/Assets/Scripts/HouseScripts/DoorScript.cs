@@ -12,13 +12,19 @@ public class DoorScript : MonoBehaviour {
 
     public float smooth = 1;
 
-    public bool open, enter;
+    public bool open, enter, canBeOpenned;
+    public float interactionDistance = 200f;
 
 	void Update () 
     {
+
         RaycastHit[] allHit;
         if (Camera.main != null)
         {
+            if (Vector3.Distance(this.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= interactionDistance)
+                canBeOpenned = true;
+            else canBeOpenned = false;
+
             allHit = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition));
             foreach (RaycastHit hit in allHit)
             {
@@ -32,13 +38,16 @@ public class DoorScript : MonoBehaviour {
         }
 
         if (Input.GetMouseButtonDown(0) && mouseOver)
-            if (Vector3.Distance(this.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= 200f)
+        {
+            if (canBeOpenned)
             {
                 open = !open;
                 if (Vector3.Dot(this.transform.TransformDirection(Vector3.right), this.transform.position - GameObject.FindGameObjectWithTag("Player").transform.position) < 0)
                     openAngle = -90;
                 else openAngle = 90;
             }
+            else canBeOpenned = false;
+        }
 
         if (open == true)
         {

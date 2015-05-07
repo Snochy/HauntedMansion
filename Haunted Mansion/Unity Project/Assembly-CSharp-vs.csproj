@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\CharacterScripts\FlashLightSync.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\cameraDriver.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\makeTransparent.cs" />
+     <Compile Include="Assets\Scripts\GUIs\CursorControllor.cs" />
      <Compile Include="Assets\Scripts\GUIs\GUI_Handler.cs" />
      <Compile Include="Assets\Scripts\GUIs\InGameGuI.cs" />
      <Compile Include="Assets\Scripts\Haunts\HauntedTeddy.cs" />

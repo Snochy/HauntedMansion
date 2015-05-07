@@ -7,6 +7,10 @@ public class ItemHighLighter : MonoBehaviour
     public Material highLighted;
     public bool mouseOver;
 
+    public bool canPickUp;
+
+    public float pickUpDistance = 120f;
+
     public string soundName;
 
     void Start()
@@ -16,6 +20,10 @@ public class ItemHighLighter : MonoBehaviour
 
     void Update()
     {
+
+        if (Vector3.Distance(this.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= pickUpDistance)
+            canPickUp = true;
+        else canPickUp = false;
 
         RaycastHit[] allHit = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition));
         foreach (RaycastHit hit in allHit)
@@ -34,10 +42,11 @@ public class ItemHighLighter : MonoBehaviour
         }
 
         if (Input.GetMouseButtonDown(0) && mouseOver)
-            if (Vector3.Distance(this.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= 120f)
+            if (canPickUp)
             {
                 GameObject.Find("SoundHandler").GetComponent<SoundPlayer>().PlayAudio(soundName);
                 Destroy(this.gameObject);
             }
+
     }
 }

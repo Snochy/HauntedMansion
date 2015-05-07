@@ -30,9 +30,11 @@ public class cameraDriver : MonoBehaviour
 	private float correctedDistance;
 
 	public LayerMask layerMask;
+    public LayerMask defaultMasking;
 	
 	void Start ()
 	{
+        defaultMasking = Camera.main.cullingMask;
 		Vector3 angles = transform.eulerAngles;
 		x = angles.x;
 		y = angles.y;
@@ -51,6 +53,14 @@ public class cameraDriver : MonoBehaviour
      */
 	void LateUpdate ()
 	{
+
+        if (currentDistance <= minDistance + 20f)
+        {
+            LayerMask maskingPlayer = 1 << 9;
+            maskingPlayer = ~maskingPlayer;
+            Camera.main.cullingMask = maskingPlayer;
+        }
+        else Camera.main.cullingMask = defaultMasking;
 		// Don't do anything if target is not defined
 		if (!target)
 			return;

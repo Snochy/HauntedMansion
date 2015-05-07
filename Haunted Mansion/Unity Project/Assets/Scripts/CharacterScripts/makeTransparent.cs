@@ -16,21 +16,29 @@ public class makeTransparent : MonoBehaviour {
         if(Physics.Raycast(ray, out hit, 1000))
             if (hit.collider.gameObject == collider)
             {
+                GetComponent<Renderer>().material = transparent;
                 fading = true;
             }
             else
             {
+                GetComponent<Renderer>().material = current;
                 fading = false;
             }
 
             if (fading)
             {
-                GetComponent<Renderer>().material.color = Color.Lerp(GetComponent<Renderer>().material.color, transparent.color, Time.deltaTime);
+                float alpha = Mathf.Lerp(current.color.a, transparent.color.a, Time.deltaTime);
+                Color color = GetComponent<Renderer>().material.color;
+                color.a = 1 - alpha;
+                GetComponent<Renderer>().material.color = color;
             }
 
             if (!fading)
             {
-                GetComponent<Renderer>().material.color = Color.Lerp(GetComponent<Renderer>().material.color, current.color, Time.deltaTime * 5f);
+                float alpha = Mathf.Lerp(transparent.color.a, current.color.a, Time.deltaTime * 5f);
+                Color color = GetComponent<Renderer>().material.color;
+                color.a = 1- alpha;
+                GetComponent<Renderer>().material.color = color;
             }
         }
 	

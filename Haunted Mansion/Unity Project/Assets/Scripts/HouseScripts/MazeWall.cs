@@ -4,6 +4,8 @@ public class MazeWall : MazeCellEdge
 {
     public Transform wall;
 
+    public bool SpawnedProp = false;
+
     public override void Initialize(MazeCell cell, MazeCell otherCell, MazeDirection direction, EdgeTypes edgeType)
     {
         base.Initialize(cell, otherCell, direction, edgeType);

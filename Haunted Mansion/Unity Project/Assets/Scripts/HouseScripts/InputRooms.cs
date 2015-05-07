@@ -4,14 +4,7 @@ using System.Collections.Generic;
 
 public class InputRooms : MonoBehaviour
 {
-    public GameObject singleRoom;
-    public GameObject doubleCrossRoom;
-    public GameObject doubleCornerRoom;
-    public GameObject triRoom;
-    public GameObject quadRoom;
     public GameObject entranceHall;
-
-    public GameObject soundPrefab;
 
     public void ReplaceRooms()
     {

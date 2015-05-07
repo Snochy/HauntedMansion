@@ -9,14 +9,23 @@ public class PropsSpawner : MonoBehaviour {
 
 	private bool spawnedProps = false;
 
+    [Range(0f, 1f)]
+    public float propProbability;
+
 	public void AddProps()
 	{
 		GameObject[] largeSpawns = GameObject.FindGameObjectsWithTag("LargeObject");
+        GameObject prop;
 
 		foreach(GameObject go in largeSpawns)
 		{
-			GameObject prop = Instantiate(largeObjects[Random.Range(0,largeObjects.Count)], go.transform.position, go.transform.rotation)as GameObject;
-			prop.transform.parent = go.transform.parent;
+            if(!go.transform.parent.GetComponent<MazeWall>().SpawnedProp)
+                if(Random.value < propProbability ? true : false)
+                {
+			        prop = Instantiate(largeObjects[Random.Range(0,largeObjects.Count)], go.transform.position, go.transform.rotation)as GameObject;
+                    prop.transform.parent = go.transform;
+                    prop.transform.parent.parent.GetComponent<MazeWall>().SpawnedProp = true;
+                }
 
 		}
 
@@ -24,8 +33,13 @@ public class PropsSpawner : MonoBehaviour {
 
 		foreach(GameObject go in smallSpawns)
 		{
-			GameObject prop = Instantiate(smallObjects[Random.Range(0,smallObjects.Count)], go.transform.position, go.transform.rotation)as GameObject;
-			prop.transform.parent = go.transform.parent;
+             if(!go.transform.parent.GetComponent<MazeWall>().SpawnedProp)
+                 if (Random.value < propProbability ? true : false)
+                 {
+                     prop = Instantiate(smallObjects[Random.Range(0, smallObjects.Count)], go.transform.position, go.transform.rotation) as GameObject;
+                     prop.transform.parent = go.transform;
+                     prop.transform.parent.parent.GetComponent<MazeWall>().SpawnedProp = true;
+                 }
 		}
 	}
 }
