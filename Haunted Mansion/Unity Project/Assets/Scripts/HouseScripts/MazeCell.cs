@@ -22,7 +22,7 @@ public class MazeCell : MonoBehaviour {
     public void Initialize(MazeRoom room)
     {
         room.Add(this);
-        transform.GetComponent<Renderer>().material = room.settings.floorMaterial;
+        transform.FindChild("Floor").GetComponent<Renderer>().material = room.settings.floorMaterial;
     }
 
     public MazeCellEdge GetEdge(MazeDirection direction)

@@ -74,6 +74,7 @@
      <Compile Include="Assets\Scripts\HouseScripts\RoomType.cs" />
      <Compile Include="Assets\Scripts\ItemScripts\ItemHighLighter.cs" />
      <Compile Include="Assets\Scripts\MainMenu\MenuLightsHandler.cs" />
+     <Compile Include="Assets\Scripts\Props\flickeringLight.cs" />
      <Compile Include="Assets\Scripts\Sounds\SoundPlayer.cs" />
      <None Include="Assets\FBXModels\Props\PropShaders\ItemGlow.shader" />
  <Reference Include="UnityEngine.UI">

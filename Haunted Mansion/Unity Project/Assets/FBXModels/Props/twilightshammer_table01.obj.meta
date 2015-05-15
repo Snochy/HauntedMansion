@@ -7,13 +7,18 @@ ModelImporter:
   fileIDToRecycleName:
     100000: Geoset_000
     100002: //RootNode
+    100004: twilightshammer_table01:Geoset_000
     400000: Geoset_000
     400002: //RootNode
+    400004: twilightshammer_table01:Geoset_000
     2300000: Geoset_000
+    2300002: twilightshammer_table01:Geoset_000
     3300000: Geoset_000
+    3300002: twilightshammer_table01:Geoset_000
     4300000: Geoset_000
+    4300002: twilightshammer_table01:Geoset_000
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -34,11 +39,11 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
-    importBlendShapes: 1
+    importBlendShapes: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
+    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 1
     secondaryUVAngleDistortion: 8
@@ -49,7 +54,7 @@ ModelImporter:
   tangentSpace:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
-    normalImportMode: 0
+    normalImportMode: 1
     tangentImportMode: 1
   importAnimation: 1
   copyAvatar: 0

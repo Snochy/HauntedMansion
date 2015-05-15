@@ -81,9 +81,9 @@ public class Character_Movement : MonoBehaviour {
 		
 		controller.Move(moveDirection * Time.deltaTime);
 
-		if(moveDirection.x > 0 || moveDirection.z > 0)
-			PlayAudio("step");
-		else PlayAudio("stopStep");
+        //if(moveDirection.x > 0 || moveDirection.z > 0)
+        //    PlayAudio("step");
+        //else PlayAudio("stopStep");
 		
 	}
 
