@@ -77,13 +77,12 @@ public class Character_Movement : MonoBehaviour {
 		}
 
 		if(Input.GetKeyDown(KeyCode.C))
+		{
 			GameObject.Find("FlashLight").GetComponent<Light>().enabled = !GameObject.Find("FlashLight").GetComponent<Light>().enabled;
+			GameObject.Find("FlashLight").GetComponent<AudioSource>().Play();
+		}
 		
 		controller.Move(moveDirection * Time.deltaTime);
-
-        //if(moveDirection.x > 0 || moveDirection.z > 0)
-        //    PlayAudio("step");
-        //else PlayAudio("stopStep");
 		
 	}
 

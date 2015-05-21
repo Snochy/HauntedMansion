@@ -15,7 +15,6 @@ public class FlashLightSync : MonoBehaviour {
 			if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity,layerMask))
 			{
 				flashlight.LookAt(hit.point);
-                //point = hit.point;
 			}
 
 	}

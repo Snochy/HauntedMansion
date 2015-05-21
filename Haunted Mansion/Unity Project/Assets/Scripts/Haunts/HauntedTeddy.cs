@@ -20,7 +20,8 @@ public class HauntedTeddy : MonoBehaviour
             GameObject teddyBear = Instantiate(teddyBearGO) as GameObject;
             teddyBear.name = "TeddyBear Ground " + (i+1);
             IntVector2 temp = new IntVector2(Random.Range(0, maze.GetComponent<Maze>().size.x), Random.Range(0, maze.GetComponent<Maze>().size.z));
-            while (maze.GetComponent<Maze>().groundCells[temp.x, temp.z] == null)
+            
+			while (maze.GetComponent<Maze>().groundCells[temp.x, temp.z] == null || maze.GetComponent<Maze>().groundCells[temp.x, temp.z].roomType == RoomType.EntranceHall)
                 temp = new IntVector2(Random.Range(0, maze.GetComponent<Maze>().size.x), Random.Range(0, maze.GetComponent<Maze>().size.z));
 
             teddyBear.transform.parent = maze.GetComponent<Maze>().groundCells[temp.x, temp.z].transform;

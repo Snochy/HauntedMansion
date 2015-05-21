@@ -8,6 +8,8 @@ public class SoundPlayer : MonoBehaviour {
 
 	public AudioSource click;
     public AudioSource book;
+    
+    public AudioSource pickUp;
 	
 	public void PlayAudio(string a)
 	{
@@ -19,5 +21,8 @@ public class SoundPlayer : MonoBehaviour {
 			click.Play ();
         if (a == "book")
             book.Play();
+        if(a == "pickUp")
+        	pickUp.Play ();
+        
 	}
 }

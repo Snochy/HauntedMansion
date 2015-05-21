@@ -59,6 +59,7 @@
     <Compile Include="Assets\Scripts\CharacterScripts\Character_Movement.cs" />
     <Compile Include="Assets\Scripts\CharacterScripts\FlashLightSync.cs" />
     <Compile Include="Assets\Scripts\CharacterScripts\cameraDriver.cs" />
+    <Compile Include="Assets\Scripts\CharacterScripts\footStepHandler.cs" />
     <Compile Include="Assets\Scripts\CharacterScripts\makeTransparent.cs" />
     <Compile Include="Assets\Scripts\GUIs\CursorControllor.cs" />
     <Compile Include="Assets\Scripts\GUIs\GUI_Handler.cs" />

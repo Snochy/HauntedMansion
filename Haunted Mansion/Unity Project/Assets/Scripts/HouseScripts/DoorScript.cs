@@ -14,6 +14,9 @@ public class DoorScript : MonoBehaviour {
 
     public bool open, enter, canBeOpenned;
     public float interactionDistance = 200f;
+    
+    public AudioSource openSound;
+    public AudioSource closeSound;
 
 	void Update () 
     {
@@ -47,6 +50,14 @@ public class DoorScript : MonoBehaviour {
                 else openAngle = 90;
             }
             else canBeOpenned = false;
+            
+            if(canBeOpenned)
+            {
+	            if(open)
+	            	PlayAudio("open");
+	            if(!open)
+	            	PlayAudio("close");
+            }
         }
 
         if (open == true)
@@ -65,5 +76,12 @@ public class DoorScript : MonoBehaviour {
          Time.deltaTime * smooth);
         }
             
+	}
+	
+	public void PlayAudio(string a)
+	{
+		if(a == "open")
+			openSound.Play();
+		else closeSound.Play();
 	}
 }

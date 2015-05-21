@@ -21,32 +21,34 @@ public class ItemHighLighter : MonoBehaviour
     void Update()
     {
 
-        if (Vector3.Distance(this.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= pickUpDistance)
-            canPickUp = true;
-        else canPickUp = false;
-
-        RaycastHit[] allHit = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition));
-        foreach (RaycastHit hit in allHit)
-        {
-            if (hit.collider.gameObject == this.gameObject)
-            {
-                startcolor = GetComponent<Renderer>().material;
-                GetComponent<Renderer>().material = highLighted;
-                mouseOver = true;
-            }
-            else
-            {
-                GetComponent<Renderer>().material = startcolor;
-                mouseOver = false;
-            }
-        }
-
-        if (Input.GetMouseButtonDown(0) && mouseOver)
-            if (canPickUp)
-            {
-                GameObject.Find("SoundHandler").GetComponent<SoundPlayer>().PlayAudio(soundName);
-                Destroy(this.gameObject);
-            }
-
+		if(GameObject.FindGameObjectWithTag("Player") != null && Camera.main != null)
+		{
+	        if (Vector3.Distance(this.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= pickUpDistance)
+	            canPickUp = true;
+	        else canPickUp = false;
+	
+	        RaycastHit[] allHit = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition));
+	        foreach (RaycastHit hit in allHit)
+	        {
+	            if (hit.collider.gameObject == this.gameObject)
+	            {
+	                startcolor = GetComponent<Renderer>().material;
+	                GetComponent<Renderer>().material = highLighted;
+	                mouseOver = true;
+	            }
+	            else
+	            {
+	                GetComponent<Renderer>().material = startcolor;
+	                mouseOver = false;
+	            }
+	        }
+	
+	        if (Input.GetMouseButtonDown(0) && mouseOver)
+	            if (canPickUp)
+	            {
+	                GameObject.Find("SoundHandler").GetComponent<SoundPlayer>().PlayAudio(soundName);
+	                Destroy(this.gameObject);
+	            }
+		}
     }
 }

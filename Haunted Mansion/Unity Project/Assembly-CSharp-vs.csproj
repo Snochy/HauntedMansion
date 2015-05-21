@@ -39,16 +39,17 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>D:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>D:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\CharacterScripts\Character_Movement.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\FlashLightSync.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\cameraDriver.cs" />
+     <Compile Include="Assets\Scripts\CharacterScripts\footStepHandler.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\makeTransparent.cs" />
      <Compile Include="Assets\Scripts\GUIs\CursorControllor.cs" />
      <Compile Include="Assets\Scripts\GUIs\GUI_Handler.cs" />
@@ -78,7 +79,7 @@
      <Compile Include="Assets\Scripts\Sounds\SoundPlayer.cs" />
      <None Include="Assets\FBXModels\Props\PropShaders\ItemGlow.shader" />
  <Reference Include="UnityEngine.UI">
- <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

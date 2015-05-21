@@ -43,17 +43,22 @@ public class GameManager : MonoBehaviour
         Physics.gravity = new Vector3(0, -600.0F, 0);
     }
 
-    public void LoadAssets()
+    public void StartHaunt()
     {
-            transform.GetComponent<InputRooms>().ReplaceRooms();
-            transform.GetComponent<PropsSpawner>().AddProps();
             hauntstart = true;
-
     }
 
     public Maze GetMaze()
     {
         return mazeInstance;
+    }
+    
+    public void SpawnCharacters()
+    {
+		GameObject character = Instantiate(mainCharacter) as GameObject;
+		character.name = "Character 01";		
+		character.transform.position =
+			new Vector3(-250f, 33f, -1200f);
     }
 
 	//Makes instance of Maze and generates maze within Maze

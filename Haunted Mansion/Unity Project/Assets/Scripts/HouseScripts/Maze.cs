@@ -90,7 +90,10 @@ public class Maze : MonoBehaviour {
 
         if (activeGroundCells.Count == 0 && activeUpperCells.Count == 0 && activeBasementCells.Count == 0)
         {
-            GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().isHouseBuilt = true;
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().isHouseBuilt = true;			
+			GameObject.FindGameObjectWithTag("GameController").GetComponent<InputRooms>().ReplaceRooms();
+			GameObject.FindGameObjectWithTag("GameController").GetComponent<PropsSpawner>().AddProps();
+			GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().hauntstart = true;
         }
     }
 

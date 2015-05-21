@@ -5,9 +5,12 @@ public class InGameGuI : MonoBehaviour {
 
 	public Texture2D cogIcon;
 	public Texture2D XIcon;
+	
+	public Texture2D redHealthBar;
 
 	public Texture2D keybaordIconA;
 	public GUIStyle menuStyle;
+	public GUIStyle HUDStyle;
 
 	public float fadeSpeed = 1f;
 
@@ -21,6 +24,8 @@ public class InGameGuI : MonoBehaviour {
 	private bool isFading = false;
 
     public bool isHouseReady = false;
+    
+    public bool areYouSure = false;
 
 	public Color guiColor = Color.clear;
 
@@ -48,8 +53,7 @@ public class InGameGuI : MonoBehaviour {
             if(isHouseReady)
 			    if(GUI.Button(new Rect(Screen.width * .3f,Screen.height * .65f, 100,50),"Close"))
 			    {
-                    gameHandler.GetComponent<GameManager>().mainCharacter.SetActive(true);
-                    gameHandler.GetComponent<GameManager>().LoadAssets();
+                    gameHandler.GetComponent<GameManager>().SpawnCharacters();
 				    controls = false;
 			    }
 		}
@@ -58,21 +62,21 @@ public class InGameGuI : MonoBehaviour {
 
 			if(!menuOpen)
 			{
-				if(GUI.Button(new Rect(Screen.width * .05f,Screen.height * .05f, 200,50), "Back"))
-				{
-					isFading = true;
-				}
 
-				if(GUI.Button(new Rect(Screen.width * .90f,Screen.height * .05f, 50,50), cogIcon))
+				if(Input.GetKeyDown(KeyCode.Escape))
 				{
 					GetComponent<GUITexture>().color = new Color(0,0,0,0.75f);
 					menuOpen = true;
 				}
+				
+				GUI.Box(new Rect(Screen.width * .01f,Screen.height * .01f, Screen.width * .25f, Screen.height * .05f),"HP:",HUDStyle);
+				GUI.Box(new Rect(Screen.width * .05f,Screen.height * .02f, Screen.width * .15f, Screen.height * .025f), redHealthBar);
+				
 			}
 
 			if(menuOpen)
 			{
-				GUI.Box(new Rect(Screen.width * .25f,Screen.height * .25f, 400,200),"",menuStyle);
+				GUI.Box(new Rect(Screen.width * .25f,Screen.height * .25f, Screen.width * .5f, Screen.height * .5f),"",menuStyle);
 				if(GUI.Button(new Rect(Screen.width * .3f,Screen.height * .3f, 50,50),button01Content.image))
 				{
 					musicTog = !musicTog;
@@ -83,10 +87,28 @@ public class InGameGuI : MonoBehaviour {
 					SFXTog = !SFXTog;
 				}
 				GUI.Label(new Rect(Screen.width * .39f,Screen.height * .42f, 100,50),"Sound FX");
-				if(GUI.Button(new Rect(Screen.width * .45f,Screen.height * .5f, 100,25),"Apply"))
+				if(GUI.Button(new Rect(Screen.width * .55f,Screen.height * .70f, 100,25),"Apply"))
 				{
 					menuOpen = false;
 					GetComponent<GUITexture>().color = new Color(0,0,0,0f);
+				}
+				
+				if(GUI.Button(new Rect(Screen.width * .65f,Screen.height * .70f, 100,25),"Cancel"))
+				{
+					menuOpen = false;
+					GetComponent<GUITexture>().color = new Color(0,0,0,0f);
+				}
+				
+				
+				if(GUI.Button(new Rect(Screen.width * .28f,Screen.height * .70f, 100,25), "End Game"))
+				{
+					areYouSure = true;
+					menuOpen = false;
+				}
+				
+				if(Input.GetKeyDown(KeyCode.Escape))
+				{
+					menuOpen = false;
 				}
 			}
 
@@ -106,12 +128,32 @@ public class InGameGuI : MonoBehaviour {
 
 				if(SFXTog)
 				{
+					GameObject[] temp = GameObject.FindGameObjectsWithTag("SoundEffect");
+					foreach(GameObject go in temp)
+						go.GetComponent<AudioSource>().mute = false;
 					button02Content.image = XIcon;
 					
 				}
 				else 
 				{
 					button02Content.image = null;
+					GameObject[] temp = GameObject.FindGameObjectsWithTag("SoundEffect");
+					foreach(GameObject go in temp)
+						go.GetComponent<AudioSource>().mute = true;
+					button02Content.image = null;
+				}
+			}
+			
+			if(areYouSure)
+			{
+				GUI.Box(new Rect(Screen.width * .375f,Screen.height * .375f, Screen.width * .25f, Screen.height * .15f),"Are you sure you want to leave the game and go back to the main menu?",menuStyle);
+				if(GUI.Button(new Rect(Screen.width * .4f,Screen.height * .48f, 100,25), "End Game"))
+				{
+					Application.LoadLevel(0);
+				}
+				if(GUI.Button(new Rect(Screen.width * .5f,Screen.height * .48f, 100,25), "Back"))
+				{
+					areYouSure = false;
 				}
 			}
 		}
@@ -129,12 +171,6 @@ public class InGameGuI : MonoBehaviour {
 		{
 			GetComponent<GUITexture>().color = Color.Lerp(GetComponent<GUITexture>().color, Color.black, Time.deltaTime);
 			guiColor = Color.Lerp(guiColor, Color.clear, Time.deltaTime);
-		}
-
-		if(GetComponent<GUITexture>().color.a >= 0.95f && isFading)
-		{
-			isFading = false;
-			Application.LoadLevel(0);
 		}
 	}
 }
