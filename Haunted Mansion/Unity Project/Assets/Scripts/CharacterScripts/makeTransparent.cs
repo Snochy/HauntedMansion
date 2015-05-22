@@ -5,7 +5,7 @@ public class makeTransparent : MonoBehaviour {
 
     public Material current;
     public Material transparent;
-    public GameObject collider;
+    public GameObject colliderObject;
 
     public bool fading;
 
@@ -14,7 +14,7 @@ public class makeTransparent : MonoBehaviour {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, 1000))
-            if (hit.collider.gameObject == collider)
+            if (hit.collider.gameObject == colliderObject)
             {
                 GetComponent<Renderer>().material = transparent;
                 fading = true;

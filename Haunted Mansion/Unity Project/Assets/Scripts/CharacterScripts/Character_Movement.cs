@@ -11,8 +11,6 @@ public class Character_Movement : MonoBehaviour {
 		
     public float speed = 0.0F;
 
-	private bool moving = false;
-
 	void start ()
 	{
 		speed = defaultSpeed;
@@ -79,15 +77,10 @@ public class Character_Movement : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.C))
 		{
 			GameObject.Find("FlashLight").GetComponent<Light>().enabled = !GameObject.Find("FlashLight").GetComponent<Light>().enabled;
-			GameObject.Find("FlashLight").GetComponent<AudioSource>().Play();
+            GameObject.FindGameObjectWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio("click");
 		}
 		
 		controller.Move(moveDirection * Time.deltaTime);
 		
-	}
-
-	public void PlayAudio(string a)
-	{
-		GameObject.Find("SoundHandler").GetComponent<SoundPlayer>().PlayAudio(a);
 	}
 }

@@ -61,6 +61,12 @@
     <Compile Include="Assets\Scripts\CharacterScripts\cameraDriver.cs" />
     <Compile Include="Assets\Scripts\CharacterScripts\footStepHandler.cs" />
     <Compile Include="Assets\Scripts\CharacterScripts\makeTransparent.cs" />
+    <Compile Include="Assets\Scripts\Databases\Character.cs" />
+    <Compile Include="Assets\Scripts\Databases\CharacterBase.cs" />
+    <Compile Include="Assets\Scripts\Databases\CharacterID.cs" />
+    <Compile Include="Assets\Scripts\Databases\CharacterType.cs" />
+    <Compile Include="Assets\Scripts\GUIs\ButtonItem.cs" />
+    <Compile Include="Assets\Scripts\GUIs\CreateScrollList.cs" />
     <Compile Include="Assets\Scripts\GUIs\CursorControllor.cs" />
     <Compile Include="Assets\Scripts\GUIs\GUI_Handler.cs" />
     <Compile Include="Assets\Scripts\GUIs\InGameGuI.cs" />

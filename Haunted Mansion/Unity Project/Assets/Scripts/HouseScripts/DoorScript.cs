@@ -14,9 +14,6 @@ public class DoorScript : MonoBehaviour {
 
     public bool open, enter, canBeOpenned;
     public float interactionDistance = 200f;
-    
-    public AudioSource openSound;
-    public AudioSource closeSound;
 
 	void Update () 
     {
@@ -54,9 +51,9 @@ public class DoorScript : MonoBehaviour {
             if(canBeOpenned)
             {
 	            if(open)
-	            	PlayAudio("open");
+                    GameObject.FindWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio("doorOpen");
 	            if(!open)
-	            	PlayAudio("close");
+                    GameObject.FindWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio("doorClose");
             }
         }
 
@@ -76,12 +73,5 @@ public class DoorScript : MonoBehaviour {
          Time.deltaTime * smooth);
         }
             
-	}
-	
-	public void PlayAudio(string a)
-	{
-		if(a == "open")
-			openSound.Play();
-		else closeSound.Play();
 	}
 }

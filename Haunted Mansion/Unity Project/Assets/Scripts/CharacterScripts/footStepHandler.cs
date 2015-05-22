@@ -3,7 +3,6 @@ using System.Collections;
 
 public class footStepHandler : MonoBehaviour {
 
-	public AudioSource stepSound;
 	public bool played = false;
 	public LayerMask mask = -1;
 	
@@ -16,16 +15,13 @@ public class footStepHandler : MonoBehaviour {
 		{
 			if(hit.collider != null)
 			{
-				stepSound.Play ();
+                GameObject.FindWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio("step");
 				played = true;
 			}
 		}
 		}
 		if(hit.collider == null)
 			played = false;
-
-		
-		print (hit.collider);
 	}
 
 }

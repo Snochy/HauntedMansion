@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public Maze mazePrefab;
     private Maze mazeInstance;
     public GameObject mainCharacter;
+    public GameObject GUIHandler;
 
     public GameObject teddyHaunt;
 
@@ -30,7 +31,7 @@ public class GameManager : MonoBehaviour
 
         if (isHouseBuilt)
         {
-            gameObject.GetComponent<InGameGuI>().isHouseReady = true;
+            GUIHandler.GetComponent<InGameGuI>().isHouseReady = true;
         }
 
         if (hauntstart)

@@ -20,8 +20,6 @@ public class Maze : MonoBehaviour {
 
     public MazeDoor doorPrefab;
 
-    private int roomIndex = 0;
-
     [Range(0f, 1f)]
     public float doorProbability;
 

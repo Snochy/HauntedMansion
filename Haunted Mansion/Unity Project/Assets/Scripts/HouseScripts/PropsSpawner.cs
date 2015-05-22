@@ -7,8 +7,6 @@ public class PropsSpawner : MonoBehaviour {
 	public List<GameObject> smallObjects = new List<GameObject>();
 	public List<GameObject> largeObjects = new List<GameObject>();
 
-	private bool spawnedProps = false;
-
     [Range(0f, 1f)]
     public float propProbability;
 
