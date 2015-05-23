@@ -46,7 +46,7 @@ public class ItemHighLighter : MonoBehaviour
 	        if (Input.GetMouseButtonDown(0) && mouseOver)
 	            if (canPickUp)
 	            {
-                    GameObject.FindGameObjectWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio("pickUp");
+                    GameObject.FindGameObjectWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio(SoundID.PickUp);
 	                Destroy(this.gameObject);
 	            }
 		}

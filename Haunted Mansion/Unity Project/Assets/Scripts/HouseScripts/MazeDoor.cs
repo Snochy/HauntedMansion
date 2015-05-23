@@ -25,7 +25,24 @@ public class MazeDoor : MazePassage
             Transform child = transform.GetChild(i);
             if (child != hinge)
             {
-                child.GetComponent<Renderer>().material = cell.room.settings.wallMaterial;
+                Material[] mats = new Material[] { child.GetComponent<Renderer>().materials[0], cell.room.settings.wallMaterial };
+                child.GetComponent<Renderer>().materials = mats;
+            }
+        }
+    }
+
+    public override void Initialize(MazeCell cell, MazeDirection direction, EdgeTypes edgeType)
+    {
+       base.Initialize(cell, direction, edgeType);
+       if(cell.roomType != RoomType.EntranceHall)
+        Destroy(hinge.gameObject);
+       for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            if (child != hinge)
+            {
+                Material[] mats = new Material[] { child.GetComponent<Renderer>().materials[0], cell.room.settings.wallMaterial };
+                child.GetComponent<Renderer>().materials = mats;
             }
         }
     }

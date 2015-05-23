@@ -51,9 +51,9 @@ public class DoorScript : MonoBehaviour {
             if(canBeOpenned)
             {
 	            if(open)
-                    GameObject.FindWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio("doorOpen");
+                    GameObject.FindWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio(SoundID.DoorOpen);
 	            if(!open)
-                    GameObject.FindWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio("doorClose");
+                    GameObject.FindWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio(SoundID.DoorClose);
             }
         }
 

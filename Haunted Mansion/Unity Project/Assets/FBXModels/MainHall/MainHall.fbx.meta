@@ -11,6 +11,7 @@ ModelImporter:
     100010: Rug
     100012: StairRug
     100014: Walls
+    100016: MainHall_MidSection01
     400000: //RootNode
     400002: Door1
     400004: Drappery
@@ -19,6 +20,7 @@ ModelImporter:
     400010: Rug
     400012: StairRug
     400014: Walls
+    400016: MainHall_MidSection01
     2300000: //RootNode
     2300002: Door1
     2300004: Drappery
@@ -27,6 +29,7 @@ ModelImporter:
     2300010: Rug
     2300012: StairRug
     2300014: Walls
+    2300016: MainHall_MidSection01
     3300000: //RootNode
     3300002: Door1
     3300004: Drappery
@@ -35,6 +38,7 @@ ModelImporter:
     3300010: Rug
     3300012: StairRug
     3300014: Walls
+    3300016: MainHall_MidSection01
     4300000: Entrance_Hall04
     4300002: EntranceHall_Mesh01
     4300004: Walls
@@ -45,9 +49,12 @@ ModelImporter:
     4300014: StairRug
     4300016: Rug
     4300018: EntranceHall02
+    4300020: MainHall_MidSection01
+    4300022: MainHall
+    4300024: MainHall01
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -68,11 +75,11 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
-    importBlendShapes: 1
+    importBlendShapes: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
+    optimizeMeshForGPU: 0
     keepQuads: 0
     weldVertices: 1
     secondaryUVAngleDistortion: 8

@@ -55,6 +55,10 @@
      <Compile Include="Assets\Scripts\Databases\CharacterBase.cs" />
      <Compile Include="Assets\Scripts\Databases\CharacterID.cs" />
      <Compile Include="Assets\Scripts\Databases\CharacterType.cs" />
+     <Compile Include="Assets\Scripts\Databases\HouseMaterials.cs" />
+     <Compile Include="Assets\Scripts\Databases\HouseMaterialsBase.cs" />
+     <Compile Include="Assets\Scripts\Databases\HouseMaterialsID.cs" />
+     <Compile Include="Assets\Scripts\Databases\HouseMaterialsType.cs" />
      <Compile Include="Assets\Scripts\GUIs\ButtonItem.cs" />
      <Compile Include="Assets\Scripts\GUIs\CreateScrollList.cs" />
      <Compile Include="Assets\Scripts\GUIs\CursorControllor.cs" />
@@ -82,8 +86,9 @@
      <Compile Include="Assets\Scripts\ItemScripts\ItemHighLighter.cs" />
      <Compile Include="Assets\Scripts\MainMenu\MenuLightsHandler.cs" />
      <Compile Include="Assets\Scripts\Props\flickeringLight.cs" />
+     <Compile Include="Assets\Scripts\Sounds\SoundID.cs" />
      <Compile Include="Assets\Scripts\Sounds\SoundPlayer.cs" />
-     <None Include="Assets\FBXModels\Props\PropShaders\ItemGlow.shader" />
+     <None Include="Assets\Shaders\ItemGlow.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

@@ -15,7 +15,7 @@ public class footStepHandler : MonoBehaviour {
 		{
 			if(hit.collider != null)
 			{
-                GameObject.FindWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio("step");
+                GameObject.FindWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio(SoundID.Step);
 				played = true;
 			}
 		}

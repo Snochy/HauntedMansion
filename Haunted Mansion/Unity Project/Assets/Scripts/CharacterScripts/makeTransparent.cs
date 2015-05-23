@@ -3,8 +3,7 @@ using System.Collections;
 
 public class makeTransparent : MonoBehaviour {
 
-    public Material current;
-    public Material transparent;
+    public Material transparent, current;
     public GameObject colliderObject;
 
     public bool fading;

@@ -77,7 +77,7 @@ public class Character_Movement : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.C))
 		{
 			GameObject.Find("FlashLight").GetComponent<Light>().enabled = !GameObject.Find("FlashLight").GetComponent<Light>().enabled;
-            GameObject.FindGameObjectWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio("click");
+            GameObject.FindGameObjectWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio(SoundID.Click);
 		}
 		
 		controller.Move(moveDirection * Time.deltaTime);

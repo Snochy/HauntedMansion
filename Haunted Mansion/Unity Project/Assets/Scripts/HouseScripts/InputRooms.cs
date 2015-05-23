@@ -27,11 +27,14 @@ public class InputRooms : MonoBehaviour
         mainHall.name = "EntranceHall 0 , 0";
         mainHall.transform.localPosition = new Vector3(coordX * 600, 0, coordZ * 600f);
         mainHall.transform.parent = cells[0,0].transform.parent;
+        mainHall.GetComponent<Renderer>().material = GameObject.Find("Maze(Clone)").GetComponent<Maze>().entranceHall.settings.floorMaterial;
 
         foreach (MazeCell mazeCell in cells)
         {
-             if (mazeCell.roomType == RoomType.EntranceHall)
-                 Destroy(mazeCell.gameObject);
+            if (mazeCell.roomType == RoomType.EntranceHall)
+            {
+                Destroy(mazeCell.transform.FindChild("MazeCeiling(Clone)").gameObject);
+            }
         }
 
         cells = new MazeCell[transform.GetComponent<GameManager>().GetMaze().size.x, transform.GetComponent<GameManager>().GetMaze().size.z];
@@ -40,7 +43,7 @@ public class InputRooms : MonoBehaviour
         foreach (MazeCell mazeCell in cells)
         {
             if (mazeCell.roomType == RoomType.EntranceHall)
-                Destroy(mazeCell.gameObject);
+                Destroy(mazeCell.transform.FindChild("Floor").gameObject);
         }
 
     }

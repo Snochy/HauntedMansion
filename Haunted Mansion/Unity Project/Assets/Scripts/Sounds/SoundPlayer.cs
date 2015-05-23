@@ -19,23 +19,22 @@ public class SoundPlayer : MonoBehaviour {
     {
         isEnabled = true;
     }
-	public void PlayAudio(string a)
+
+	public void PlayAudio(SoundID a)
 	{
         if (isEnabled)
         {
-            if (a == "step" && !step.isPlaying)
+            if (a == SoundID.Step)
                 step.Play();
-            if (a == "stopStep")
-                step.Stop();
-            if (a == "click")
+            if (a == SoundID.Click)
                 click.Play();
-            if (a == "book")
+            if (a == SoundID.Book)
                 book.Play();
-            if (a == "pickUp")
+            if (a == SoundID.PickUp)
                 pickUp.Play();
-            if (a == "doorOpen")
+            if (a == SoundID.DoorOpen)
                 doorOpen.Play();
-            if (a == "doorClose")
+            if (a == SoundID.DoorClose)
                 doorClose.Play();
         }
         

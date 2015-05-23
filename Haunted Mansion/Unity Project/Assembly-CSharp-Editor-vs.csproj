@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Editor\AnimationHelper.cs" />
-     <None Include="Assets\FBXModels\Props\PropShaders\ItemGlow.shader" />
+     <None Include="Assets\Shaders\ItemGlow.shader" />
  <Reference Include="Assembly-UnityScript">
  <HintPath>D:/Users/Snochy/Documents/HauntedMansion/Haunted Mansion/Unity Project/Library/ScriptAssemblies/Assembly-UnityScript.dll</HintPath>
  </Reference>

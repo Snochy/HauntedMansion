@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\MainMenu\LightFlickerJS.js" />
-     <None Include="Assets\FBXModels\Props\PropShaders\ItemGlow.shader" />
+     <None Include="Assets\Shaders\ItemGlow.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

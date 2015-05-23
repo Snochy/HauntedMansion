@@ -98,7 +98,7 @@
     <Compile Include="Assets\Editor\AnimationHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\FBXModels\Props\PropShaders\ItemGlow.shader" />
+    <None Include="Assets\Shaders\ItemGlow.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2010\UnityVS.CSharp.targets" />
 </Project>

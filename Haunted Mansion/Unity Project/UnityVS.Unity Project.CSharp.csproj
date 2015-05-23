@@ -65,6 +65,10 @@
     <Compile Include="Assets\Scripts\Databases\CharacterBase.cs" />
     <Compile Include="Assets\Scripts\Databases\CharacterID.cs" />
     <Compile Include="Assets\Scripts\Databases\CharacterType.cs" />
+    <Compile Include="Assets\Scripts\Databases\HouseMaterials.cs" />
+    <Compile Include="Assets\Scripts\Databases\HouseMaterialsBase.cs" />
+    <Compile Include="Assets\Scripts\Databases\HouseMaterialsID.cs" />
+    <Compile Include="Assets\Scripts\Databases\HouseMaterialsType.cs" />
     <Compile Include="Assets\Scripts\GUIs\ButtonItem.cs" />
     <Compile Include="Assets\Scripts\GUIs\CreateScrollList.cs" />
     <Compile Include="Assets\Scripts\GUIs\CursorControllor.cs" />
@@ -92,10 +96,11 @@
     <Compile Include="Assets\Scripts\ItemScripts\ItemHighLighter.cs" />
     <Compile Include="Assets\Scripts\MainMenu\MenuLightsHandler.cs" />
     <Compile Include="Assets\Scripts\Props\flickeringLight.cs" />
+    <Compile Include="Assets\Scripts\Sounds\SoundID.cs" />
     <Compile Include="Assets\Scripts\Sounds\SoundPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\FBXModels\Props\PropShaders\ItemGlow.shader" />
+    <None Include="Assets\Shaders\ItemGlow.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2010\UnityVS.CSharp.targets" />
 </Project>
