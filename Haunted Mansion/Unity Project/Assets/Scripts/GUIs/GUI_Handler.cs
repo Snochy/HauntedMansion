@@ -130,4 +130,9 @@ public class GUI_Handler : MonoBehaviour {
         menuNum += menuDirection;
         isFading = false;
     }
+
+    public void SetCharacter(CharacterID id)
+    {
+        PlayerStats.SetPlayerCharID(id);
+    }
 }

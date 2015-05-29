@@ -28,7 +28,7 @@ public class CursorControllor : MonoBehaviour
             {
                 if (hit.collider.gameObject.tag == "PickUp")
                 {
-                    if(hit.collider.gameObject.GetComponent<ItemHighLighter>().canPickUp)
+                    if(hit.collider.gameObject.GetComponent<PropController>().withinPickUpRange)
                         Cursor.SetCursor(pickUpCursor, hotSpot, cursorMode);
                     else Cursor.SetCursor(greyedOutCursor, hotSpot, cursorMode);
                 }

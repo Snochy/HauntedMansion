@@ -21,9 +21,12 @@ public class Maze : MonoBehaviour {
     public MazeDoor doorPrefab;
 
     public MazeRoom entranceHall;
+    public MazeRoom stairs;
 
     [Range(0f, 1f)]
     public float doorProbability;
+    [Range(0f, 1f)]
+    public float wallDecorProbability;
 
     public List<MazeRoom> rooms = new List<MazeRoom>();
 
@@ -73,17 +76,18 @@ public class Maze : MonoBehaviour {
 
         DoFirstGenerationStep(activeGroundCells);
         DoFirstGenerationStepUpper(activeUpperCells);
-        DoFirstGenerationStepBasement(activeUpperCells);
+        AddStaircaseDown(activeGroundCells, activeBasementCells);
+        DoFirstGenerationStepBasement(activeBasementCells);
 
         while (activeGroundCells.Count > 0 || activeUpperCells.Count > 0 || activeBasementCells.Count > 0)
         {
             yield return delay;
             if(activeUpperCells.Count > 0)
-             DoNextGenerationStep(activeUpperCells);
+             DoNextGenerationStep(activeUpperCells, FloorType.Upper);
             if (activeGroundCells.Count > 0)
-             DoNextGenerationStep(activeGroundCells);
+                DoNextGenerationStep(activeGroundCells, FloorType.Ground);
             if (activeBasementCells.Count > 0)
-             DoNextGenerationStep(activeBasementCells);
+                DoNextGenerationStep(activeBasementCells, FloorType.Basement);
         }
 
         if (activeGroundCells.Count == 0 && activeUpperCells.Count == 0 && activeBasementCells.Count == 0)
@@ -123,10 +127,11 @@ public class Maze : MonoBehaviour {
 	//Called after the First step, also take sin list
 	//Takes active cell count and minuses one for current index so its starts as 0 as 1
 	//Current cell is taken from the list and store in variable
-    private void DoNextGenerationStep(List<MazeCell> activeCells)
+    private void DoNextGenerationStep(List<MazeCell> activeCells, FloorType floorType)
     {
         int currentIndex = activeCells.Count - 1;
         MazeCell currentCell = activeCells[currentIndex];
+        currentCell.floorType = floorType;
 		
 		//Ask if currentCell as mean fully Initialize, meaning sides been initialzed fully or not
 		//this makes it so once a dead end is reach the cell is finished and it goes back tracks
@@ -304,7 +309,26 @@ public class Maze : MonoBehaviour {
 	//if not then give it a wall too
     private void CreateWall(MazeCell cell, MazeCell otherCell, MazeDirection direction)
     {
+        bool spawnWallDecor = Random.value < wallDecorProbability ? true : false;
         MazeWall wall = Instantiate(wallPrefab) as MazeWall;
+        bool redo = false;
+        int propNum;
+        if (spawnWallDecor)
+        {
+            do
+            {
+                redo = false;
+                propNum = Random.Range(0, PropBase.PropListWallDecor.Count);
+                if(cell.floorType == FloorType.Basement)
+                    if (PropBase.PropListWallDecor[propNum].Type.isNotBasement)
+                        redo = true;
+            }
+            while (redo);
+            GameObject wallDecor;
+            wallDecor = Instantiate(PropBase.PropListWallDecor[propNum].Type.Prefab) as GameObject;
+            wallDecor.transform.parent = wall.transform;
+            wallDecor.transform.localPosition = Vector3.zero;
+        }
         wall.Initialize(cell, otherCell, direction, EdgeTypes.Wall);
         if (otherCell != null)
         {
@@ -315,7 +339,27 @@ public class Maze : MonoBehaviour {
 
     private void CreateWall(MazeCell cell, MazeDirection direction)
     {
+        bool spawnWallDecor = Random.value < wallDecorProbability ? true : false;
         MazeWall wall = Instantiate(wallPrefab) as MazeWall;
+        bool redo = false;
+        int propNum;
+        if(cell.roomType != RoomType.Stairs)
+            if (spawnWallDecor)
+            {
+                do
+                {
+                    redo = false;
+                    propNum = Random.Range(0, PropBase.PropListWallDecor.Count);
+                    if (cell.floorType == FloorType.Basement)
+                        if (PropBase.PropListWallDecor[propNum].Type.isNotBasement)
+                            redo = true;
+                }
+                while (redo);
+                GameObject wallDecor;
+                wallDecor = Instantiate(PropBase.PropListWallDecor[propNum].Type.Prefab) as GameObject;
+                wallDecor.transform.parent = wall.transform;
+                wallDecor.transform.localPosition = Vector3.zero;
+            }
         wall.Initialize(cell, direction, EdgeTypes.Wall);
     }
     
@@ -477,7 +521,7 @@ public class Maze : MonoBehaviour {
             CreateWall(activeCells[4], MazeDirection.West);
 
             activeCells.Add(CreateCell(new IntVector3(halfX, 1, halfZ - 2), RoomType.EntranceHall));
-            activeCells[5].Initialize(activeCells[0].room);
+            activeCells[5].Initialize(entranceHall);
             CreatePassage(activeCells[5], MazeDirection.North);
             CreateWall(activeCells[5], MazeDirection.East);
             CreateWall(activeCells[5], MazeDirection.South);
@@ -485,17 +529,61 @@ public class Maze : MonoBehaviour {
         }
     }
 
-    private void AddStaircaseDown()
+    private void AddStaircaseDown(List<MazeCell> activeCellsGround, List<MazeCell> activeCellsBasement)
     {
-        MazeCell newCell;
+        IntVector2 newCell;
+        bool redo = false;
         do
         {
-            newCell = groundCells[Random.Range(0, size.x), Random.Range(0, size.z)];
+            redo = false;
+            newCell = new IntVector2(Random.Range(1, size.x -1), Random.Range(0, size.z));
+            if(newCell.x == size.x / 2 - 2)
+            {
+                if(newCell.z == size.z /2)
+                    redo = true;
+            }
+            else if(newCell.x == size.x / 2 + 1)
+            {
+                if (newCell.z == size.z / 2)
+                    redo = true;
+            }
+            if (groundCells[newCell.x, newCell.z] != null)
+                redo = true;
         }
-        while (newCell.roomType != RoomType.EntranceHall);
+        while (redo);
 
-        groundCells[newCell.coordinates.x, newCell.coordinates.z].roomType = RoomType.Stairs;
-        basementCells[newCell.coordinates.x, newCell.coordinates.z].roomType = RoomType.Stairs;
+        activeCellsGround.Add(CreateCell(new IntVector3(newCell.x, 0, newCell.z), RoomType.Stairs));
+        activeCellsGround[activeCellsGround.Count -1].Initialize(CreateRoom(-1));
+        stairs = activeCellsGround[activeCellsGround.Count - 1].room;
+        CreateWall(activeCellsGround[activeCellsGround.Count - 1], MazeDirection.North);
+        CreateWall(activeCellsGround[activeCellsGround.Count - 1], MazeDirection.South);
+        if (size.x / 2 < newCell.x)
+        {
+            CreatePassage(activeCellsGround[activeCellsGround.Count - 1], MazeDirection.West, true);
+            CreateWall(activeCellsGround[activeCellsGround.Count - 1], MazeDirection.East);
+        }
+        else
+        {
+            CreateWall(activeCellsGround[activeCellsGround.Count - 1], MazeDirection.West);
+            CreatePassage(activeCellsGround[activeCellsGround.Count - 1], MazeDirection.East, true);
+        }
 
+
+
+        activeCellsBasement.Add(CreateCell(new IntVector3(newCell.x, -1, newCell.z), RoomType.Stairs));
+        activeCellsBasement[0].Initialize(stairs);
+        CreateWall(activeCellsBasement[0], MazeDirection.North);
+        CreateWall(activeCellsBasement[0], MazeDirection.South);
+
+        if (size.x / 2 < newCell.x)
+        {
+            CreatePassage(activeCellsBasement[0], MazeDirection.East, true);
+            CreateWall(activeCellsBasement[0], MazeDirection.West);
+        }
+        else
+        {
+            CreatePassage(activeCellsBasement[0], MazeDirection.West, true);
+            CreateWall(activeCellsBasement[0], MazeDirection.East);
+        }
     }
 }

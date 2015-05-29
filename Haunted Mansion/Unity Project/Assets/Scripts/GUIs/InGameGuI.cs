@@ -21,11 +21,15 @@ public class InGameGuI : MonoBehaviour {
     
     public bool areYouSure = false;
 
+    public bool finalPanel = false;
+
 	public Color guiColor = Color.clear;
 
     public GameObject loadingScreen;
     public GameObject optionMenu;
     public GameObject sureMenu;
+    public GameObject playerUI;
+    public GameObject endGamePanel;
 
     public Button endGame;
     public Button start;
@@ -35,12 +39,15 @@ public class InGameGuI : MonoBehaviour {
     public Button cancel;
     public Button endGameYes;
     public Button endGameCancel;
+    public Button endGameVictory;
 
     public Image musicCross, soundCross;
 
     public GameObject gameHandler;
 
     public Image fader;
+
+    public Text finishStatement;
 
 
     void Start()
@@ -54,6 +61,7 @@ public class InGameGuI : MonoBehaviour {
         apply.onClick.AddListener(() => { ApplyButtonClick(); });
         endGameCancel.onClick.AddListener(() => { EndGameCancelButtonClick(); });
         endGameYes.onClick.AddListener(() => { EndGameYesButtonClick(); });
+        endGameVictory.onClick.AddListener(() => { endGameVictoryButtonClick(); });
 
     }
 
@@ -74,13 +82,15 @@ public class InGameGuI : MonoBehaviour {
 			if(!menuOpen)
 			{
                 loadingScreen.SetActive(false);
-                optionMenu.SetActive(false);			
+                optionMenu.SetActive(false);
+                playerUI.GetComponent<Canvas>().enabled = true;
 			}
 
             else if (menuOpen)
             {
                 loadingScreen.SetActive(false);
                 optionMenu.SetActive(true);
+                playerUI.GetComponent<Canvas>().enabled = false;
             }
 
 			
@@ -89,6 +99,15 @@ public class InGameGuI : MonoBehaviour {
                 sureMenu.SetActive(true);
 			}
 		}
+
+        if (finalPanel)
+        {
+            loadingScreen.SetActive(false);
+            optionMenu.SetActive(false);
+            sureMenu.SetActive(false);
+            playerUI.GetComponent<Canvas>().enabled = false;
+            endGamePanel.SetActive(true);
+        }
 
 	}
 
@@ -104,6 +123,11 @@ public class InGameGuI : MonoBehaviour {
         }
 
 	}
+
+    public void ToggleEndGamePanel()
+    {
+        finalPanel = !finalPanel;
+    }
 	
 	public void FadeToBlack()
 	{
@@ -180,5 +204,10 @@ public class InGameGuI : MonoBehaviour {
         menuOpen = !menuOpen;
         sureMenu.SetActive(false);
         areYouSure = false;
+    }
+
+    private void endGameVictoryButtonClick()
+    {
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().EndGame();
     }
 }

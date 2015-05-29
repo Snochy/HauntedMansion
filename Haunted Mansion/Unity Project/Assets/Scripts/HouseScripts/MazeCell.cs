@@ -17,6 +17,8 @@ public class MazeCell : MonoBehaviour {
 
     public MazeRoom room;
 
+    public FloorType floorType;
+
     public int roomIndex;
 
     public void Initialize(MazeRoom room)

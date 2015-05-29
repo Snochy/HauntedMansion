@@ -38,6 +38,19 @@ public class CharacterBase {
             Profile = Resources.Load<Sprite>("CharacterAvatars/bondImage"),
 		});
 
+        AddCharacter(new CharacterType()
+        {
+            IDNumber = 1,
+            Id = CharacterID.Girl,
+            Name = "Lucy",
+            Description = "a young girl",
+            Health = 80.0,
+            Sanity = 90,
+            Speed = 45,
+            Prefab = Resources.Load("Characters/[PH]MaleOld") as GameObject,
+            Profile = Resources.Load<Sprite>("CharacterAvatars/lucyImage"),
+        });
+
 	}
 		static void AddCharacter(CharacterType CharacterType)
 		{			

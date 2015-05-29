@@ -58,6 +58,9 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CharacterScripts\Character_Movement.cs" />
     <Compile Include="Assets\Scripts\CharacterScripts\FlashLightSync.cs" />
+    <Compile Include="Assets\Scripts\CharacterScripts\PlayerPrefsX.cs" />
+    <Compile Include="Assets\Scripts\CharacterScripts\PlayerStats.cs" />
+    <Compile Include="Assets\Scripts\CharacterScripts\PlayerStatsHandler.cs" />
     <Compile Include="Assets\Scripts\CharacterScripts\cameraDriver.cs" />
     <Compile Include="Assets\Scripts\CharacterScripts\footStepHandler.cs" />
     <Compile Include="Assets\Scripts\CharacterScripts\makeTransparent.cs" />
@@ -69,14 +72,24 @@
     <Compile Include="Assets\Scripts\Databases\HouseMaterialsBase.cs" />
     <Compile Include="Assets\Scripts\Databases\HouseMaterialsID.cs" />
     <Compile Include="Assets\Scripts\Databases\HouseMaterialsType.cs" />
+    <Compile Include="Assets\Scripts\Databases\Nightmare.cs" />
+    <Compile Include="Assets\Scripts\Databases\NightmareBase.cs" />
+    <Compile Include="Assets\Scripts\Databases\NightmareID.cs" />
+    <Compile Include="Assets\Scripts\Databases\NightmareType.cs" />
+    <Compile Include="Assets\Scripts\Databases\Prop.cs" />
+    <Compile Include="Assets\Scripts\Databases\PropBase.cs" />
+    <Compile Include="Assets\Scripts\Databases\PropID.cs" />
+    <Compile Include="Assets\Scripts\Databases\PropType.cs" />
     <Compile Include="Assets\Scripts\GUIs\ButtonItem.cs" />
     <Compile Include="Assets\Scripts\GUIs\CreateScrollList.cs" />
     <Compile Include="Assets\Scripts\GUIs\CursorControllor.cs" />
     <Compile Include="Assets\Scripts\GUIs\GUI_Handler.cs" />
     <Compile Include="Assets\Scripts\GUIs\InGameGuI.cs" />
+    <Compile Include="Assets\Scripts\Haunts\GlobalHauntControllor.cs" />
     <Compile Include="Assets\Scripts\Haunts\HauntedTeddy.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\DoorScript.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\EdgeTypes.cs" />
+    <Compile Include="Assets\Scripts\HouseScripts\FloorType.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\InputRooms.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\IntVector2.cs" />
@@ -93,7 +106,7 @@
     <Compile Include="Assets\Scripts\HouseScripts\MazeWall.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\PropsSpawner.cs" />
     <Compile Include="Assets\Scripts\HouseScripts\RoomType.cs" />
-    <Compile Include="Assets\Scripts\ItemScripts\ItemHighLighter.cs" />
+    <Compile Include="Assets\Scripts\ItemScripts\PropController.cs" />
     <Compile Include="Assets\Scripts\MainMenu\MenuLightsHandler.cs" />
     <Compile Include="Assets\Scripts\Props\flickeringLight.cs" />
     <Compile Include="Assets\Scripts\Sounds\SoundID.cs" />

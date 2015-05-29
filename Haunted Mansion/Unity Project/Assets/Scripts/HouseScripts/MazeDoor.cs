@@ -34,8 +34,11 @@ public class MazeDoor : MazePassage
     public override void Initialize(MazeCell cell, MazeDirection direction, EdgeTypes edgeType)
     {
        base.Initialize(cell, direction, edgeType);
-       if(cell.roomType != RoomType.EntranceHall)
+       if (cell.roomType != RoomType.EntranceHall)
         Destroy(hinge.gameObject);
+       if(cell.roomType == RoomType.Stairs)
+         Destroy(hinge.gameObject);
+
        for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);

@@ -31,7 +31,7 @@ public class CreateScrollList : MonoBehaviour
             buttonItem.NameLabel.text = item.ToString();
             buttonItem.avatar.sprite = item.Type.Profile;
             newButton.transform.SetParent(contentPanel, false);
-            
+            buttonItem.id = item.Type.Id;           
         }
     }
 }

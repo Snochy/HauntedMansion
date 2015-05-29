@@ -6,14 +6,15 @@ public class GameManager : MonoBehaviour
 
     public Maze mazePrefab;
     private Maze mazeInstance;
-    public GameObject mainCharacter;
     public GameObject GUIHandler;
 
-    public GameObject teddyHaunt;
+    public string nightmareSelected;
 
     public bool isHouseBuilt;
     public bool propsSpawned;
     public bool hauntstart;
+
+    public bool characterControlEnabled;
 
 	//Begins with starting the game
     void Start()
@@ -36,8 +37,10 @@ public class GameManager : MonoBehaviour
 
         if (hauntstart)
         {
-            GameObject haunt = Instantiate(teddyHaunt) as GameObject;
-            haunt.transform.parent = this.transform.parent;
+            int nightmareNum = Random.Range(0, NightmareBase.NightmareList.Count);
+            GameObject haunt = Instantiate(NightmareBase.Get(nightmareNum).Prefab) as GameObject;
+            this.gameObject.GetComponent<GlobalHauntControllor>().SetNightmare(NightmareBase.Get(nightmareNum).Prefab);
+            haunt.transform.parent = this.transform;
             hauntstart = false;
         }
 
@@ -56,7 +59,7 @@ public class GameManager : MonoBehaviour
     
     public void SpawnCharacters()
     {
-		GameObject character = Instantiate(mainCharacter) as GameObject;
+		GameObject character = Instantiate(CharacterBase.Get(PlayerStats.GetPlayerCharID()).Prefab) as GameObject;
 		character.name = "Character 01";		
 		character.transform.position =
 			new Vector3(-250f, 33f, -1200f);
@@ -67,6 +70,7 @@ public class GameManager : MonoBehaviour
     {
         mazeInstance = Instantiate(mazePrefab) as Maze;
         StartCoroutine(mazeInstance.Generate());
+        characterControlEnabled = true;
     }
 
 	//Stops and restarts the generation
@@ -77,4 +81,21 @@ public class GameManager : MonoBehaviour
         Destroy(mazeInstance.gameObject);
         BeginGame();
     }
+
+    public void EndGame()
+    {
+        Application.LoadLevel(0);
+    }
+
+    public void ObjectiveComplete(bool a)
+    {
+        if (a)
+            GameObject.Find("GUIElements").GetComponent<InGameGuI>().finishStatement.text = "You have survived the night!";
+        else GameObject.Find("GUIElements").GetComponent<InGameGuI>().finishStatement.text = "You did not survive.";
+
+        GameObject.Find("GUIElements").GetComponent<InGameGuI>().finalPanel = true;
+
+        characterControlEnabled = false;
+    }
+
 }

@@ -19,68 +19,71 @@ public class Character_Movement : MonoBehaviour {
     private Vector3 moveDirection;
 
     void Update() {
-        CharacterController controller = GetComponent<CharacterController>();
-        if (controller.isGrounded) 
-		{	
-			float forward;
 
-            if (Input.GetMouseButton(0) && Input.GetMouseButton(1))
+        if (GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().characterControlEnabled)
+        {
+            CharacterController controller = GetComponent<CharacterController>();
+            if (controller.isGrounded)
             {
-                transform.rotation = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0);
-                forward = 1;
+                float forward;
+
+                if (Input.GetMouseButton(0) && Input.GetMouseButton(1))
+                {
+                    transform.rotation = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0);
+                    forward = 1;
+                }
+                else forward = Input.GetAxis("Vertical");
+
+                anim.SetFloat("Speed", forward);
+
+                moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, forward);
+                moveDirection = transform.TransformDirection(moveDirection);
+                moveDirection *= speed;
+
+                if (Input.GetKey(KeyCode.Space))
+                {
+                    moveDirection.y = jumpSpeed;
+                }
+
             }
-            else forward = Input.GetAxis("Vertical");
 
-            anim.SetFloat("Speed", forward);
+            else
+            {
 
-            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, forward);
-            moveDirection = transform.TransformDirection(moveDirection);
-            moveDirection *= speed;
-			
-            if (Input.GetKey(KeyCode.Space))
-			{
-                moveDirection.y = jumpSpeed; 
-			}
-						
+                if (moveDirection.y >= 1)
+                {
+                    moveDirection.y -= jumpSpeed * Time.deltaTime;
+                }
+
+                moveDirection.y -= gravity * Time.deltaTime;
+
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                transform.Rotate(0, rotateSpeed, 0);
+
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                transform.Rotate(0, -rotateSpeed, 0);
+            }
+
+            if ((controller.collisionFlags & CollisionFlags.Above) != 0)
+            {
+                if (moveDirection.y > 0)
+                {
+                    moveDirection.y = 0;
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                GameObject.Find("FlashLight").GetComponent<Light>().enabled = !GameObject.Find("FlashLight").GetComponent<Light>().enabled;
+                GameObject.FindGameObjectWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio(SoundID.Click);
+            }
+
+            controller.Move(moveDirection * Time.deltaTime);
         }
-		
-		else 
-		{
-			
-			if(moveDirection.y >= 1)
-			{
-	          moveDirection.y -= jumpSpeed * Time.deltaTime;
-			}
-			
-			moveDirection.y -= gravity * Time.deltaTime;
-						
-    	}
-		
-		if(Input.GetKey(KeyCode.D))
-		{
-			transform.Rotate(0, rotateSpeed, 0);
-
-		}
-		if(Input.GetKey(KeyCode.A))
-		{
-			transform.Rotate(0, -rotateSpeed, 0);
-		}
-		
-		if ((controller.collisionFlags & CollisionFlags.Above) != 0)
-		{
-        	if (moveDirection.y > 0) 
-			{
-            	moveDirection.y = 0;
-        	}
-		}
-
-		if(Input.GetKeyDown(KeyCode.C))
-		{
-			GameObject.Find("FlashLight").GetComponent<Light>().enabled = !GameObject.Find("FlashLight").GetComponent<Light>().enabled;
-            GameObject.FindGameObjectWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio(SoundID.Click);
-		}
-		
-		controller.Move(moveDirection * Time.deltaTime);
-		
 	}
 }
