@@ -217,6 +217,12 @@ public class Maze : MonoBehaviour {
 		newCell.transform.localPosition =
                 new Vector3((coordinates.x - size.x * 0.5f) * 600, coordinates.y * 337.4f, (coordinates.z - size.z * 0.5f) * 600);
 
+        Transform[] allChildren =   newCell.transform.FindChild("Nodes").GetComponentsInChildren<Transform>();
+        foreach (Transform child in allChildren)
+        {
+            child.name = child.name + " " + coordinates.x + ", " + coordinates.y + ", " + coordinates.z;
+        }
+
         MazeCeiling ceiling = Instantiate(ceilingPrefab) as MazeCeiling;
         ceiling.Initialize(newCell);
 

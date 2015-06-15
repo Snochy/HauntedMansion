@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     public bool characterControlEnabled;
 
+    public GameObject aStar;
+
 	//Begins with starting the game
     void Start()
     {
@@ -42,14 +44,14 @@ public class GameManager : MonoBehaviour
             this.gameObject.GetComponent<GlobalHauntControllor>().SetNightmare(NightmareBase.Get(nightmareNum).Prefab);
             haunt.transform.parent = this.transform;
             hauntstart = false;
+            aStar.GetComponent<Astar>().SetNetworkConnections();
         }
-
         Physics.gravity = new Vector3(0, -600.0F, 0);
     }
 
     public void StartHaunt()
     {
-            hauntstart = true;
+        hauntstart = true;
     }
 
     public Maze GetMaze()

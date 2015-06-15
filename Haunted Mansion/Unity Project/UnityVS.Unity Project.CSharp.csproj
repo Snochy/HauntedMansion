@@ -56,6 +56,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\AI\AI.cs" />
+    <Compile Include="Assets\Scripts\AI\Astar.cs" />
+    <Compile Include="Assets\Scripts\AI\Node.cs" />
     <Compile Include="Assets\Scripts\CharacterScripts\Character_Movement.cs" />
     <Compile Include="Assets\Scripts\CharacterScripts\FlashLightSync.cs" />
     <Compile Include="Assets\Scripts\CharacterScripts\PlayerPrefsX.cs" />
@@ -68,6 +71,10 @@
     <Compile Include="Assets\Scripts\Databases\CharacterBase.cs" />
     <Compile Include="Assets\Scripts\Databases\CharacterID.cs" />
     <Compile Include="Assets\Scripts\Databases\CharacterType.cs" />
+    <Compile Include="Assets\Scripts\Databases\Entity.cs" />
+    <Compile Include="Assets\Scripts\Databases\EntityBase.cs" />
+    <Compile Include="Assets\Scripts\Databases\EntityID.cs" />
+    <Compile Include="Assets\Scripts\Databases\EntityType.cs" />
     <Compile Include="Assets\Scripts\Databases\HouseMaterials.cs" />
     <Compile Include="Assets\Scripts\Databases\HouseMaterialsBase.cs" />
     <Compile Include="Assets\Scripts\Databases\HouseMaterialsID.cs" />

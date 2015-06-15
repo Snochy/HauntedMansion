@@ -9,13 +9,17 @@ public class HauntedTeddy : MonoBehaviour
     public int teddyCount;
     public int resetter;
 
+    public GameObject ghostPrefab;
+
     public int[] floors = new int[3];
     
     void Start()
     {
         maze = GameObject.Find("Maze(Clone)") as GameObject;
         teddyBearGO = PropBase.Get(PropID.TeddyBear).Prefab;
+        ghostPrefab = EntityBase.Get(EntityID.Ghost).Prefab;
         SpawnTeddies();
+        SpawnGhost();
     }
 
     void Update()
@@ -72,6 +76,35 @@ public class HauntedTeddy : MonoBehaviour
             if (counter >= 3)
                 ResetFloors();
         }
+    }
+
+    private void SpawnGhost()
+    {
+        GameObject ghost = Instantiate(ghostPrefab) as GameObject;
+        ghost.GetComponent<AI>().InstantiateEntity(EntityID.Ghost);
+
+        IntVector2 temp = new IntVector2(Random.Range(0, maze.GetComponent<Maze>().size.x), Random.Range(0, maze.GetComponent<Maze>().size.z));
+
+        while (maze.GetComponent<Maze>().groundCells[temp.x, temp.z] == null || maze.GetComponent<Maze>().groundCells[temp.x, temp.z].roomType == RoomType.EntranceHall)
+            temp = new IntVector2(Random.Range(0, maze.GetComponent<Maze>().size.x), Random.Range(0, maze.GetComponent<Maze>().size.z));
+
+        Vector3 housePos = Vector3.zero;
+
+        switch (RandomFloorSpawn)
+        {
+            case 1:
+                housePos = maze.GetComponent<Maze>().basementCells[temp.x, temp.z].transform.position;
+                break;
+            case 2:
+                housePos = maze.GetComponent<Maze>().groundCells[temp.x, temp.z].transform.position;
+                break;
+            case 3:
+                housePos = maze.GetComponent<Maze>().upperCells[temp.x, temp.z].transform.position;
+                break;
+        }
+
+        ghost.transform.position =
+        new Vector3(housePos.x, housePos.y + 25f, housePos.z);
     }
 
     private int RandomFloorSpawn

@@ -32,6 +32,12 @@ public class InputRooms : MonoBehaviour
         mainHall.transform.parent = cells[0,0].transform.parent;
         mainHall.GetComponent<Renderer>().material = GameObject.Find("Maze(Clone)").GetComponent<Maze>().entranceHall.settings.floorMaterial;
 
+        Transform[] allChildren = mainHall.transform.FindChild("Nodes").GetComponentsInChildren<Transform>();
+        foreach (Transform child in allChildren)
+        {
+            child.name = child.name + " EntranceHall 0 , 0";
+        }
+
         foreach (MazeCell mazeCell in cells)
         {
             if (mazeCell.roomType == RoomType.EntranceHall)
@@ -59,6 +65,12 @@ public class InputRooms : MonoBehaviour
                 stairs.transform.parent = mazeCell.transform;
                 stairs.transform.localPosition = Vector3.zero;
                 stairs.GetComponent<Renderer>().material = GameObject.Find("Maze(Clone)").GetComponent<Maze>().stairs.settings.floorMaterial;
+
+                Transform[] stairsAllChildren = stairs.transform.FindChild("Nodes").GetComponentsInChildren<Transform>();
+                foreach (Transform child in stairsAllChildren)
+                {
+                    child.name = child.name + " stairs";
+                }
             }
         }
 
@@ -69,6 +81,8 @@ public class InputRooms : MonoBehaviour
         {
             if (mazeCell.roomType == RoomType.EntranceHall)
                 Destroy(mazeCell.transform.FindChild("Floor").gameObject);
+            if (mazeCell.roomType == RoomType.EntranceHall)
+                Destroy(mazeCell.transform.FindChild("Nodes").gameObject);
         }
 
 
