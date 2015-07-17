@@ -23,7 +23,7 @@ public class MazeDoor : MazePassage
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
-            if (child != hinge)
+            if (child != hinge && child.name != "Nodes")
             {
                 Material[] mats = new Material[] { child.GetComponent<Renderer>().materials[0], cell.room.settings.wallMaterial };
                 child.GetComponent<Renderer>().materials = mats;
@@ -42,7 +42,7 @@ public class MazeDoor : MazePassage
        for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
-            if (child != hinge)
+            if (child != hinge && child.name != "Nodes")
             {
                 Material[] mats = new Material[] { child.GetComponent<Renderer>().materials[0], cell.room.settings.wallMaterial };
                 child.GetComponent<Renderer>().materials = mats;

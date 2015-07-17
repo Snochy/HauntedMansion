@@ -56,7 +56,7 @@ public class cameraDriver : MonoBehaviour
 
         if (currentDistance <= minDistance + 20f)
         {
-            LayerMask maskingPlayer = 1 << 9;
+            LayerMask maskingPlayer = 1 << 9 | 1 << 14;
             maskingPlayer = ~maskingPlayer;
             Camera.main.cullingMask = maskingPlayer;
         }

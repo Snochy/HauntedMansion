@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\AI\AI.cs" />
+    <Compile Include="Assets\Scripts\AI\AIReformed.cs" />
     <Compile Include="Assets\Scripts\AI\Astar.cs" />
     <Compile Include="Assets\Scripts\AI\Node.cs" />
     <Compile Include="Assets\Scripts\CharacterScripts\Character_Movement.cs" />

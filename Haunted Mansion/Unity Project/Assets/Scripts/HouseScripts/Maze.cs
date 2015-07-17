@@ -96,6 +96,7 @@ public class Maze : MonoBehaviour {
 			GameObject.FindGameObjectWithTag("GameController").GetComponent<InputRooms>().ReplaceRooms();
 			GameObject.FindGameObjectWithTag("GameController").GetComponent<PropsSpawner>().AddProps();
 			GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().hauntstart = true;
+            CheckRoomNeigbors();
         }
     }
 
@@ -591,5 +592,53 @@ public class Maze : MonoBehaviour {
             CreatePassage(activeCellsBasement[0], MazeDirection.West, true);
             CreateWall(activeCellsBasement[0], MazeDirection.East);
         }
+    }
+
+    private void CheckRoomNeigbors()
+    {
+        foreach(MazeCell mazeCell in groundCells)
+            foreach (MazeCellEdge mazeEdge in mazeCell.edges)
+            {
+                MazeDirection direction = mazeEdge.direction;
+                IntVector3 coordinates = mazeCell.coordinates + direction.ToIntVector2();
+                if (ContainsCoordinates(coordinates))
+                {
+                    MazeCell neighbor = null;
+                    neighbor = GetCell(coordinates);
+                    if (neighbor != null)
+                        if (mazeEdge.otherCell == null)
+                            mazeEdge.otherCell = neighbor;
+                }
+            }
+
+        foreach (MazeCell mazeCell in upperCells)
+            foreach (MazeCellEdge mazeEdge in mazeCell.edges)
+            {
+                MazeDirection direction = mazeEdge.direction;
+                IntVector3 coordinates = mazeCell.coordinates + direction.ToIntVector2();
+                if (ContainsCoordinates(coordinates))
+                {
+                    MazeCell neighbor = null;
+                    neighbor = GetCellUpper(coordinates);
+                    if (neighbor != null)
+                        if (mazeEdge.otherCell == null)
+                            mazeEdge.otherCell = neighbor;
+                }
+            }
+
+        foreach (MazeCell mazeCell in basementCells)
+            foreach (MazeCellEdge mazeEdge in mazeCell.edges)
+            {
+                MazeDirection direction = mazeEdge.direction;
+                IntVector3 coordinates = mazeCell.coordinates + direction.ToIntVector2();
+                if (ContainsCoordinates(coordinates))
+                {
+                    MazeCell neighbor = null;
+                    neighbor = GetCellBasement(coordinates);
+                    if (neighbor != null)
+                        if (mazeEdge.otherCell == null)
+                            mazeEdge.otherCell = neighbor;
+                }
+            } 
     }
 }

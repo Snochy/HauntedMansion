@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,9 +19,17 @@ public class GameManager : MonoBehaviour
 
     public GameObject aStar;
 
+    public List<GameObject> listOfPlayers;
+
+    private bool timerOn = false;
+    public float gameTime = 0;
+
+    public float gravity = 600;
+
 	//Begins with starting the game
     void Start()
     {
+        gameTime = 0;
         BeginGame();
     }
 
@@ -46,7 +55,11 @@ public class GameManager : MonoBehaviour
             hauntstart = false;
             aStar.GetComponent<Astar>().SetNetworkConnections();
         }
-        Physics.gravity = new Vector3(0, -600.0F, 0);
+
+        if (timerOn)
+            gameTime += Time.deltaTime;
+
+        Physics.gravity = new Vector3(0, -gravity, 0);
     }
 
     public void StartHaunt()
@@ -65,6 +78,7 @@ public class GameManager : MonoBehaviour
 		character.name = "Character 01";		
 		character.transform.position =
 			new Vector3(-250f, 33f, -1200f);
+        AddPlayer(character);
     }
 
 	//Makes instance of Maze and generates maze within Maze
@@ -73,6 +87,7 @@ public class GameManager : MonoBehaviour
         mazeInstance = Instantiate(mazePrefab) as Maze;
         StartCoroutine(mazeInstance.Generate());
         characterControlEnabled = true;
+        ToggleTimer();
     }
 
 	//Stops and restarts the generation
@@ -86,6 +101,7 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
+        RemoveAllPlayer();
         Application.LoadLevel(0);
     }
 
@@ -95,9 +111,29 @@ public class GameManager : MonoBehaviour
             GameObject.Find("GUIElements").GetComponent<InGameGuI>().finishStatement.text = "You have survived the night!";
         else GameObject.Find("GUIElements").GetComponent<InGameGuI>().finishStatement.text = "You did not survive.";
 
+        ToggleTimer();
+
         GameObject.Find("GUIElements").GetComponent<InGameGuI>().finalPanel = true;
 
         characterControlEnabled = false;
+    }
+
+    public void AddPlayer(GameObject player)
+    {
+        listOfPlayers.Add(player);
+    }
+    public void RemovePlayer(GameObject player)
+    {
+        listOfPlayers.Remove(player);
+    }
+    public void RemoveAllPlayer()
+    {
+        listOfPlayers.Clear();
+    }
+
+    public void ToggleTimer()
+    {
+        timerOn = !timerOn;
     }
 
 }

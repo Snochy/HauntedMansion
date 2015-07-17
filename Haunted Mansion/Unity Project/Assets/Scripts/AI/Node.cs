@@ -15,6 +15,11 @@ public class Node : MonoBehaviour {
         connectedNodes.Add(aNode);
     }
 
+    public void RemoveConnectedNode(Node aNode)
+    {
+        connectedNodes.Remove(aNode);
+    }
+
     public Vector3 GetPos()
     {
         return this.transform.position;
@@ -51,6 +56,8 @@ public class Node : MonoBehaviour {
 
     public Node RandomConnectedNode()
     {
-        return connectedNodes[Random.Range(0, connectedNodes.Count)];
+        if (connectedNodes.Count > 0)
+            return connectedNodes[Random.Range(0, connectedNodes.Count)];
+        else return this;
     }
 }

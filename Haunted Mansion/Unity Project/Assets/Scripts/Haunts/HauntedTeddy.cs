@@ -31,6 +31,11 @@ public class HauntedTeddy : MonoBehaviour
                 count++;
         if(count >= teddyCount)
             GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().ObjectiveComplete(true);
+
+        List<GameObject> ListOfDeadPlayers = GameObject.FindGameObjectWithTag("GameController").GetComponent<GlobalHauntControllor>().listOfDeadPlayers;
+        if (GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().listOfPlayers.Count >= 1)
+            if (ListOfDeadPlayers.Count >= GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().listOfPlayers.Count)
+                GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().ObjectiveComplete(false);
     }
 
     private void SpawnTeddies()

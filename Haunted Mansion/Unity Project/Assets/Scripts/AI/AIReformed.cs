@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class AI : MonoBehaviour
+public class AIReformed : MonoBehaviour
 {
 
     private GameObject aStar;
@@ -27,7 +27,7 @@ public class AI : MonoBehaviour
     public float roamSpeed;
     public float chaseDistance;
 
-    public float currentSpeed;
+    public AIState currentStart = AIState.IDLE;
 
     public enum AIState { IDLE, CHASE, FLEE };
 
@@ -50,42 +50,35 @@ public class AI : MonoBehaviour
 
     void Update()
     {
-        currentSpeed = 0;
+
+        float speed = 0;
         if (state == AIState.IDLE)
         {
-            currentSpeed = roamSpeed;
-            target = null;
             if (HasAggro())
             {
                 state = AIState.CHASE;
             }
-            else if (willRoam)
+            else if(willRoam)
             {
+                speed = roamSpeed * 1000f * Time.deltaTime;
                 if (queuePath.Count == 0)
                     StartCoroutine(PathFinderRoam());
             }
-            else
-            {
-                queuePath.Clear();
-                path.Clear();
-            }
         }
-        else if (state == AIState.CHASE && willChase)
+        else if (state == AIState.CHASE)
         {
-            currentSpeed = chaseSpeed;
             if (HasLineOfSight())
             {
-                path.Clear();
                 if (InMeleeRange())
                 {
-                    print("In melee range");
+                    //future melee attack logs
                 }
                 else
                 {
                     Vector3 moveDirection = target.transform.position - transform.position;
                     var newRot = Quaternion.LookRotation(moveDirection);
                     transform.rotation = Quaternion.Lerp(transform.rotation, newRot, 0.1f);
-                    gameObject.GetComponent<CharacterController>().Move(moveDirection.normalized * currentSpeed * Time.deltaTime);
+                    gameObject.GetComponent<CharacterController>().Move(moveDirection.normalized * speed * Time.deltaTime);
                     queuePath.Clear();
                 }
             }
@@ -94,29 +87,21 @@ public class AI : MonoBehaviour
                 if (queuePath.Count == 0)
                     StartCoroutine(PathFinderChase());
             }
-            else
-            {
-                path.Clear();
-                queuePath.Clear();
-                state = AIState.IDLE;
-            }
+            else state = AIState.IDLE;
         }
         else if (state == AIState.FLEE)
         {
-            print("Fleeing");
+            // future fleeing characcters
         }
 
-        else
-        {
-            state = AIState.IDLE;
-        }
+        SimplifyQueue();
         if (queuePath.Count != 0)
         {
             Node currentNode = queuePath.Peek() as Node;
             Vector3 moveDirection = currentNode.transform.position - transform.position;
             var newRot = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Lerp(transform.rotation, newRot, 0.1f);
-            gameObject.GetComponent<CharacterController>().Move(moveDirection.normalized * currentSpeed * Time.deltaTime);
+            gameObject.GetComponent<CharacterController>().Move(moveDirection.normalized * speed * Time.deltaTime);
             if (Vector3.Distance(this.transform.position, currentNode.GetPos()) <= 8f)
                 queuePath.Dequeue();
         }
@@ -150,7 +135,6 @@ public class AI : MonoBehaviour
         {
             path = aStar.GetComponent<Astar>().GetPath(startNode, endNode);
         }
-        AddListToQue();
         return path;
     }
 
@@ -166,22 +150,22 @@ public class AI : MonoBehaviour
         return aStar.GetComponent<Astar>().PathPossiable;
     }
 
-    private void AddListToQue()
+    private void SimplifyQueue()
     {
         queuePath.Clear();
         foreach (Node aNode in path)
             queuePath.Enqueue(aNode);
 
-        //int defaultLayer = this.gameObject.layer;
-        //this.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-        //mask = 1 << 2;
-        //mask = ~mask;
-        //if (queuePath.Count > 1)
-        //    for (int i = 0; i < queuePath.Count - 1; i++)
-        //        if (!Physics.Linecast(transform.position, path[i + 1].transform.position, mask))
-        //            queuePath.Dequeue();
+        int defaultLayer = this.gameObject.layer;
+        this.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        mask = 1 << 2;
+        mask = ~mask;
+        if (queuePath.Count > 1)
+            for (int i = 0; i < queuePath.Count - 1; i++)
+                if (!Physics.Linecast(transform.position, path[i + 1].transform.position, mask))
+                    queuePath.Dequeue();
 
-        //this.gameObject.layer = defaultLayer;
+        this.gameObject.layer = defaultLayer;
     }
 
     private bool HasAggro()
@@ -201,7 +185,6 @@ public class AI : MonoBehaviour
             {
                 if (rcHit.transform.gameObject == player.transform.gameObject)
                 {
-                    target = player.transform.gameObject;
                     return true;
                 }
             }

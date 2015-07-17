@@ -9,6 +9,8 @@ public class GlobalHauntControllor : MonoBehaviour {
 
     public GameObject Nightmare;
 
+    public List<GameObject> listOfDeadPlayers;
+
     public void DestroyedObject(GameObject goDestroyed)
     {
         LastItemDestoryed = goDestroyed.GetComponent<PropController>().propID;
@@ -18,5 +20,10 @@ public class GlobalHauntControllor : MonoBehaviour {
     public void SetNightmare(GameObject goNightmare)
     {
         Nightmare = goNightmare;
+    }
+
+    public void PlayerDeath(GameObject player)
+    {
+        listOfDeadPlayers.Add(player);
     }
 }

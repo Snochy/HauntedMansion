@@ -33,7 +33,7 @@ public class CharacterBase {
 			Description = "A old man",
 			Health = 100.0,
 			Sanity = 80,
-			Speed = 25,
+			Speed = 175,
             Prefab = Resources.Load("Characters/[PH]MaleOld") as GameObject,
             Profile = Resources.Load<Sprite>("CharacterAvatars/bondImage"),
 		});
@@ -46,7 +46,7 @@ public class CharacterBase {
             Description = "a young girl",
             Health = 80.0,
             Sanity = 90,
-            Speed = 45,
+            Speed = 210,
             Prefab = Resources.Load("Characters/[PH]MaleOld") as GameObject,
             Profile = Resources.Load<Sprite>("CharacterAvatars/lucyImage"),
         });

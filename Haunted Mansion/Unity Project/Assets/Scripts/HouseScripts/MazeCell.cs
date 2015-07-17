@@ -7,7 +7,7 @@ public class MazeCell : MonoBehaviour {
     public IntVector3 coordinates;
 
 	//a list of edges that are current set up for the room
-    private MazeCellEdge[] edges = new MazeCellEdge[MazeDirections.Count];
+    public MazeCellEdge[] edges = new MazeCellEdge[MazeDirections.Count];
 
 	//The amount of edges currently have been initialized
     public int initializedEdgeCount;

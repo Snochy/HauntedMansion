@@ -4,21 +4,21 @@ using System.Collections;
 public class Character_Movement : MonoBehaviour {
 	public float rotateSpeed = 6.0F;
     public float jumpSpeed = 140.0F;
-	public float gravity = 140.0F;
-	public float defaultSpeed = 30.0F;
+    public float defaultSpeed;
+
+    public double speedMod = 0;
 
     public Animator anim;
-		
-    public float speed = 0.0F;
 
-	void start ()
-	{
-		speed = defaultSpeed;
-	}
+    public double currentSpeed;
 
     private Vector3 moveDirection;
 
     void Update() {
+
+        currentSpeed = defaultSpeed + speedMod;
+        if (currentSpeed <= 0)
+            currentSpeed = 0;
 
         if (GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().characterControlEnabled)
         {
@@ -38,7 +38,7 @@ public class Character_Movement : MonoBehaviour {
 
                 moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, forward);
                 moveDirection = transform.TransformDirection(moveDirection);
-                moveDirection *= speed;
+                moveDirection *= (float)currentSpeed;
 
                 if (Input.GetKey(KeyCode.Space))
                 {
@@ -55,7 +55,7 @@ public class Character_Movement : MonoBehaviour {
                     moveDirection.y -= jumpSpeed * Time.deltaTime;
                 }
 
-                moveDirection.y -= gravity * Time.deltaTime;
+                moveDirection.y -= GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().gravity * Time.deltaTime;
 
             }
 

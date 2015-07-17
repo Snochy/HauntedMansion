@@ -15,6 +15,13 @@ public class DoorScript : MonoBehaviour {
     public bool open, enter, canBeOpenned;
     public float interactionDistance = 200f;
 
+    public MazeCellEdge mazeCellEdge;
+
+    void Start()
+    {
+        mazeCellEdge = transform.parent.parent.parent.GetComponent<MazeCellEdge>();
+    }
+
 	void Update () 
     {
 
@@ -50,10 +57,16 @@ public class DoorScript : MonoBehaviour {
             
             if(canBeOpenned)
             {
-	            if(open)
+                if (open)
+                {
                     GameObject.FindWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio(SoundID.DoorOpen);
-	            if(!open)
+                    MakeConnection();
+                }
+                if (!open)
+                {
+                    BreakConnection();
                     GameObject.FindWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio(SoundID.DoorClose);
+                }
             }
         }
 
@@ -74,4 +87,16 @@ public class DoorScript : MonoBehaviour {
         }
             
 	}
+
+    private void BreakConnection()
+    {
+        mazeCellEdge.transform.FindChild("Nodes").FindChild("DoorNode").GetComponent<Node>().RemoveConnectedNode(mazeCellEdge.otherCell.edges[(int)mazeCellEdge.direction.GetOpposite()].transform.FindChild("Nodes").FindChild("DoorNode").GetComponent<Node>());
+        mazeCellEdge.otherCell.edges[(int)mazeCellEdge.direction.GetOpposite()].transform.FindChild("Nodes").FindChild("DoorNode").GetComponent<Node>().RemoveConnectedNode(mazeCellEdge.transform.FindChild("Nodes").FindChild("DoorNode").GetComponent<Node>());
+    }
+
+    private void MakeConnection()
+    {
+        mazeCellEdge.transform.FindChild("Nodes").FindChild("DoorNode").GetComponent<Node>().AddConnectedNode(mazeCellEdge.otherCell.edges[(int)mazeCellEdge.direction.GetOpposite()].transform.FindChild("Nodes").FindChild("DoorNode").GetComponent<Node>());
+        mazeCellEdge.otherCell.edges[(int)mazeCellEdge.direction.GetOpposite()].transform.FindChild("Nodes").FindChild("DoorNode").GetComponent<Node>().AddConnectedNode(mazeCellEdge.transform.FindChild("Nodes").FindChild("DoorNode").GetComponent<Node>());
+    }
 }

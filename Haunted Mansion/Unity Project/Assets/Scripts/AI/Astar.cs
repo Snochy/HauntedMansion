@@ -7,6 +7,7 @@ public class Astar : MonoBehaviour {
     public Node startNode;
     public Node endNode;
     public List<Node> allNodes;
+    public bool PathPossiable = false;
 
     public List<Node> GetPath(Node startPoint, Node endPoint)
     {
@@ -47,6 +48,7 @@ public class Astar : MonoBehaviour {
 
     private void BreatheFirst()
     {
+        PathPossiable = false;
         if (allNodes.Count < 1)
             SetNetworkConnections();
         foreach (Node node in allNodes)
@@ -64,7 +66,10 @@ public class Astar : MonoBehaviour {
         {
             Node current = frontier.Dequeue() as Node;
             if (current == endNode)
-               break;
+            {
+                PathPossiable = true;
+                break;
+            }
 
             foreach (Node next in current.GetConnectedNodes())
                 if (next.GetState() != Node.State.CLOSED)
