@@ -46,6 +46,7 @@ public class PropBase
             Prefab = Resources.Load("Props/Window01") as GameObject,
             isNotBasement = true,
             isWallDecor = true,
+            isSpawnable = true,
         });
 
         AddProp(new PropType()
@@ -55,6 +56,7 @@ public class PropBase
             Name = "Painting",
             Prefab = Resources.Load("Props/painting") as GameObject,
             isWallDecor = true,
+            isSpawnable = true,
         });
 
         AddProp(new PropType()
@@ -153,6 +155,9 @@ public class PropBase
             Id = PropID.TeddyBear,
             Name = "A teddy bear",
             Prefab = Resources.Load("Props/TeddyBear01") as GameObject,
+            interactionDistance = 150f,
+            interactable = true,
+            canBePickedUp = true,
         });
 
         AddProp(new PropType()
@@ -178,6 +183,19 @@ public class PropBase
             Name = "A book",
             Prefab = Resources.Load("Props/BookPrefab01") as GameObject,
         });
+
+        AddProp(new PropType()
+        {
+            IDNumber = 17,
+            Id = PropID.CursedPainting,
+            Name = "A Demonic Painting",
+            Prefab = Resources.Load("Props/cursedPainting01") as GameObject,
+            isWallDecor = true,
+            isSpawnable = false,
+            interactionDistance = 200f,
+            interactable = true,
+        });
+
     }
     static void AddProp(PropType PropType)
     {

@@ -26,9 +26,9 @@ public class CursorControllor : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, playerMask))
             {
-                if (hit.collider.gameObject.tag == "PickUp")
+                if (hit.collider.gameObject.GetComponent<PropController>() != null && hit.collider.gameObject.GetComponent<PropController>().interactable)
                 {
-                    if(hit.collider.gameObject.GetComponent<PropController>().withinPickUpRange)
+                    if(hit.collider.gameObject.GetComponent<PropController>().withinInteractionRange)
                         Cursor.SetCursor(pickUpCursor, hotSpot, cursorMode);
                     else Cursor.SetCursor(greyedOutCursor, hotSpot, cursorMode);
                 }

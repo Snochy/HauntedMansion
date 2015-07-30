@@ -12,4 +12,7 @@ public class PropType
     public bool isFloorDecor = false;
     public bool isNotBasement = false;
     public float probability = 1f;
+    public float interactionDistance = 0f;
+    public bool canBePickedUp = false;
+    public bool interactable;
 }

@@ -16,6 +16,8 @@ public class EntityType
     public bool willChase = false;
     public bool willRoam = false;
     public float chaseDistance = 0;
+    public float attackSpeed = 0;
+    public float attackPower = 0;
 
 	public override string ToString()
 	{

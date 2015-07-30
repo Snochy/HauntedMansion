@@ -83,6 +83,7 @@
      <Compile Include="Assets\Scripts\GUIs\CursorControllor.cs" />
      <Compile Include="Assets\Scripts\GUIs\GUI_Handler.cs" />
      <Compile Include="Assets\Scripts\GUIs\InGameGuI.cs" />
+     <Compile Include="Assets\Scripts\Haunts\AFriendfortheAges.cs" />
      <Compile Include="Assets\Scripts\Haunts\GlobalHauntControllor.cs" />
      <Compile Include="Assets\Scripts\Haunts\HauntedTeddy.cs" />
      <Compile Include="Assets\Scripts\HouseScripts\DoorScript.cs" />

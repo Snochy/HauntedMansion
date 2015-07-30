@@ -5,16 +5,18 @@ public class PropController : MonoBehaviour
 {
     private Material startcolor;
     public Material highLighted;
-    public bool mouseOver;
-    public bool isHighlightable;
+    private bool mouseOver;
+    public bool interactable;
     public bool canBePickedUp;
-    public bool withinPickUpRange;
+    public bool withinInteractionRange;
 
     public PropID propID;
 
-    public float pickUpDistance = 120f;
+    public float interactionDistance = 120f;
 
     public string soundName;
+
+    public Material postInteractionMaterial;
 
     void Start()
     {
@@ -25,34 +27,48 @@ public class PropController : MonoBehaviour
     {
             if (GameObject.FindGameObjectWithTag("Player") != null && Camera.main != null)
             {
-                if (isHighlightable)
+                if (interactable)
                 {
-                    if (Vector3.Distance(this.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= pickUpDistance)
-                        withinPickUpRange = true;
-                    else withinPickUpRange = false;
+                    if (Vector3.Distance(this.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= interactionDistance)
+                        withinInteractionRange = true;
+                    else withinInteractionRange = false;
 
                     RaycastHit[] allHit = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition));
                     foreach (RaycastHit hit in allHit)
                     {
-                        if (hit.collider.gameObject == this.gameObject)
+                        if (highLighted != null)
                         {
-                            startcolor = GetComponent<Renderer>().material;
-                            GetComponent<Renderer>().material = highLighted;
-                            mouseOver = true;
-                        }
-                        else
-                        {
-                            GetComponent<Renderer>().material = startcolor;
-                            mouseOver = false;
+                            if (hit.collider.gameObject == this.gameObject)
+                            {
+                                startcolor = GetComponent<Renderer>().material;
+                                GetComponent<Renderer>().material = highLighted;
+                                mouseOver = true;
+                            }
+                            else
+                            {
+                                GetComponent<Renderer>().material = startcolor;
+                                mouseOver = false;
+                            }
                         }
                     }
 
-                    if (Input.GetMouseButtonDown(0) && mouseOver && canBePickedUp)
-                        if (withinPickUpRange)
+                    if (Input.GetMouseButtonDown(0) && mouseOver && interactable)
+                        if (withinInteractionRange)
                         {
-                            GameObject.FindGameObjectWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio(SoundID.PickUp);
-                            GameObject.FindGameObjectWithTag("GameController").GetComponent<GlobalHauntControllor>().DestroyedObject(this.gameObject);
-                            Destroy(this.gameObject);
+                            if (canBePickedUp)
+                            {
+                                GameObject.FindGameObjectWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio(SoundID.PickUp);
+                                GameObject.FindGameObjectWithTag("GameController").GetComponent<GlobalHauntControllor>().DestroyedObject(this.gameObject);
+                                Destroy(this.gameObject);
+                            }
+                            else
+                            {
+                                GameObject.FindGameObjectWithTag("SoundEffect").GetComponent<SoundPlayer>().PlayAudio(SoundID.PickUp);
+                                GameObject.FindGameObjectWithTag("GameController").GetComponent<GlobalHauntControllor>().DestroyedObject(this.gameObject);
+                                if(postInteractionMaterial != null)
+                                    GetComponent<Renderer>().material = postInteractionMaterial;
+                                interactable = false;
+                            }
                         }
             }
         }

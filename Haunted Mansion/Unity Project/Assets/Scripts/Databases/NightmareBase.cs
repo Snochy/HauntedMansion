@@ -28,9 +28,9 @@ public class NightmareBase
         AddNightmare(new NightmareType()
         {
             IDNumber = 0,
-            Id = NightmareID.TeddyBear,
-            Name = "Forsaken Girl",
-            Prefab = Resources.Load("Haunts/hauntedTeddy") as GameObject,
+            Id = NightmareID.FriendsfortheAges,
+            Name = "Friends for the Ages",
+            Prefab = Resources.Load("Haunts/friendsfortheages") as GameObject,
         });
     }
     static void AddNightmare(NightmareType NightmareType)

@@ -16,6 +16,10 @@ public class Character_Movement : MonoBehaviour {
 
     void Update() {
 
+        if (Input.GetKey(KeyCode.LeftShift))
+            speedMod = defaultSpeed * .5f;
+        else speedMod = 0;
+
         currentSpeed = defaultSpeed + speedMod;
         if (currentSpeed <= 0)
             currentSpeed = 0;
@@ -33,6 +37,10 @@ public class Character_Movement : MonoBehaviour {
                     forward = 1;
                 }
                 else forward = Input.GetAxis("Vertical");
+
+                if (Input.GetKey(KeyCode.LeftShift))
+                    anim.speed = 1.2f;
+                else anim.speed = 1f;
 
                 anim.SetFloat("Speed", forward);
 

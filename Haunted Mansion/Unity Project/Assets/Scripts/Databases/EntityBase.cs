@@ -39,6 +39,8 @@ public class EntityBase {
             willRoam = true,
             willChase = true,
             chaseDistance = 2000f,
+            attackSpeed = 0.5f,
+            attackPower = 5f,
 		});
 
 	}

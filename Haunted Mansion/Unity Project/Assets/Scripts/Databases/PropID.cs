@@ -22,4 +22,5 @@ public enum PropID
     DemonTable,
     TeddyBear,
     Window,
+    CursedPainting,
 }

@@ -5,4 +5,5 @@ public enum NightmareID
 {
     None,
     TeddyBear,
+    FriendsfortheAges,
 }

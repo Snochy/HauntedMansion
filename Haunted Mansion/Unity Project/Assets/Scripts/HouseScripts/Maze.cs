@@ -326,11 +326,17 @@ public class Maze : MonoBehaviour {
             {
                 redo = false;
                 propNum = Random.Range(0, PropBase.PropListWallDecor.Count);
-                if(cell.floorType == FloorType.Basement)
-                    if (PropBase.PropListWallDecor[propNum].Type.isNotBasement)
-                        redo = true;
+
+                if (PropBase.PropListWallDecor[propNum].Type.isSpawnable)
+                {
+                    if (cell.floorType == FloorType.Basement)
+                        if (PropBase.PropListWallDecor[propNum].Type.isNotBasement)
+                            redo = true;
+                }
+                else redo = true;
             }
             while (redo);
+
             GameObject wallDecor;
             wallDecor = Instantiate(PropBase.PropListWallDecor[propNum].Type.Prefab) as GameObject;
             wallDecor.transform.parent = wall.transform;
@@ -357,9 +363,13 @@ public class Maze : MonoBehaviour {
                 {
                     redo = false;
                     propNum = Random.Range(0, PropBase.PropListWallDecor.Count);
-                    if (cell.floorType == FloorType.Basement)
-                        if (PropBase.PropListWallDecor[propNum].Type.isNotBasement)
-                            redo = true;
+                    if (PropBase.PropListWallDecor[propNum].Type.isSpawnable)
+                    {
+                        if (cell.floorType == FloorType.Basement)
+                            if (PropBase.PropListWallDecor[propNum].Type.isNotBasement)
+                                    redo = true;
+                    }
+                    else redo = true;
                 }
                 while (redo);
                 GameObject wallDecor;

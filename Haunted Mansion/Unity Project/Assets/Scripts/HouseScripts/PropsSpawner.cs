@@ -21,15 +21,26 @@ public class PropsSpawner : MonoBehaviour {
                     if (!go.transform.parent.GetComponent<MazeWall>().SpawnedProp)
                         if (Random.value < propProbability ? true : false)
                         {
-                            int index = Random.Range(0, PropBase.PropListSpawnables.Count);
+                            int index;
+                            bool redo = false;
+                            do
+                            {
+                                redo = false;
+                                index = Random.Range(0, PropBase.PropListSpawnables.Count);
+
+                                if (PropBase.PropListSpawnables[index].Type.isWallDecor)
+                                    redo = true;
+                            } while (redo);
+
 
                             if (PropBase.PropListSpawnables[index].Type.Prefab != null)
                             {
                                 prop = Instantiate(PropBase.PropListSpawnables[index].Type.Prefab, go.transform.position, go.transform.rotation) as GameObject;
                                 prop.transform.parent = go.transform;
-                                prop.transform.localPosition = new Vector3(prop.transform.localPosition.x + Randomizer(), prop.transform.localPosition.y, prop.transform.localPosition.z);
+                                prop.transform.localPosition = new Vector3(prop.transform.localPosition.x + Randomizer(), prop.transform.localPosition.y + 10f, prop.transform.localPosition.z);
                                 prop.transform.Rotate(0, Randomizer(15), 0);
                                 prop.transform.parent.parent.GetComponent<MazeWall>().SpawnedProp = true;
+                                prop.GetComponent<PropController>().propID = PropBase.PropListSpawnables[index].Type.Id;
                             }
                             else print(PropBase.PropListSpawnables[index].Type.Prefab + " failed to spawn because prefab was null");
                         }
@@ -37,6 +48,10 @@ public class PropsSpawner : MonoBehaviour {
 
             }
         }
+
+        GameObject[] allProps = GameObject.FindGameObjectsWithTag("PropItem");
+        foreach (GameObject go in allProps)
+            go.GetComponent<Rigidbody>().velocity = Vector3.zero;
 	}
 
     private float Randomizer()

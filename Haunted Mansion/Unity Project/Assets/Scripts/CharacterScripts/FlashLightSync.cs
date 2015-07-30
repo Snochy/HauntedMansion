@@ -9,6 +9,18 @@ public class FlashLightSync : MonoBehaviour {
 
 	public LayerMask layerMask;
 
+    public bool isRaising = false;
+    public float startTime;
+    public Vector3 startMarker;
+    public Vector3 endMarker;
+    public float journeyLength;
+    public Vector3 orginPos;
+
+    void Start()
+    {
+        orginPos = flashlight.transform.localPosition;
+    }
+
 	void Update () {
 
 		RaycastHit hit;

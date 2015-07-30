@@ -29,6 +29,11 @@ public class AI : MonoBehaviour
 
     public float currentSpeed;
 
+    public float attackSpeed;
+    public float attackPower;
+
+    private float nextSwing = 0.0F;
+
     public enum AIState { IDLE, CHASE, FLEE };
 
     void Start()
@@ -46,6 +51,8 @@ public class AI : MonoBehaviour
         chaseSpeed = EntityBase.Get(aID).Speed;
         roamSpeed = EntityBase.Get(aID).roamSpeed;
         chaseDistance = EntityBase.Get(aID).chaseDistance;
+        attackSpeed = EntityBase.Get(aID).attackSpeed;
+        attackPower = EntityBase.Get(aID).attackPower;
     }
 
     void Update()
@@ -78,7 +85,11 @@ public class AI : MonoBehaviour
                 path.Clear();
                 if (InMeleeRange())
                 {
-                    print("In melee range");
+                    if (Time.time > nextSwing)
+                    {
+                        nextSwing = Time.time + attackSpeed;
+                        Attack();
+                    }
                 }
                 else
                 {
@@ -124,7 +135,7 @@ public class AI : MonoBehaviour
 
     private bool InMeleeRange()
     {
-        if (Vector3.Distance(this.transform.position, target.transform.position) <= 8f)
+        if (Vector3.Distance(this.transform.position, target.transform.position) <= 50f)
             return true;
         else return false;
     }
@@ -207,5 +218,10 @@ public class AI : MonoBehaviour
             }
         }
         return false;
+    }
+
+    private void Attack()
+    {
+        target.GetComponent<PlayerStatsHandler>().TakeDamage(attackPower);
     }
 }
