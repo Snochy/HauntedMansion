@@ -24,6 +24,7 @@ public class GUI_Handler : MonoBehaviour {
     public GameObject scrollingMenu;
     public GameObject startBack;
     public GameObject launchMenu;
+	public GameObject characterSpawn;
     public Image fader;
 
     public Button back;
@@ -134,5 +135,11 @@ public class GUI_Handler : MonoBehaviour {
     public void SetCharacter(CharacterID id)
     {
         PlayerStats.SetPlayerCharID(id);
+		if(GameObject.Find ("Character") != null)
+			Destroy(GameObject.Find ("Character"));
+		GameObject character = Instantiate(CharacterBase.Get(PlayerStats.GetPlayerCharID()).CharSelPrefab) as GameObject;
+		character.name = "Character";
+		character.transform.parent = characterSpawn.transform;
+		character.transform.localPosition = Vector3.zero;
     }
 }

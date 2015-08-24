@@ -1,11 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GUIs\ButtonItem.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GUIs\GUI_Handler.cs">
     <Files>
-      <File FileName="Assets\Scripts\Databases\CharacterBase.cs" Line="53" Column="79" />
-      <File FileName="Assets\Scripts\Databases\CharacterType.cs" Line="16" Column="78" />
-      <File FileName="Assets\Scripts\GUIs\GUI_Handler.cs" Line="134" Column="20" />
-      <File FileName="Assets\Scripts\GUIs\ButtonItem.cs" Line="23" Column="84" />
+      <File FileName="Assets\Scripts\GUIs\GUI_Handler.cs" Line="140" Column="1" />
+      <File FileName="Assets\Scripts\GUIs\ButtonItem.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\HouseScripts\GameManager.cs" Line="78" Column="3" />
+      <File FileName="Assets\Scripts\Databases\CharacterBase.cs" Line="31" Column="28" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
