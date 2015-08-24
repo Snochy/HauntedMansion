@@ -13,6 +13,7 @@ public class CharacterType {
 	public bool ShowToolTip = true;
     public GameObject Prefab = Resources.Load("Characters/[PH]MaleOld") as GameObject;
     public Sprite Profile = Resources.Load<Sprite>("CharacterAvatars/NoPlayerImage");
+	public GameObject CharSelPrefab = Resources.Load("Characters/[PH]MaleCharSel") as GameObject;
 
 	public override string ToString()
 	{

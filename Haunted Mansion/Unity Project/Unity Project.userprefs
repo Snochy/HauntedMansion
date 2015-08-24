@@ -1,18 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GUIs\InGameGuI.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GUIs\ButtonItem.cs">
     <Files>
-      <File FileName="Assets\Scripts\GUIs\InGameGuI.cs" Line="73" Column="61" />
-      <File FileName="Assets\Scripts\HouseScripts\Maze.cs" Line="96" Column="55" />
-      <File FileName="Assets\Scripts\HouseScripts\PropsSpawner.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\HouseScripts\GameManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\HouseScripts\InputRooms.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\ItemScripts\ItemHighLighter.cs" Line="22" Column="6" />
-      <File FileName="Assets\Scripts\CharacterScripts\Character_Movement.cs" Line="73" Column="35" />
-      <File FileName="Assets\Scripts\CharacterScripts\footStepHandler.cs" Line="23" Column="4" />
-      <File FileName="Assets\Scripts\CharacterScripts\FlashLightSync.cs" Line="17" Column="34" />
-      <File FileName="Assets\Scripts\Sounds\SoundPlayer.cs" Line="24" Column="16" />
-      <File FileName="Assets\Scripts\HouseScripts\DoorScript.cs" Line="55" Column="14" />
+      <File FileName="Assets\Scripts\Databases\CharacterBase.cs" Line="53" Column="79" />
+      <File FileName="Assets\Scripts\Databases\CharacterType.cs" Line="16" Column="78" />
+      <File FileName="Assets\Scripts\GUIs\GUI_Handler.cs" Line="134" Column="20" />
+      <File FileName="Assets\Scripts\GUIs\ButtonItem.cs" Line="23" Column="84" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

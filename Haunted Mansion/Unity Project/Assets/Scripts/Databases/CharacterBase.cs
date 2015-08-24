@@ -36,6 +36,7 @@ public class CharacterBase {
 			Speed = 175,
             Prefab = Resources.Load("Characters/[PH]MaleOld") as GameObject,
             Profile = Resources.Load<Sprite>("CharacterAvatars/bondImage"),
+			CharSelPrefab = Resources.Load("Characters/[PH]MaleCharSel") as GameObject,
 		});
 
         AddCharacter(new CharacterType()
@@ -49,6 +50,7 @@ public class CharacterBase {
             Speed = 210,
             Prefab = Resources.Load("Characters/[PH]MaleOld") as GameObject,
             Profile = Resources.Load<Sprite>("CharacterAvatars/lucyImage"),
+			CharSelPrefab = Resources.Load("Characters/[PH]GirlCharSel") as GameObject,
         });
 
 	}
