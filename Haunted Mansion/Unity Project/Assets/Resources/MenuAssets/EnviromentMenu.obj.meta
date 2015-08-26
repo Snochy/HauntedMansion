@@ -7,11 +7,21 @@ ModelImporter:
   fileIDToRecycleName:
     100000: //RootNode
     100002: PH__Character_Select
+    100004: CharcterSelect01
+    100006: CharcterSelect02
     400000: //RootNode
     400002: PH__Character_Select
+    400004: CharcterSelect01
+    400006: CharcterSelect02
     2300000: PH__Character_Select
+    2300002: CharcterSelect01
+    2300004: CharcterSelect02
     3300000: PH__Character_Select
+    3300002: CharcterSelect01
+    3300004: CharcterSelect02
     4300000: PH__Character_Select
+    4300002: CharcterSelect01
+    4300004: CharcterSelect02
   materials:
     importMaterials: 0
     materialName: 0
