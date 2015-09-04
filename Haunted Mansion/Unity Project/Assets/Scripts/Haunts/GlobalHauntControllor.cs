@@ -11,6 +11,11 @@ public class GlobalHauntControllor : MonoBehaviour {
 
     public List<GameObject> listOfDeadPlayers;
 
+	void Start()
+	{
+		PlayerStatsHandler.PlayerDeath += PlayerDeath;
+	}
+
     public void DestroyedObject(GameObject goDestroyed)
     {
         LastItemDestoryed = goDestroyed.GetComponent<PropController>().propID;

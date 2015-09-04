@@ -9,16 +9,25 @@ public class PlayerStatsHandler : MonoBehaviour {
     public double startingSanity = 0;
     public double currentSanity;
     private double speed;
-    public Slider healthSlider;
     public Slider sanitySlider;
     public Sprite avatar;
     public Image avatarImage;
     public Text playerText;
 
+	private double lastHealth = 0;
+	private double lastSanity = 0;
+	
+	public delegate void HealthStatsChanges(float health);
+	public static event HealthStatsChanges HealthStatsChanged;
+
+	public delegate void SanityStatsChanges(float sanity);
+	public static event HealthStatsChanges SanityStatsChanged;
+
+	public delegate void Death(GameObject player);
+	public static event Death PlayerDeath;
+	
 	void Awake () 
     {
-        healthSlider = GameObject.FindGameObjectWithTag("PlayerHUD").transform.FindChild("HealthSlider").GetComponent<Slider>();
-        sanitySlider = GameObject.FindGameObjectWithTag("PlayerHUD").transform.FindChild("SanitySlider").GetComponent<Slider>();
         avatarImage = GameObject.FindGameObjectWithTag("PlayerHUD").transform.FindChild("Panel").FindChild("Image").GetComponent<Image>();
         playerText = GameObject.FindGameObjectWithTag("PlayerHUD").transform.FindChild("Name").GetComponent<Text>();
         startingHealth = CharacterBase.Get(PlayerPrefs.GetInt("charNum")).Health;
@@ -35,23 +44,32 @@ public class PlayerStatsHandler : MonoBehaviour {
 
     void Update()
     {
-        double SliderState = currentHealth / startingHealth;
-        GameObject.FindGameObjectWithTag("HealthSlider").GetComponent<Slider>().value = (float)SliderState;
-        SliderState = currentSanity / startingSanity;
-        GameObject.FindGameObjectWithTag("SanitySlider").GetComponent<Slider>().value = (float)SliderState;
+		if (lastHealth != currentHealth) 
+		{
+			if(HealthStatsChanged != null)
+			{
+				float HealthSliderState = (float)(currentHealth / startingHealth);
+				HealthStatsChanged(HealthSliderState);
+			}
+			lastHealth = currentHealth;
+		}
 
-        if (currentHealth <= 0)
-            Death();
-        if (currentSanity <= 0)
-            Death();
+		if (lastSanity != currentSanity) 
+		{
+			if(SanityStatsChanged != null)
+			{
+				float HealthSliderState = (float)(currentSanity / startingSanity);
+				HealthStatsChanged(HealthSliderState);
+			}
+			lastHealth = currentHealth;
+		}
     }
 
     public void TakeDamage(double amount)
     {
         currentHealth -= amount;
-        healthSlider.value = (float)currentHealth;
         if (currentHealth <= 0)
-            Death();
+            PlayerDeath(this.gameObject);
     }
 
     public void TakeSanity(double amount)
@@ -59,13 +77,7 @@ public class PlayerStatsHandler : MonoBehaviour {
         currentSanity -= amount;
         sanitySlider.value = (float)currentSanity;
         if (currentSanity <= 0)
-            Death();
-    }
-
-    private void Death()
-    {
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<GlobalHauntControllor>().PlayerDeath(this.gameObject);
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().characterControlEnabled = false;
+            PlayerDeath(this.gameObject);
     }
 
 }

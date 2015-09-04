@@ -1,8 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CharacterScripts\footStepHandler.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CharacterScripts\PlayerStatsHandler.cs">
     <Files>
-      <File FileName="Assets\Scripts\CharacterScripts\footStepHandler.cs" Line="18" Column="1" />
+      <File FileName="Assets\Scripts\CharacterScripts\PlayerStats.cs" Line="14" Column="2" />
+      <File FileName="Assets\Scripts\GUIs\InGameGuI.cs" Line="28" Column="36" />
+      <File FileName="Assets\Scripts\CharacterScripts\PlayerStatsHandler.cs" Line="55" Column="4" />
+      <File FileName="Assets\Scripts\GUIs\HealthSliderControl.cs" Line="9" Column="3" />
+      <File FileName="Assets\Scripts\Haunts\GlobalHauntControllor.cs" Line="32" Column="39" />
+      <File FileName="Assets\Scripts\HouseScripts\GameManager.cs" Line="142" Column="35" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

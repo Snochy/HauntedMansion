@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     {
         gameTime = 0;
         BeginGame();
+		PlayerStatsHandler.PlayerDeath += DisableCharacter;
     }
 
 	//Player can reset game by pressing R
@@ -136,4 +137,8 @@ public class GameManager : MonoBehaviour
         timerOn = !timerOn;
     }
 
+	void DisableCharacter (GameObject player)
+	{
+		characterControlEnabled = false;
+	}
 }
