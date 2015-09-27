@@ -103,6 +103,7 @@
     <Compile Include="Assets\Scripts\GUIs\GUI_Handler.cs" />
     <Compile Include="Assets\Scripts\GUIs\HealthSliderControl.cs" />
     <Compile Include="Assets\Scripts\GUIs\InGameGuI.cs" />
+    <Compile Include="Assets\Scripts\GUIs\PlayerTurntable.cs" />
     <Compile Include="Assets\Scripts\Haunts\AFriendfortheAges.cs" />
     <Compile Include="Assets\Scripts\Haunts\GlobalHauntControllor.cs" />
     <Compile Include="Assets\Scripts\Haunts\HauntedTeddy.cs" />
